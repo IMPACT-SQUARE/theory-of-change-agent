@@ -1,180 +1,178 @@
 # 변화이론 에이전트 (Theory of Change Agent)
 
-**KOICA PDM (Project Design Matrix) 생성** Claude Code 스킬·플러그인.
-유저와 한 번에 한 질문씩 변화이론(Theory of Change) 기반 인터뷰를 진행한 뒤,
-**PDM 매트릭스 + 모니터링 매트릭스**를 산출한다. 시작 시 **세 가지 진행 방식 중
-무엇으로 할지 반드시 먼저 묻는다.** 산출 언어는 입력 언어를 미러링(한글→한글, 영어→영어).
+KOICA 사업 기획서를 쓸 때 꼭 필요한 **PDM(Project Design Matrix, 성과체계표)** 을
+대화하듯 질문에 답하면서 만들어 주는 도구입니다. Claude(클로드)라는 AI 비서 위에서 동작합니다.
 
-영감: OMC `/deep-interview`, gstack `/office-hours`.
-규칙 근거: KOICA 평가심사실 「PDM 가이드라인 (2018)」.
+빈 표를 앞에 두고 무엇부터 채워야 할지 막막한 순간을 줄이는 것이 목표입니다.
+한 번에 하나씩 묻는 질문에 답하다 보면, KOICA PDM 가이드라인에 맞는 표가 완성됩니다.
+한국어로 답하면 결과도 한국어로, 영어로 답하면 영어로 나옵니다.
 
 ---
 
-## 설치
+## 무엇을 도와주나요
 
-### 방법 1 — Claude Code 플러그인 마켓플레이스 (권장, 자동 업데이트)
-Claude Code 안에서:
+- **변화이론(Theory of Change)** 의 흐름(투입물 → 활동 → 산출물 → 성과 → 영향)에 따라
+  질문을 던지고, 답을 정리해 결과사슬을 함께 세워 줍니다.
+- 다 만들고 나면 **PDM 표**와 **모니터링 표** 두 가지 문서를 만들어 줍니다.
+- 마지막에 KOICA 가이드라인의 핵심 규칙을 지켰는지 **자동으로 점검**해 주기 때문에,
+  자주 지적받는 실수를 미리 걸러낼 수 있습니다.
+
+이런 분들에게 유용합니다.
+
+- KOICA 사업에 지원하려고 PDM을 처음 써 보는 분
+- 이미 초안이 있는데 가이드라인에 맞는지 확인받고 싶은 분
+- 아이디어만 있고 아직 성과 구조가 잡히지 않은 분
+
+---
+
+## 어떻게 시작하나요
+
+이 도구는 처음에 **어떤 방식으로 진행할지 먼저 물어봅니다.** 세 가지 중에서 고르면 됩니다.
+
+1. **컨셉부터 시작하기**
+   아이디어만 있을 때 고릅니다. 문제와 목표부터 하나씩 짚어 가며 성과 구조를 함께 만듭니다.
+
+2. **자료를 가지고 시작하기**
+   사업 기획서, 초안, 기존 PDM 같은 자료가 있을 때 고릅니다.
+   가진 내용을 읽어 들이고 비어 있는 부분만 채워 갑니다.
+   이미 승인된 PDM이라면 고치지 않고 점검만 받을 수도 있습니다.
+
+3. **표를 먼저 보고 고치기**
+   질문 하나만 답하면 곧바로 PDM 초안 표를 만들어 줍니다.
+   그 표를 보면서 원하는 부분을 고쳐 나가고, 마지막에 "확정"이라고 하면 품질 점검을 거쳐 마무리합니다.
+
+세 방식은 함께 제공되며, 본인에게 편한 방식을 그때그때 고르면 됩니다.
+
+---
+
+## 무엇이 만들어지나요
+
+작업이 끝나면 결과물이 파일로 저장됩니다.
+
+- **PDM 표 (`pdm.md`)**
+  KOICA 양식 그대로, 영향 / 성과 / 산출물 / 활동을 가로 4칸(요약, 검증지표, 검증수단, 중요가정)으로 정리한 표입니다.
+- **모니터링 표 (`monitoring.md`)**
+  지표마다 정의, 기초치, 목표치, 근거, 자료 출처, 측정 시기, 수집 주체, 분리 기준을 정리한 표입니다.
+
+기초치와 목표치는 보통 현장 답사와 자료 조사를 거쳐 정해지기 때문에, 처음에는 `추후 확정`으로 비워 둡니다.
+나중에 값이 정해지면 그 자리에 채워 넣으면 됩니다.
+
+(`pdm.json`이라는 파일도 함께 만들어집니다. 위 두 표가 여기서 자동으로 만들어지는 원본 데이터입니다.)
+
+---
+
+## 품질 점검은 어떻게 하나요
+
+마무리 직전에, 만들어진 PDM이 KOICA 가이드라인의 핵심 규칙을 지키는지 스스로 확인합니다. 예를 들면 이런 점들입니다.
+
+- 영향(Impact)에는 별도의 지표를 넣지 않습니다.
+- 산출물(Output)은 3~4개로 정리합니다.
+- 성과당 지표는 1~2개(최대 3개)로 둡니다.
+- 모든 지표에는 어떻게 측정할지(검증수단)가 적혀 있어야 합니다.
+- 활동은 산출물로, 산출물은 성과로 빠짐없이 연결되어야 합니다.
+- 성과는 양적 확대가 아니라 대상의 '행동 변화'로 표현합니다.
+
+반드시 지켜야 하는 규칙은 통과할 때까지 함께 다듬은 뒤에 마무리하고,
+권장 규칙(SMART, CREAM, 성별 분리지표 등)은 점수로 알려 줍니다.
+규칙의 전체 목록과 가이드라인 쪽수 근거는 [`skills/theory-of-change-agent/rules/koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md)에 정리돼 있습니다.
+
+---
+
+## 설치하기
+
+평소 **Claude 데스크톱 앱이나 웹(claude.ai)** 을 쓰신다면 **방법 3**을 보세요.
+개발용 터미널 도구인 **Claude Code**에 익숙하시면 **방법 1**이 가장 편합니다.
+
+### 방법 1. Claude Code 플러그인 (자동 업데이트, 권장)
+
+Claude Code 안에서 아래 두 줄을 입력하면 설치됩니다.
+
 ```
 /plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
 /plugin install theory-of-change-agent@impact-square
 ```
-업데이트 (omc/gstack처럼 최신본 받기):
+
+나중에 최신 버전을 받고 싶을 때는 아래처럼 업데이트합니다.
+
 ```
 /plugin marketplace update impact-square
 /plugin update theory-of-change-agent
 ```
 
-### 방법 2 — 심볼릭 링크 (개발·빠른 설치)
+### 방법 2. 직접 연결하기 (빠른 설치)
+
 ```bash
 git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
 ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
 ```
-업데이트는 `git pull`. 해제: `rm ~/.claude/skills/theory-of-change-agent` (원본 안전).
 
-### 방법 3 — Claude 데스크톱 / claude.ai (Skills 업로드)
-Claude Code가 아닌 **데스크톱 앱·브라우저(claude.ai)**에서 쓰려면 스킬을 zip으로 업로드한다.
+업데이트는 `git pull`로 받습니다. 연결을 끊으려면 `rm ~/.claude/skills/theory-of-change-agent`를 입력합니다. 원본 폴더는 그대로 남습니다.
 
-1. **전제** — 유료 플랜(Pro / Max / Team / Enterprise) + **코드 실행(code execution) 기능 ON**.
-   (게이트가 샌드박스에서 `python3`로 동작 — jq 불필요.)
-2. **zip 만들기** — 레포 루트에서:
+### 방법 3. Claude 데스크톱 / 웹(claude.ai)에 올리기
+
+Claude Code가 아닌 데스크톱 앱이나 브라우저에서 쓰려면 스킬을 압축 파일(zip)로 만들어 올립니다.
+
+1. **준비 사항**: 유료 요금제(Pro / Max / Team / Enterprise)와 **코드 실행(code execution) 기능 켜기**가 필요합니다.
+2. **압축 파일 만들기**: 내려받은 폴더의 `skills` 폴더 안에서 아래 명령을 실행합니다.
    ```bash
    cd skills
    zip -r theory-of-change-agent.zip theory-of-change-agent \
      -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
    ```
-3. **업로드** — 데스크톱/claude.ai → **Settings → Capabilities → Skills → Upload** →
-   `theory-of-change-agent.zip` 선택 → 목록에서 **Enable**.
-   (메뉴 명칭은 앱 버전에 따라 다를 수 있음 — `Settings` 안의 *Skills / Capabilities* 항목을 찾는다.)
-4. **사용** — 채팅에 `변화이론 에이전트로 KOICA PDM 만들어줘` 처럼 입력 → 산출물(`pdm.md`,
-   `monitoring.md`)을 채팅의 **다운로드 링크**로 받는다. 선택지 질문은 앱의 탭 선택 UI로 뜬다.
+3. **올리기**: 데스크톱 앱이나 claude.ai에서 `설정(Settings) → Capabilities → Skills → Upload`로 들어가
+   방금 만든 `theory-of-change-agent.zip`을 선택하고 켜(Enable) 줍니다.
+   (메뉴 이름은 버전에 따라 조금 다를 수 있으니, 설정 안에서 *Skills* 또는 *Capabilities* 항목을 찾으세요.)
+4. **사용하기**: 채팅에 "변화이론 에이전트로 KOICA PDM 만들어줘"처럼 적으면 시작합니다.
+   완성된 표(`pdm.md`, `monitoring.md`)는 채팅에 뜨는 다운로드 링크로 받습니다.
 
-> ⚠️ 앱에 업로드한 스킬은 **자동 업데이트되지 않는다** — 스킬이 바뀌면 새 zip을 다시 업로드해야 한다.
-> 자동 업데이트(omc/gstack식)를 원하면 **방법 1(Claude Code 플러그인)**.
+앱에 올린 스킬은 자동으로 업데이트되지 않습니다. 내용이 바뀌면 새 압축 파일을 다시 올려야 합니다.
+자동 업데이트가 필요하면 방법 1을 사용하세요.
 
-전체 가이드: [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
+더 자세한 안내는 [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md)에 있습니다.
 
-### 요구사항
-- **Claude Code** (CLI / 데스크탑 / IDE 통합 모두 가능)
-- **`python3`** — 결정적 검증기(`rules/validate-critical.py`, 의존성 없는 stdlib만). **jq 불필요**라
-  Claude Code·데스크톱 샌드박스 어디서나 동작.
-- (선택) `jq` — 개발용 벤치마크 비교 스크립트 / `jsonschema` — 빌드타임 스키마 검증.
+### 준비물
 
----
-
-## 사용법
-
-```
-/theory-of-change-agent                                  # 진행 방식(A/B/C) 먼저 질문
-/theory-of-change-agent --concept "한 줄 컨셉"             # Mode A: 컨셉부터 (가이드 인터뷰)
-/theory-of-change-agent --inputs @brief.md                # Mode B: 자료 보유
-/theory-of-change-agent --draft                           # Mode C: 표 먼저 (질문 1개 후 초안 표)
-/theory-of-change-agent --inputs @existing-pdm.md --audit # 기존/승인 PDM 감사 (보고 전용)
-```
-
-세 가지 모드 — 진입 시 **반드시 먼저 어느 방식으로 진행할지 질문한다**:
-- **[A] 컨셉부터** — 아이디어만. 한 번에 하나씩 결과사슬 구성.
-- **[B] 자료 보유** — 문서/초안/기존 PDM 추출 후 빈칸만. 승인 PDM은 `--audit`.
-- **[C] 표 먼저(Draft-first)** — 질문 1개 → 즉시 초안 표 → 수정 → "확정" 시 하드 게이트.
-
-자세한 흐름은 [`skills/theory-of-change-agent/README.md`](./skills/theory-of-change-agent/README.md) · [`SKILL.md`](./skills/theory-of-change-agent/SKILL.md).
-
-산출물 (default `./out/`):
-- **`pdm.json`** — 단일 진실원본. ID 연결 결과사슬 DAG (`from_*` 인과 참조).
-- **`pdm.md`** — PDM 4행4열 매트릭스 (KOICA 양식).
-- **`monitoring.md`** — 지표 정의·기초치·목표치·근거·출처·시기·수집주체·분리.
-  (기초치/목표치는 기본 `추후 확정` — 현장답사 후 채움.)
-
----
-
-## 동작 검증
-
-```bash
-cd skills/theory-of-change-agent
-
-# 결정적 구조 검증 (순수 파이썬, jq 불필요)
-bash rules/validate-critical.sh schema/pdm-example.json
-#   또는: python3 rules/validate-critical.py schema/pdm-example.json
-
-# 벤치마크 — 합성 PDM 3건 탐지정확도 (18/18 = 100%)
-bash benchmark/run-benchmark.sh
-```
-
----
-
-## 파일 구조
-
-```
-theory-of-change-agent/
-├── .claude-plugin/
-│   ├── plugin.json              # 플러그인 매니페스트
-│   └── marketplace.json         # 마켓플레이스 매니페스트
-├── skills/
-│   └── theory-of-change-agent/
-│       ├── SKILL.md             # 오케스트레이션 (Phase 0-4)
-│       ├── README.md            # 스킬 단위 사용 가이드
-│       ├── INSTALL-desktop.md   # Claude 데스크톱/웹 업로드 가이드
-│       ├── prompts/             # 인터뷰·생성·렌더·정제 프롬프트
-│       ├── rules/               # koica-rules.md · checklist.json · validate-critical.py/.sh
-│       ├── schema/              # pdm-schema.json · pdm-example.json
-│       └── benchmark/           # expected/synthetic-*.json · sample-brief.md · scorer.md · run-benchmark.sh
-├── docs/                        # 공개 참고 자료 (KOICA 가이드라인 · Theory of Change 논문)
-├── README.md                    # 이 파일
-└── LICENSE                      # MIT
-```
-
----
-
-## 자가검증 게이트 (요약)
-
-산출물 마무리 전 2단 게이트 통과 필요:
-
-**Critical (하드 게이트, GATE 모드에서 차단):**
-- C01 영향 무지표/무MoV · C02 산출물 3-4 · C03 성과별 지표 1-2(≤3) · C04 모든 지표에 MoV ·
-  C05 산출물→성과 인과 링크 · C06 산출물 명사형(LLM) · C08 고아 활동 없음
-  (C07 "단일 성과"는 제거 — 다중 성과 허용. `rules/koica-rules.md` §10 참고.)
-
-**Advisory (수치 임계치 80%):**
-- A01 SMART · A02 CREAM · A03 성별 분리지표 · A04 proxy 정당화 · A05 목표 현실성(추후확정 시 N/A) ·
-  A06 종료평가 측정가능 · A07 산출물≠활동 반복 · A08 성과=행동변화
-
-규칙 정의·근거: [`skills/theory-of-change-agent/rules/koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md).
+- **Claude** (Claude Code, 데스크톱 앱, 웹 중 무엇이든)
+- **`python3`**: 품질 점검을 돌리는 데 쓰입니다. 데스크톱/웹의 코드 실행 환경에는 기본으로 들어 있습니다.
 
 ---
 
 ## 데이터 정책
 
-- 레포에 포함된 `docs/`의 PDF는 **공개 문서**(KOICA PDM 가이드라인, Theory of Change 논문)뿐이다.
-- 벤치마크 fixture(`benchmark/expected/*.json`)는 **합성·익명화** PDM이다(실명·실 재무 제거, 구조만 보존).
-- 실제 사업 PDM 원본은 레포에 포함하지 않으며 별도 비공개 보관한다.
+- 이 저장소에 들어 있는 `docs/`의 PDF는 공개 문서(KOICA PDM 가이드라인, Theory of Change 자료)뿐입니다.
+- 품질 점검용 예시 데이터(`benchmark/`)는 실명과 실제 금액을 모두 지운 가상의 PDM입니다. 구조만 남겨 두었습니다.
+- 실제 사업 PDM 원본은 이 저장소에 넣지 않으며, 별도로 비공개 보관합니다.
+
+---
+
+## 폴더 구성
+
+```
+theory-of-change-agent/
+├── .claude-plugin/      플러그인 설정 파일
+├── skills/
+│   └── theory-of-change-agent/
+│       ├── SKILL.md         전체 진행 방식 설명
+│       ├── README.md        스킬 단위 사용 안내
+│       ├── INSTALL-desktop.md  데스크톱/웹 설치 안내
+│       ├── prompts/         인터뷰와 문서 생성에 쓰는 안내문
+│       ├── rules/           KOICA 규칙과 자동 점검 도구
+│       ├── schema/          PDM 데이터 형식과 예시
+│       └── benchmark/       품질 점검용 가상 예시
+├── docs/                공개 참고 자료
+├── README.md            이 문서
+└── LICENSE              라이선스(MIT)
+```
 
 ---
 
 ## 상태
 
-**v1.0** — 결정적 엔진(순수 파이썬) + 3건 합성 벤치마크(탐지정확도 100%) + 3개 모드 + Claude Code 플러그인 배포.
-이전 명칭 "Impact Harness"에서 **변화이론 에이전트**로 리네임(2026-06).
-
----
-
-## 기여 (Contributing)
-
-규칙·스키마·프롬프트 단위로 기여 가능:
-- **새 KOICA 양식 변형**: `rules/koica-rules.md` 보강 + `checklist.json` 규칙 추가.
-- **새 출력 포맷** (xlsx/hwp 등): `SKILL.md` Phase 3 렌더 확장 + `prompts/render-*.md` 추가.
-- **벤치마크 확장**: `benchmark/expected/`에 합성 PDM JSON + `expected_failures` 매트릭스 추가.
-
-자가검증(`validate-critical.sh`)과 벤치마크(`run-benchmark.sh`)가 모두 통과해야 PR 머지.
+버전 1.0입니다. 세 가지 진행 방식, 자동 품질 점검, Claude Code 플러그인 배포가 준비돼 있습니다.
+이전 이름은 "Impact Harness"였고, 2026년 6월에 "변화이론 에이전트"로 이름을 바꿨습니다.
 
 ---
 
 ## 라이선스
 
 [MIT](./LICENSE) © 2026 IMPACT SQUARE
-
----
-
-## 감사
-
-- **KOICA 평가심사실** — 「PDM 가이드라인 (2018)」 (공개 문서, `docs/` 수록)
-- **임팩트스퀘어** — 도메인 자문
-- **OMC (oh-my-claudecode)**, **gstack** — 스킬 구조 레퍼런스
