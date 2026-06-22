@@ -1,0 +1,127 @@
+{
+  "version": "1.3",
+  "updated": "2026-06-10",
+  "note": "Data-driven KOICA PDM self-check. C-rules are Critical (hard gate in GATE mode). A-rules are Advisory (numeric threshold). Structural rules (C01-C05, C08) are enforced deterministically by validate-critical.sh; C06 and A-rules are LLM-judged. The same checklist scores the benchmark in AUDIT mode. See rules/koica-rules.md for guideline citations. C07 (single-outcome) was removed 2026-06-05 — see koica-rules.md §10. Baseline/target are deferred ('추후 확정') by default since 2026-06-10 — A05 is N/A while a target is deferred (koica-rules.md §4.8, §10).",
+  "advisory_threshold": 0.8,
+  "max_advisory_rounds": 3,
+  "critical": [
+    {
+      "id": "C01",
+      "rule": "impact_no_indicators",
+      "description": "Impact row must have NO indicators or MoV",
+      "check": "impact.indicators is empty AND impact.mov is empty",
+      "deterministic": true,
+      "source": "guideline p.23"
+    },
+    {
+      "id": "C02",
+      "rule": "output_count_3_4",
+      "description": "Output count must be 3-4",
+      "check": "outputs.length >= 3 AND outputs.length <= 4",
+      "deterministic": true,
+      "source": "guideline p.21"
+    },
+    {
+      "id": "C03",
+      "rule": "outcome_indicator_count",
+      "description": "Each outcome must have 1-2 indicators (hard cap 3)",
+      "check": "each outcome.indicators.length >= 1 AND <= 3",
+      "deterministic": true,
+      "source": "guideline p.22"
+    },
+    {
+      "id": "C04",
+      "rule": "all_indicators_have_mov",
+      "description": "Every output/outcome indicator must have a non-empty MoV",
+      "check": "for each indicator in outputs+outcomes: indicator.mov is non-empty",
+      "deterministic": true,
+      "source": "guideline p.18 (per-indicator, stricter than per-level; reviewer 2026-05-28)"
+    },
+    {
+      "id": "C05",
+      "rule": "output_outcome_causal_link",
+      "description": "Every output must be referenced by at least one outcome's from_outputs",
+      "check": "for each output.id: exists in some outcome.from_outputs",
+      "deterministic": true,
+      "source": "guideline p.17 (vertical logic)"
+    },
+    {
+      "id": "C06",
+      "rule": "output_is_noun_form",
+      "description": "Output narrative must be noun-form, not a restatement of an activity",
+      "check": "LLM judge: is output.narrative a noun-form deliverable (goods/services), not an activity verb?",
+      "deterministic": false,
+      "source": "guideline p.21, p.25"
+    },
+    {
+      "id": "C08",
+      "rule": "no_orphan_activities",
+      "description": "Every activity must be referenced by at least one output's from_activities (even support activities must connect to an output)",
+      "check": "for each activity.id (or one of its sub ids): exists in some output.from_activities",
+      "deterministic": true,
+      "note": "Promoted from Advisory to Critical (reviewer 2026-05-28).",
+      "source": "guideline p.20 (activity checklist #1), p.21"
+    }
+  ],
+  "advisory": [
+    {
+      "id": "A01",
+      "rule": "indicator_smart",
+      "description": "Each indicator should satisfy SMART criteria",
+      "check": "LLM judge: Specific, Measurable, Attainable, Relevant, Timely?",
+      "unit": "per-indicator (rule passes if >50% of indicators satisfy)",
+      "source": "guideline p.6"
+    },
+    {
+      "id": "A02",
+      "rule": "indicator_cream",
+      "description": "Each indicator should satisfy CREAM criteria",
+      "check": "LLM judge: Clear, Relevant, Economic, Adequate, Monitorable?",
+      "unit": "per-indicator (rule passes if >50% of indicators satisfy)",
+      "source": "guideline p.6"
+    },
+    {
+      "id": "A03",
+      "rule": "gender_disaggregation_present",
+      "description": "At least one indicator should have gender disaggregation (mandatory per guideline)",
+      "check": "exists indicator where disaggregation contains 'gender' or '성별'",
+      "source": "guideline p.7"
+    },
+    {
+      "id": "A04",
+      "rule": "proxy_has_justification",
+      "description": "Proxy indicators must have explicit justification with assumption",
+      "check": "for each indicator where is_proxy=true: proxy_justification is non-empty",
+      "source": "guideline p.8"
+    },
+    {
+      "id": "A05",
+      "rule": "target_realistic_vs_baseline",
+      "description": "Target should be realistic relative to baseline (baseline + expected improvement)",
+      "check": "LLM judge: given baseline, duration, and context, is the target realistic? CONDITIONAL: if baseline or target is deferred ('추후 확정'/null/empty), this rule is N/A and counts as pass (baseline/target are set post-finalization from field survey — koica-rules.md §4.8).",
+      "conditional": "skip_when_target_deferred",
+      "source": "guideline p.10"
+    },
+    {
+      "id": "A06",
+      "rule": "measurable_at_end_evaluation",
+      "description": "Indicator should be measurable at end-of-project evaluation",
+      "check": "LLM judge: can this indicator be measured within 1 year after project completion?",
+      "source": "guideline p.22 (outcome checklist #7)"
+    },
+    {
+      "id": "A07",
+      "rule": "output_not_activity_restatement",
+      "description": "Output should not be a restatement or recombination of activities",
+      "check": "LLM judge: is the output a result distinct from its linked activities (process)?",
+      "source": "guideline p.21, p.25"
+    },
+    {
+      "id": "A08",
+      "rule": "outcome_is_behavioral_change",
+      "description": "Outcome should describe behavioral change, not just an output at scale",
+      "check": "LLM judge: does the outcome describe a change in behavior/practice in the target group?",
+      "source": "guideline p.22 (outcome checklist #1)"
+    }
+  ]
+}

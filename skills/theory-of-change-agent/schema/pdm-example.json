@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "project_name": "니카라과 ICT 활용 교육역량 강화사업",
+    "version": "1.0",
+    "created_at": "2026-05-28",
+    "approved_at": null,
+    "lang": "ko",
+    "mode": "A",
+    "gate_mode": "GATE",
+    "headline_indicator": "수혜자 500개 중등학교 교사의 ICT 활용 교육역량 강화",
+    "sdgs_koica_indicator": "SDGs 4.c"
+  },
+  "impact": {
+    "id": "imp-1",
+    "narrative": "1. SDGs 4.c. 교사연수를 통해 자격있는 교사 공급의 증대\n2. ICT 활용 교원 비중 증가(니카라과 교육발전전략 2017-21 제5목표)",
+    "sdgs": ["SDG 4.c"],
+    "national_strategy": "니카라과 교육발전전략 2017-2021 승인",
+    "assumptions_from_outcome": ["니카라과 교육발전전략 2017-2021 승인"],
+    "stale": false
+  },
+  "outcomes": [
+    {
+      "id": "oc-1",
+      "narrative": "니카라과 500개 중등학교 영어, 수학 교과교사의 ICT 활용 교육역량 강화",
+      "indicators": [
+        {
+          "id": "ind-oc-1.1",
+          "name": "수료자 중 ICT 활용교육 선도교사 자격증 취득률",
+          "definition": "ICT 활용교육 선도교사 자격 시험 합격률",
+          "baseline": null,
+          "target": null,
+          "target_rationale": null,
+          "mov": "니카라과 교육부 DB",
+          "data_source": "니카라과 교육부 DB",
+          "timing": "사업 종료 시",
+          "collector": "교육부",
+          "disaggregation": "성별",
+          "is_proxy": false,
+          "proxy_justification": null
+        }
+      ],
+      "mov": ["니카라과 교육부 DB"],
+      "assumptions": ["교육부-대학교 공동자격증 수여", "대상 학교 ICT 인프라 구축"],
+      "from_outputs": ["op-1", "op-2", "op-3", "op-4"],
+      "stale": false
+    }
+  ],
+  "outputs": [
+    {
+      "id": "op-1",
+      "narrative": "개발된 연수프로그램",
+      "indicators": [
+        {
+          "id": "ind-op-1.1",
+          "name": "신규 개발 연수프로그램 개수",
+          "definition": "새로 개발된 연수 프로그램의 총 수",
+          "baseline": 0,
+          "target": 4,
+          "target_rationale": "온라인 2개 + 오프라인 2개 교과",
+          "mov": "PMC 종료보고서",
+          "data_source": "PMC 종료보고서",
+          "timing": "연간",
+          "collector": "PMC",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": ["PMC 종료보고서"],
+      "assumptions": ["영어, 수학 교육과정 개편 완료"],
+      "from_activities": ["act-1"],
+      "stale": false
+    },
+    {
+      "id": "op-2",
+      "narrative": "양성된 마스터트레이너",
+      "indicators": [
+        {
+          "id": "ind-op-2.1",
+          "name": "마스터트레이너 자격증(25점) 취득률",
+          "definition": "마스터트레이너 시험 합격률",
+          "baseline": 0,
+          "target": null,
+          "target_rationale": null,
+          "mov": "교육부 DB",
+          "data_source": "교육부 DB",
+          "timing": "연간",
+          "collector": "교육부",
+          "disaggregation": "성별",
+          "is_proxy": false
+        }
+      ],
+      "mov": ["교육부 DB"],
+      "assumptions": ["카라소 연수센터 조직 및 인력 배정"],
+      "from_activities": ["act-2", "act-4"],
+      "stale": false
+    },
+    {
+      "id": "op-3",
+      "narrative": "훈련받은 선도교사",
+      "indicators": [
+        {
+          "id": "ind-op-3.1",
+          "name": "선도교사 연수(1800명) 수료율",
+          "definition": "연수 수료자 수 / 총 대상자 수",
+          "baseline": 0,
+          "target": 1800,
+          "target_rationale": "니카라과 500개 중등학교 대상",
+          "mov": "초청연수보고서",
+          "data_source": "초청연수보고서",
+          "timing": "연간",
+          "collector": "연수센터",
+          "disaggregation": "성별",
+          "is_proxy": false
+        }
+      ],
+      "mov": ["초청연수보고서"],
+      "assumptions": [],
+      "from_activities": ["act-3"],
+      "stale": false
+    },
+    {
+      "id": "op-4",
+      "narrative": "구축된 ICT 기자재",
+      "indicators": [
+        {
+          "id": "ind-op-4.1",
+          "name": "기자재(6종) 공급률",
+          "definition": "목표 기자재 공급 완료 비율",
+          "baseline": 0,
+          "target": 6,
+          "target_rationale": "PC실습실 1개, 노트북 7개, 태블릿 실습실 등",
+          "mov": "연수센터 관리대장",
+          "data_source": "연수센터 관리대장",
+          "timing": "연간",
+          "collector": "연수센터",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": ["연수센터 관리대장"],
+      "assumptions": [],
+      "from_activities": ["act-5"],
+      "stale": false
+    }
+  ],
+  "activities": [
+    { "id": "act-1", "text": "연수 프로그램 개발 지원", "sub": [
+      { "id": "act-1.1", "text": "온라인 프로그램(2개 교과)" },
+      { "id": "act-1.2", "text": "오프라인 연수 프로그램(2개 교과)" }
+    ], "stale": false },
+    { "id": "act-2", "text": "마스터트레이너 양성", "sub": [
+      { "id": "act-2.1", "text": "현지 코칭 프로그램" },
+      { "id": "act-2.2", "text": "초청연수" }
+    ], "stale": false },
+    { "id": "act-3", "text": "선도교사 연수 지원", "sub": [
+      { "id": "act-3.1", "text": "카라소 연수센터, 온라인 연수 지원" }
+    ], "stale": false },
+    { "id": "act-4", "text": "연수센터 역량 강화", "sub": [
+      { "id": "act-4.1", "text": "초청연수(관리자, 개발자)" }
+    ], "stale": false },
+    { "id": "act-5", "text": "ICT 기자재 공급", "sub": [], "stale": false }
+  ],
+  "inputs": {
+    "koica": { "budget": "사업예산 300만불", "duration": "2017-2019", "personnel": null },
+    "recipient": { "contribution": "분담재원 00만불", "other_resources": "기타재원 부지(00km2)" },
+    "pre_conditions": ["카라소 내 교육연수센터 법적 지위 획득", "마스터트레이너 및 선도교사 운영 방안 수립"]
+  }
+}

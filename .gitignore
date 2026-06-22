@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+
+# Claude Code harness state (keep specs/ and plans/, drop transient state)
+**/.omc/state/
+**/.omc/cache/
+**/.omc/project-memory.json
+
+# Raw meeting transcripts (auto-STT) — curated minutes 옆에서 노이즈 방지
+meetings/*.txt
+
+# Generated skill output (rendered PDMs are produced at runtime)
+**/out/
+
+# Node
+node_modules/
+
+# Private source PDFs (real project documents — kept outside the repo)
+docs/*_PDM.pdf
+# Build artifacts
+*.zip
+# Internal scratch (not for the public repo)
+/STATUS-*.md
+/산출물.md
+.omc/

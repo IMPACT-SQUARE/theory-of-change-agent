@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://theory-of-change-agent.dev/pdm/v1",
+  "title": "KOICA PDM",
+  "description": "ID-linked results-chain DAG for a KOICA Project Design Matrix. Describes the data format only; KOICA guideline rules (e.g. output count 3-4) are enforced by checklist.json / validate-critical.sh, not by this schema.",
+  "type": "object",
+  "required": ["meta", "impact", "outcomes", "outputs", "activities", "inputs"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["project_name", "version", "created_at", "lang"],
+      "properties": {
+        "project_name": { "type": "string" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "created_at": { "type": "string", "format": "date" },
+        "approved_at": { "type": ["string", "null"] },
+        "lang": { "type": "string", "enum": ["ko", "en"] },
+        "mode": { "type": "string", "enum": ["A", "B", "C"], "description": "Entry/interaction mode: A = concept-first interview, B = inputs-held, C = draft-first (table-first, one question then a full draft)" },
+        "gate_mode": { "type": "string", "enum": ["GATE", "AUDIT", "DRAFT"], "description": "GATE = new PDM (blocking); AUDIT = existing/approved PDM (report-only); DRAFT = draft-first work-in-progress (report-only until the user finalizes, which flips it to GATE)" },
+        "headline_indicator": { "type": "string", "description": "대표 수혜자 지표/목표치 (top-line)" },
+        "sdgs_koica_indicator": { "type": "string" }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "required": ["id", "narrative"],
+      "description": "Per KOICA guideline p.23, Impact has NO indicators/MoV. The schema permits the optional 'indicators'/'mov' fields ONLY so AUDIT mode can represent real/approved PDMs that deviate; rule C01 flags them in GATE mode.",
+      "properties": {
+        "id": { "type": "string", "pattern": "^imp-\\d+$" },
+        "narrative": { "type": "string", "description": "Strategic goal statement" },
+        "sdgs": { "type": "array", "items": { "type": "string" }, "description": "SDG targets (e.g. 'SDG 8.3')" },
+        "national_strategy": { "type": "string", "description": "Recipient country dev strategy alignment" },
+        "assumptions_from_outcome": { "type": "array", "items": { "type": "string" }, "description": "Assumptions for Outcome->Impact link" },
+        "indicators": { "type": "array", "items": { "$ref": "#/$defs/indicator" }, "description": "AUDIT/ingestion only — guideline-noncompliant; flagged by rule C01" },
+        "mov": { "type": "array", "items": { "type": "string" }, "description": "AUDIT/ingestion only — guideline-noncompliant; flagged by rule C01" },
+        "stale": { "type": "boolean", "default": false }
+      }
+    },
+    "outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Outcome count is unconstrained at every layer; the prior single-outcome rule (C07) was removed 2026-06-05.",
+      "items": {
+        "type": "object",
+        "required": ["id", "narrative", "indicators", "from_outputs"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^oc-\\d+$" },
+          "narrative": { "type": "string", "description": "Behavioral change statement" },
+          "indicators": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/indicator" } },
+          "mov": { "type": "array", "items": { "type": "string" } },
+          "assumptions": { "type": "array", "items": { "type": "string" }, "description": "Assumptions for Output->Outcome link" },
+          "from_outputs": { "type": "array", "items": { "type": "string", "pattern": "^op-\\d+$" }, "description": "Output IDs feeding this outcome" },
+          "stale": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Schema permits any count for ingestion; output count 3-4 is enforced as rule C02.",
+      "items": {
+        "type": "object",
+        "required": ["id", "narrative", "indicators", "from_activities"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^op-\\d+$" },
+          "narrative": { "type": "string", "description": "Noun-form deliverable (goods/services)" },
+          "indicators": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/indicator" } },
+          "mov": { "type": "array", "items": { "type": "string" } },
+          "assumptions": { "type": "array", "items": { "type": "string" }, "description": "Assumptions for Activity->Output link" },
+          "from_activities": { "type": "array", "items": { "type": "string", "pattern": "^act-\\d+(\\.\\d+)?$" }, "description": "Activity IDs that produce this output" },
+          "stale": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "activities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^act-\\d+$" },
+          "text": { "type": "string", "description": "Activity description" },
+          "sub": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "text"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^act-\\d+\\.\\d+$" },
+                "text": { "type": "string" }
+              }
+            }
+          },
+          "stale": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "required": ["koica", "recipient"],
+      "properties": {
+        "koica": {
+          "type": "object",
+          "properties": {
+            "budget": { "type": ["string", "null"] },
+            "duration": { "type": ["string", "null"] },
+            "personnel": { "type": ["string", "null"] }
+          }
+        },
+        "recipient": {
+          "type": "object",
+          "properties": {
+            "contribution": { "type": ["string", "null"] },
+            "other_resources": { "type": ["string", "null"] }
+          }
+        },
+        "pre_conditions": { "type": "array", "items": { "type": "string" }, "description": "Pre-conditions for activities to proceed" }
+      }
+    }
+  },
+  "$defs": {
+    "indicator": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^ind-[a-z]+-\\d+(\\.\\d+)*$" },
+        "name": { "type": "string" },
+        "definition": { "type": "string" },
+        "baseline": { "type": ["string", "number", "null"], "description": "Deferred by default: the canonical placeholder is the string \"추후 확정\" (set post-finalization from field survey — koica-rules.md §4.8). A concrete value may be supplied if the user volunteers one." },
+        "target": { "type": ["string", "number", "null"], "description": "Deferred by default: canonical placeholder \"추후 확정\". When deferred, A05 (target realism) is N/A. koica-rules.md §4.8." },
+        "target_rationale": { "type": ["string", "null"], "description": "Deferred with the target ('추후 확정') unless a concrete target is supplied." },
+        "mov": { "type": "string", "description": "Means of Verification for this indicator (required non-empty by rule C04)" },
+        "data_source": { "type": "string" },
+        "timing": { "type": "string", "description": "Measurement timing/frequency" },
+        "collector": { "type": "string", "description": "Who collects the data" },
+        "disaggregation": { "type": ["string", "null"], "description": "e.g. gender, region, age" },
+        "is_proxy": { "type": "boolean", "default": false },
+        "proxy_justification": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

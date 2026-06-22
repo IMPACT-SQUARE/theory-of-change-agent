@@ -1,0 +1,32 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "impact-square",
+  "description": "IMPACT SQUARE Claude Code plugins.",
+  "owner": {
+    "name": "IMPACT SQUARE",
+    "url": "https://github.com/IMPACT-SQUARE"
+  },
+  "plugins": [
+    {
+      "name": "theory-of-change-agent",
+      "description": "변화이론 에이전트 (Theory of Change Agent) — KOICA PDM (Project Design Matrix) 생성. 진입 시 세 가지 방식(컨셉부터 / 자료 보유 / 표 먼저) 중 무엇으로 할지 먼저 묻고, 변화이론 인터뷰를 거쳐 PDM 매트릭스 + 모니터링 매트릭스를 만든다. 2단 자가검증(결정적 구조 규칙 + LLM 품질 규칙)으로 게이트하며, 검증기는 jq 없이 순수 파이썬으로 동작한다.",
+      "version": "1.0.0",
+      "author": {
+        "name": "IMPACT SQUARE"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/IMPACT-SQUARE/theory-of-change-agent",
+      "tags": [
+        "koica",
+        "pdm",
+        "impact",
+        "theory-of-change",
+        "변화이론",
+        "logframe",
+        "m&e"
+      ]
+    }
+  ],
+  "version": "1.0.0"
+}

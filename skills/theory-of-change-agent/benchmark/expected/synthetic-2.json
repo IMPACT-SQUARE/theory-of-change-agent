@@ -1,0 +1,324 @@
+{
+  "_note": "Synthetic, anonymized benchmark PDM — narratives fabricated; structure preserved to exercise the deterministic gate.",
+  "expected_failures": {
+    "C01": "fail",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C08": "pass"
+  },
+  "deviations": [
+    "Synthetic anonymized PDM — see expected_failures.",
+    "Synthetic anonymized PDM — see expected_failures.",
+    "Synthetic anonymized PDM — see expected_failures."
+  ],
+  "meta": {
+    "project_name": "합성 벤치마크 PDM",
+    "version": "5.0",
+    "created_at": "2021-12-04",
+    "approved_at": "2021-12-04",
+    "lang": "ko",
+    "mode": "B",
+    "gate_mode": "AUDIT",
+    "headline_indicator": "대표지표(합성)",
+    "sdgs_koica_indicator": "SDG 8.3"
+  },
+  "impact": {
+    "id": "imp-1",
+    "narrative": "서술(합성)",
+    "sdgs": [
+      "SDG 8.3"
+    ],
+    "national_strategy": "국가전략(합성)",
+    "indicators": [
+      {
+        "id": "ind-imp-1.1",
+        "name": "지표명(합성)",
+        "definition": "정의(합성)",
+        "baseline": "추후 확정",
+        "target": "추후 확정",
+        "target_rationale": "추후 확정",
+        "mov": "검증수단(합성)",
+        "data_source": "데이터출처(합성)",
+        "timing": "(합성)",
+        "collector": "수집주체(합성)",
+        "disaggregation": null,
+        "is_proxy": false
+      },
+      {
+        "id": "ind-imp-1.2",
+        "name": "지표명(합성)",
+        "definition": "정의(합성)",
+        "baseline": "추후 확정",
+        "target": "추후 확정",
+        "target_rationale": "추후 확정",
+        "mov": "검증수단(합성)",
+        "data_source": "데이터출처(합성)",
+        "timing": "(합성)",
+        "collector": "수집주체(합성)",
+        "disaggregation": null,
+        "is_proxy": false
+      }
+    ],
+    "mov": [
+      "검증수단(합성)",
+      "검증수단(합성)"
+    ],
+    "assumptions_from_outcome": [
+      "가정(합성)"
+    ],
+    "stale": false
+  },
+  "outcomes": [
+    {
+      "id": "oc-1",
+      "narrative": "서술(합성)",
+      "indicators": [
+        {
+          "id": "ind-oc-1.1",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        },
+        {
+          "id": "ind-oc-1.2",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": [
+        "검증수단(합성)"
+      ],
+      "assumptions": [
+        "가정(합성)"
+      ],
+      "from_outputs": [
+        "op-1",
+        "op-2",
+        "op-3"
+      ],
+      "stale": false
+    },
+    {
+      "id": "oc-2",
+      "narrative": "서술(합성)",
+      "indicators": [
+        {
+          "id": "ind-oc-2.1",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": "추후 확정",
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        },
+        {
+          "id": "ind-oc-2.2",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": [
+        "검증수단(합성)",
+        "검증수단(합성)"
+      ],
+      "assumptions": [
+        "가정(합성)"
+      ],
+      "from_outputs": [
+        "op-1",
+        "op-2",
+        "op-3"
+      ],
+      "stale": false
+    }
+  ],
+  "outputs": [
+    {
+      "id": "op-1",
+      "narrative": "서술(합성)",
+      "indicators": [
+        {
+          "id": "ind-op-1.1",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": [
+        "검증수단(합성)"
+      ],
+      "assumptions": [
+        "가정(합성)"
+      ],
+      "from_activities": [
+        "act-1",
+        "act-2",
+        "act-3"
+      ],
+      "stale": false
+    },
+    {
+      "id": "op-2",
+      "narrative": "서술(합성)",
+      "indicators": [
+        {
+          "id": "ind-op-2.1",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": [
+        "검증수단(합성)"
+      ],
+      "assumptions": [
+        "가정(합성)"
+      ],
+      "from_activities": [
+        "act-4",
+        "act-5"
+      ],
+      "stale": false
+    },
+    {
+      "id": "op-3",
+      "narrative": "서술(합성)",
+      "indicators": [
+        {
+          "id": "ind-op-3.1",
+          "name": "지표명(합성)",
+          "definition": "정의(합성)",
+          "baseline": 0,
+          "target": "추후 확정",
+          "target_rationale": "추후 확정",
+          "mov": "검증수단(합성)",
+          "data_source": "데이터출처(합성)",
+          "timing": "(합성)",
+          "collector": "수집주체(합성)",
+          "disaggregation": null,
+          "is_proxy": false
+        }
+      ],
+      "mov": [
+        "검증수단(합성)"
+      ],
+      "assumptions": [],
+      "from_activities": [
+        "act-6",
+        "act-7"
+      ],
+      "stale": false
+    }
+  ],
+  "activities": [
+    {
+      "id": "act-1",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-2",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-3",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-4",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-5",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-6",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    },
+    {
+      "id": "act-7",
+      "text": "활동(합성)",
+      "sub": [],
+      "stale": false
+    }
+  ],
+  "inputs": {
+    "koica": {
+      "budget": "예산(합성)",
+      "duration": "기간(합성)",
+      "personnel": "인력(합성)"
+    },
+    "recipient": {
+      "contribution": "분담재원(합성)",
+      "other_resources": "기타자원(합성)"
+    },
+    "pre_conditions": [
+      "선행조건(합성)",
+      "선행조건(합성)",
+      "선행조건(합성)",
+      "선행조건(합성)"
+    ]
+  }
+}
