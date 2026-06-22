@@ -10,9 +10,9 @@
 
 ---
 
-## 설치 (Claude Code)
+## 설치
 
-### 방법 1 — 플러그인 마켓플레이스 (권장, 자동 업데이트)
+### 방법 1 — Claude Code 플러그인 마켓플레이스 (권장, 자동 업데이트)
 Claude Code 안에서:
 ```
 /plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
@@ -32,10 +32,26 @@ ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/sk
 업데이트는 `git pull`. 해제: `rm ~/.claude/skills/theory-of-change-agent` (원본 안전).
 
 ### 방법 3 — Claude 데스크톱 / claude.ai (Skills 업로드)
-`skills/theory-of-change-agent/`를 zip으로 묶어 Settings → Skills 에 업로드.
-자세히는 [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
-> ⚠️ 앱에 업로드한 스킬은 **자동 업데이트되지 않는다** — 변경 시 새 zip 재업로드 필요.
-> 자동 업데이트를 원하면 **방법 1(Claude Code 플러그인)** 을 쓴다.
+Claude Code가 아닌 **데스크톱 앱·브라우저(claude.ai)**에서 쓰려면 스킬을 zip으로 업로드한다.
+
+1. **전제** — 유료 플랜(Pro / Max / Team / Enterprise) + **코드 실행(code execution) 기능 ON**.
+   (게이트가 샌드박스에서 `python3`로 동작 — jq 불필요.)
+2. **zip 만들기** — 레포 루트에서:
+   ```bash
+   cd skills
+   zip -r theory-of-change-agent.zip theory-of-change-agent \
+     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
+   ```
+3. **업로드** — 데스크톱/claude.ai → **Settings → Capabilities → Skills → Upload** →
+   `theory-of-change-agent.zip` 선택 → 목록에서 **Enable**.
+   (메뉴 명칭은 앱 버전에 따라 다를 수 있음 — `Settings` 안의 *Skills / Capabilities* 항목을 찾는다.)
+4. **사용** — 채팅에 `변화이론 에이전트로 KOICA PDM 만들어줘` 처럼 입력 → 산출물(`pdm.md`,
+   `monitoring.md`)을 채팅의 **다운로드 링크**로 받는다. 선택지 질문은 앱의 탭 선택 UI로 뜬다.
+
+> ⚠️ 앱에 업로드한 스킬은 **자동 업데이트되지 않는다** — 스킬이 바뀌면 새 zip을 다시 업로드해야 한다.
+> 자동 업데이트(omc/gstack식)를 원하면 **방법 1(Claude Code 플러그인)**.
+
+전체 가이드: [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
 
 ### 요구사항
 - **Claude Code** (CLI / 데스크탑 / IDE 통합 모두 가능)
