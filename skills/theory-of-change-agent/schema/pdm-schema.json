@@ -99,7 +99,8 @@
     },
     "inputs": {
       "type": "object",
-      "required": ["koica", "recipient"],
+      "required": ["koica"],
+      "description": "투입물. ODA/intl-dev construct (KOICA 사업은 전체 예산 기반). For biz-dev/csr-esg, keep minimal and omit the recipient/수원기관 block (koica-rules.md §11.1).",
       "properties": {
         "koica": {
           "type": "object",
@@ -111,6 +112,7 @@
         },
         "recipient": {
           "type": "object",
+          "description": "수원기관 분담재원/기타자원. ODA/intl-dev only — OMIT for biz-dev/csr-esg use-cases (the target is the end beneficiary, not a recipient institution).",
           "properties": {
             "contribution": { "type": ["string", "null"] },
             "other_resources": { "type": ["string", "null"] }

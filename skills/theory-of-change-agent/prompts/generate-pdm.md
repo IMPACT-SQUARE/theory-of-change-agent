@@ -26,8 +26,12 @@ conforms to `schema/pdm-schema.json` and the rules in `rules/koica-rules.md`. Us
     post-finalization field survey — koica-rules.md §4.8). Only set a concrete value if the user
     explicitly volunteered one. **Never invent baseline/target numbers.**
 - `inputs`: koica {budget, duration, personnel}, recipient {contribution, other_resources}, pre_conditions.
-- `meta`: project_name, version "1.0", created_at (today), lang, mode, gate_mode, headline_indicator,
-  sdgs_koica_indicator.
+  **Use-case conditional (koica-rules.md §11.1):** `inputs`/수원기관 are ODA constructs. For
+  `meta.use_case = intl-dev`, fill them fully. For `biz-dev`/`csr-esg`, **OMIT the `recipient` block**
+  (수원기관 doesn't apply — the target is the end beneficiary, not a recipient institution) and keep
+  `inputs.koica` minimal (the venture's own resources/period); do not fabricate a 수원기관.
+- `meta`: project_name, version "1.0", created_at (today), lang, **use_case**, mode, gate_mode,
+  headline_indicator, sdgs_koica_indicator.
 
 ## Draft mode (Mode C / gate_mode DRAFT)
 When invoked for a **draft-first** generation (the user answered only the one scoping question), produce a

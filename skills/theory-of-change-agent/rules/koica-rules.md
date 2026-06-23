@@ -456,8 +456,10 @@ differ per `meta.use_case` (SKILL.md Phase 1 step 0).
 ### 11.1 ODA-form requirements are use-case-specific
 - **`inputs` (투입물) and the recipient/수원기관 column are ODA/`intl-dev` constructs** [§3.1, p.19–20].
   KOICA 사업은 전체 예산 기반이라 투입물·수원기관이 핵심이지만, 창업·사회공헌 모델은 인풋 규모가 자유롭고
-  대상이 기관이 아니라 최종 수혜자다. For `biz-dev`/`csr-esg`, do **not** force a 수원기관 row and treat
-  `inputs` as optional. The variable, behavioral logic (활동 → 산출물 → 성과) is what matters there.
+  대상이 기관이 아니라 최종 수혜자다. For `biz-dev`/`csr-esg`, **OMIT the `recipient`/수원기관 block**
+  and keep `inputs` minimal (the venture's own resources/period); do not force a 수원기관 row. The
+  variable, behavioral logic (활동 → 산출물 → 성과) is what matters there. (`schema/pdm-schema.json` makes
+  `inputs.recipient` optional accordingly; `inputs` itself stays present for shape validity.)
 - C-rules unaffected: the deterministic gate (C01–C08) never inspects `inputs`/recipient, so relaxing
   them does not change benchmark behavior.
 
