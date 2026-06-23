@@ -85,6 +85,19 @@ theory-of-change-agent-plugin/            # git repo (GitHub 권장)
 /plugin install theory-of-change-agent@<marketplace-name>
 ```
 
+## 다른 AI 플랫폼에서 쓰기 (이식성)
+이 스킬의 **내용물은 플랫폼 중립적**이다. 일반 마크다운(SKILL.md + 프롬프트) + 의존성 없는 파이썬 검증기
+(`rules/validate-critical.py`, jq 불필요) + JSON 스키마뿐이라, 특정 모델에 묶이지 않는다.
+
+- **선택지 질문 도구**는 이름이 아니라 역할로 호출한다 — Claude Code는 `AskUserQuestion`, Claude 앱은
+  `ask_user_input_v0`, 다른 환경은 또 다른 이름일 수 있다(SKILL.md Guardrails 참고). Claude 전용 의존성은
+  런타임 경로에 없다.
+- **Claude Code**: 플러그인 마켓플레이스(위 "배포") — 자동 업데이트.
+- **Claude 데스크톱/웹**: zip 업로드(`INSTALL-desktop.md`).
+- **Gemini CLI / Codex 등**: 마크다운+파이썬이라 이식 가능. 단, 패키징(확장/스킬 등록) 방식은 플랫폼마다
+  달라 약간의 변환이 필요할 수 있다. **Gemini 실제 동작 테스트는 진행 예정(미검증)** — 검증되면 여기에 경로를
+  추가한다.
+
 ## 범위 / 한계 (MVP)
 - 포함: PDM 매트릭스 + 모니터링 매트릭스, 2단 자가검증, 3건 벤치마크.
 - 제외(후속): `.xlsx` 직접 생성, 연간 성과점검표, 웹 프론트(orangeimpact builder 스타일), 다국어.
