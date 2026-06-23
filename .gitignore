@@ -23,3 +23,8 @@ docs/*_PDM.pdf
 /STATUS-*.md
 /산출물.md
 .omc/
+
+# Meeting transcripts & minutes (internal only — never publish)
+meetings/
+/New note*.txt
+/*회의록*.md
