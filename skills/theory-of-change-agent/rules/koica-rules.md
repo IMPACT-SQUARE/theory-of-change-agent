@@ -437,3 +437,46 @@ while a target is deferred.
    prose. These are render/style changes only — no Critical/Advisory rule logic changes. Affected:
    `prompts/render-pdm-md.md`, `prompts/render-monitoring-md.md`, `prompts/interview-a-concept.md`,
    `prompts/generate-pdm.md`.
+
+---
+
+## 11. Use-cases & what is PLANNED (2026-06-23 meeting)
+
+변화이론 에이전트 is broader than KOICA PDM. The results-chain engine (problem → activities → outputs →
+outcomes → impact, wired by `from_*`) is shared; only the **end-view** and which structures are required
+differ per `meta.use_case` (SKILL.md Phase 1 step 0).
+
+| use_case | who | end-view | PDM-form requirements |
+|---|---|---|---|
+| `intl-dev` | 국제개발 / KOICA 사업 | PDM 매트릭스 (`pdm.md`) | full (this file applies in full) |
+| `biz-dev` | 소셜벤처·사회공헌·비영리·창업 | ToC 뷰 (`toc.md`, node diagram) | relaxed (no 수원기관, inputs optional — §4.1, §11.1) |
+| `csr-esg` | 기업 CSR/ESG | ToC 뷰 (`toc.md`) | relaxed |
+| `invest-screen` | 투심 / 임팩트 투자심사 | (planned) prose opinion | n/a |
+
+### 11.1 ODA-form requirements are use-case-specific
+- **`inputs` (투입물) and the recipient/수원기관 column are ODA/`intl-dev` constructs** [§3.1, p.19–20].
+  KOICA 사업은 전체 예산 기반이라 투입물·수원기관이 핵심이지만, 창업·사회공헌 모델은 인풋 규모가 자유롭고
+  대상이 기관이 아니라 최종 수혜자다. For `biz-dev`/`csr-esg`, do **not** force a 수원기관 row and treat
+  `inputs` as optional. The variable, behavioral logic (활동 → 산출물 → 성과) is what matters there.
+- C-rules unaffected: the deterministic gate (C01–C08) never inspects `inputs`/recipient, so relaxing
+  them does not change benchmark behavior.
+
+### 11.2 PLANNED — deferred until 임팩트스퀘어 example cases arrive (do NOT block on these)
+These were prioritized in the 2026-06-23 meeting but wait on 세라 님's example material:
+1. **Social-problem definition sub-agent (심화).** A dedicated sub-stage that elicits and *corrects* the
+   social problem ("that is not a social problem; it should be defined as …"), grounded in 임팩트스퀘어's
+   own definition manual. The social problem must connect to the outcome/impact. → extension point in the
+   ToC interview.
+2. **Outcome indicator cross-verification (2-way).** (a) logical check using a large input/activity/
+   output/outcome example set, and (b) "this indicator is most similar to IRIS+ indicator X". Emit as a
+   **separate verification section/comment**, not a blocking gate. → extension point in Phase 3 / render.
+3. **Case-based verification.** Compare generated indicators/outcomes against 임팩트스퀘어's real measured
+   cases.
+
+> Until the example material lands, the harness leaves clean extension points (this section + the ToC
+> render's "검증" placeholder) and does not fabricate IRIS+ matches or a social-problem rubric.
+
+### 11.3 Backlog (separate workstream, see meeting minutes)
+- **투심 모드** — prose impact-review of an IR/business model (different output shape).
+- **PDM ↔ 예산표 연결** — the biggest PDM pain: budget line-items must map to inputs/activities and stay
+  in sync. Deferred; an example budget table will be provided.

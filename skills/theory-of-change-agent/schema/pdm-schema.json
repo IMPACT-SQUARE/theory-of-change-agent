@@ -15,6 +15,7 @@
         "created_at": { "type": "string", "format": "date" },
         "approved_at": { "type": ["string", "null"] },
         "lang": { "type": "string", "enum": ["ko", "en"] },
+        "use_case": { "type": "string", "enum": ["intl-dev", "biz-dev", "csr-esg", "invest-screen"], "description": "What the user is doing (asked first, before mode). intl-dev = 국제개발/KOICA PDM (PDM matrix view); biz-dev = 사업개발 소셜벤처·사회공헌·비영리 (Theory-of-Change view); csr-esg = CSR/ESG project (ToC view); invest-screen = 투심 임팩트 투자심사 (planned, not yet implemented). The results-chain logic is identical across use-cases; only the rendered end-view and which structures are required differ." },
         "mode": { "type": "string", "enum": ["A", "B", "C"], "description": "Entry/interaction mode: A = concept-first interview, B = inputs-held, C = draft-first (table-first, one question then a full draft)" },
         "gate_mode": { "type": "string", "enum": ["GATE", "AUDIT", "DRAFT"], "description": "GATE = new PDM (blocking); AUDIT = existing/approved PDM (report-only); DRAFT = draft-first work-in-progress (report-only until the user finalizes, which flips it to GATE)" },
         "headline_indicator": { "type": "string", "description": "대표 수혜자 지표/목표치 (top-line)" },

@@ -10,20 +10,22 @@ description: |
   "project design matrix", "KOICA", "theory of change", "변화이론", "results chain", "로직 모델",
   "logframe", "logical framework", "impact harness", "임팩트 하네스" (legacy name), or wants to
   draft/audit a development-cooperation results matrix.
-argument-hint: "[--concept <brief> | --inputs <file> | --draft] [--lang en|ko] [--advisory-threshold 0.8] [--audit]"
+argument-hint: "[--use-case intl-dev|biz-dev|csr-esg] [--concept <brief> | --inputs <file> | --draft] [--lang en|ko] [--advisory-threshold 0.8] [--audit]"
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
 # 변화이론 에이전트 (Theory of Change Agent) — KOICA PDM 생성
 
 <Purpose>
-This skill is the **KOICA PDM (Project Design Matrix) generation** capability of the **변화이론 에이전트
-(Theory of Change Agent)**. It turns a vague project idea (or a partial draft) into a
-**KOICA-guideline-compliant PDM** through a one-question-at-a-time interview, then renders it as three
-artifacts. It encodes the KOICA PDM writing rules (`rules/koica-rules.md`) and gates the result on a
-deterministic + LLM-judged self-check (`rules/checklist.json`, `rules/validate-critical.sh`) — the same
-checklist that scores the benchmark. **Always ask the user which of the three approaches to use before
-starting** (Phase 1) — never pick one unilaterally.
+**변화이론 에이전트 (Theory of Change Agent)** turns a vague project idea (or a partial draft) into a
+guideline-aligned results chain through a one-question-at-a-time interview, then renders it. It serves
+several **use-cases** that share one underlying results-chain engine and differ only in the rendered
+end-view (Phase 1 step 0): **국제개발/KOICA PDM** renders a **KOICA-compliant PDM matrix** (the most
+mature path); **사업개발(소셜벤처·사회공헌·비영리)** and **CSR/ESG** render a **Theory-of-Change view**
+(node diagram); **투심(임팩트 투자심사)** is planned. The KOICA PDM path encodes the writing rules
+(`rules/koica-rules.md`) and gates on a deterministic + LLM-judged self-check (`rules/checklist.json`,
+`rules/validate-critical.sh`), the same checklist that scores the benchmark. **Always ask the use-case
+first, then the interaction mode** (Phase 1); never pick either unilaterally.
 </Purpose>
 
 <Output_Contract>
@@ -58,10 +60,23 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 
 ## Phase 0 — Load context
 1. Read `rules/koica-rules.md`, `rules/checklist.json`, and `schema/pdm-schema.json` into context.
-2. Parse `{{ARGUMENTS}}`: `--concept <brief>`, `--inputs <file>`, `--lang en|ko`,
-   `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
+2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg>`, `--concept <brief>`, `--inputs <file>`,
+   `--lang en|ko`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
 
-## Phase 1 — Initialize & mode selection
+## Phase 1 — Use-case & mode selection
+0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
+   the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
+   structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
+   environment's interactive choice tool (4 options). Set `meta.use_case`.
+     - **국제개발 / KOICA PDM (`intl-dev`)** — ODA·KOICA 사업의 PDM 설계. End-view = **PDM 매트릭스** (`pdm.md`).
+     - **사업개발(`biz-dev`)** — 소셜벤처·사회공헌·비영리·창업의 임팩트 모델 정리 / 아이디어. End-view =
+       **변화이론(ToC) 뷰** (`toc.md`, node diagram). PDM 양식(수원기관 등)은 강제하지 않는다.
+     - **CSR / ESG (`csr-esg`)** — 기업 사회공헌/ESG 프로젝트. End-view = **ToC 뷰** (`toc.md`).
+     - **투심 / 임팩트 투자심사 (`invest-screen`)** — **아직 준비 중**(meeting backlog). Politely say it is
+       planned, and offer one of the other three (or produce a ToC view as a stand-in). Do **not** block.
+   **End-view routing (applied in Phase 3):** `intl-dev` → PDM matrix; `biz-dev`/`csr-esg` → ToC view;
+   `invest-screen` → planned. The PDM gate/rules below apply in full to `intl-dev`; for `biz-dev`/`csr-esg`
+   the same results-chain is built but PDM-form-specific requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
 1. Determine **entry/interaction mode** — **ALWAYS ask the user which of the three approaches to use
    before doing anything else; never pick one unilaterally.** A `--concept`/`--inputs`/`--draft` flag
    counts as the user having already answered (use it directly and skip the question). Otherwise you MUST
@@ -82,7 +97,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 4. Initialize interview state (keep in working memory / scratch; not written to disk until generation):
    ```json
    {
-     "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
+     "use_case": "intl-dev|biz-dev|csr-esg|invest-screen", "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
      "results_chain": { "problem_analysis": null, "goal_analysis": null,
        "impact": null, "outcomes": [], "outputs": [], "activities": [], "inputs": null },
      "assumptions": {}, "interview_rounds": []
