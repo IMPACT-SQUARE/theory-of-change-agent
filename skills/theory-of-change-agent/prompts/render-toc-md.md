@@ -52,7 +52,25 @@ their narratives. For 성과/산출물, show indicators by name only (NO baselin
 the monitoring view and default to `추후 확정`). Use the dotted/dash display numbering from
 `render-pdm-md.md` (output `j.k`, output indicator `j.k.m`, outcome indicator `j-m`).
 
-## 3. 검증 (Verification) — placeholder (planned)
+## 3. 측정 준비 — 직접 수집해야 할 데이터 (Measurement readiness)
+The most useful insight for a `biz-dev`/`csr-esg` user is: *"to measure your impact later, you must
+collect THESE data."* The agent cannot collect these for the user, so make the to-do explicit. Build this
+section **only from existing indicator fields** (`name`, `data_source`, `timing`, `collector`, `baseline`)
+— do not invent indicators.
+
+For every output and outcome indicator, list a row:
+- **지표** (name) · **무엇을/어디서** (data_source) · **언제** (timing) · **누가** (collector).
+- Mark **"직접 트래킹 필요"** when the data is not an operational by-product the team already has — i.e.
+  survey / interview / FGD / assessment / 평가-based, or `collector` is the project team. Mark
+  **"운영데이터(자동 확보)"** when it falls out of normal operations (e.g. 보급/판매 로그, 가입 로그).
+  *(Example: 보급 대수 = 운영데이터; 교육 이수자 수·만족도·역량 평가 = 직접 트래킹 필요.)*
+- Because `baseline` defaults to `추후 확정`, add a reminder: **착수 전(또는 초기)에 기초선(baseline)을
+  측정해 두어야** 종료 시 변화를 입증할 수 있다 (koica-rules §4.6).
+
+Render as a short table or checklist, ordered outcome-first (outcome indicators are the hardest and most
+important to track).
+
+## 4. 검증 (Verification) — placeholder (planned)
 Add a short section noting that **outcome verification is planned** (logical output↔outcome check + IRIS+
 similarity), pending 임팩트스퀘어 example cases (koica-rules §11.2). Do **not** fabricate IRIS+ matches.
 > 예: "이 성과가 진짜 '성과(아웃컴)'인지, 어떤 글로벌 지표(IRIS+)와 가까운지에 대한 검증은 준비 중입니다."
