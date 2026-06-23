@@ -58,6 +58,11 @@ Row-by-row:
   (contribution/other) — and the Important-Assumptions column holds **Pre-conditions (선행조건)** from
   `inputs.pre_conditions`.
 
+## Optional: node-connection diagram
+The connection view (활동 → 산출물 → 성과 → 영향) is useful for the PDM too. You MAY append the Mermaid
+node diagram from `render-toc-md.md` §1 below the matrix as a figure (built from the same `from_*` links).
+It is optional for `pdm.md` and primary for `toc.md`.
+
 ## Fidelity checks (must hold)
 - Impact row literally shows `-` in OVI and MoV.
 - Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column.

@@ -29,14 +29,17 @@ first, then the interaction mode** (Phase 1); never pick either unilaterally.
 </Purpose>
 
 <Output_Contract>
-The skill writes three files to the working directory (default `./out/`, override with `--out`):
+The skill writes files to the working directory (default `./out/`, override with `--out`):
 - **`pdm.json`** — the single source of truth. An ID-linked results-chain DAG conforming to
   `schema/pdm-schema.json`. All other outputs are RENDERED from it.
-- **`pdm.md`** — the PDM matrix (4-row × 4-column KOICA format).
+- **`pdm.md`** — the PDM matrix (4-row × 4-column KOICA format). Primary end-view for `intl-dev`.
+- **`toc.md`** — the Theory-of-Change view (Mermaid node diagram + ToC narrative). Primary end-view for
+  `biz-dev`/`csr-esg`; optional for `intl-dev`.
 - **`monitoring.md`** — the monitoring matrix (indicator definition / baseline / target / rationale /
-  source / timing / collector / disaggregation).
+  source / timing / collector / disaggregation). Produced for all use-cases.
 
-Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx`, any web UI.
+Which files are written depends on `meta.use_case` (see Phase 3 step 8). Out of scope (do NOT produce):
+the annual performance-check sheet, direct `.xlsx`, any web UI.
 </Output_Contract>
 
 <Reference_Files>
@@ -165,10 +168,16 @@ Hard interview rules (mirror `koica-rules.md`):
    as a list — block nothing. AUDIT → "deviation list" (already-approved PDMs that predate/deviate from
    the 2017 guideline). DRAFT → "draft gap checklist" (what to confirm/fill before finalizing). For DRAFT,
    skip A05 wherever `target` is `추후 확정` (koica-rules.md §4.8).
-8. **Render `pdm.md`** via `prompts/render-pdm-md.md` (KOICA 4×4: Impact row shows `-` in OVI/MoV;
-   Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column).
-9. **Render `monitoring.md`** via `prompts/render-monitoring-md.md`.
-10. Write all three files to the out dir.
+8. **Render the end-view per `meta.use_case`** (Phase 1 step 0 routing):
+   - `intl-dev` → **`pdm.md`** via `prompts/render-pdm-md.md` (KOICA 4×4: Impact row shows `-` in OVI/MoV;
+     Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column). The
+     ToC node diagram (`prompts/render-toc-md.md` §1) MAY be appended as an optional figure.
+   - `biz-dev` / `csr-esg` → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
+     diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). `pdm.md` MAY also
+     be rendered if the user also wants the PDM form (the underlying logic is identical).
+9. **Render `monitoring.md`** via `prompts/render-monitoring-md.md` (indicator measurement plan; applies to
+   all use-cases).
+10. Write the produced files to the out dir.
 11. **Display a self-check summary**: Critical (all pass / audit findings) + Advisory (% score), plus any
     nodes still flagged `stale`. For DRAFT, frame it as a **draft checklist** and remind the user they can
     edit any cell (Phase 4) or say **"확정"/"finalize"** to run the full gate (Phase 3b).
