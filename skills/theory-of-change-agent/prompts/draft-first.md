@@ -28,7 +28,7 @@ Call `prompts/generate-pdm.md` in **draft mode**:
 
 ## Step 3 — Render immediately + non-blocking report
 - Render `pdm.md` and `monitoring.md` right away (`render-pdm-md.md`, `render-monitoring-md.md`).
-- Run checks **report-only**: `bash rules/validate-critical.sh --audit OUT/pdm.json` + the LLM checks.
+- Run checks **report-only**: `bash rules/validate-critical.sh --audit OUT/details/pdm.json` + the LLM checks.
   Present results as a **draft checklist** ("아직 비어있거나 보완이 필요한 부분"), **blocking nothing**.
 - Tell the user explicitly: *this is a draft — edit any cell, and say "확정"/"finalize" when ready to run
   the full quality gate.*

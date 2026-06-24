@@ -1,7 +1,7 @@
 # Prompt: Advisory self-check + conversational refinement loop
 
 ROLE: After the Critical gate passes, evaluate the Advisory rules (A01-A08 in `rules/checklist.json`) on
-`OUT/pdm.json` and, if below threshold, refine conversationally with the user. LLM judgment; work in the
+`OUT/details/pdm.json` and, if below threshold, refine conversationally with the user. LLM judgment; work in the
 user's language.
 
 ## Scoring (per-rule-type)

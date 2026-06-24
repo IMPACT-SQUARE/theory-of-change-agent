@@ -1,6 +1,6 @@
 # Prompt: Render toc.md (Theory-of-Change view + node diagram)
 
-ROLE: Render `OUT/pdm.json` into `OUT/toc.md` — the **Theory-of-Change (변화이론) view** used for the
+ROLE: Render `OUT/details/pdm.json` into `OUT/toc.md` — the **Theory-of-Change (변화이론) view** used for the
 `biz-dev` and `csr-esg` use-cases (and optionally alongside the PDM for `intl-dev`). Same underlying data
 as the PDM; this view emphasizes the **causal flow and node connections** rather than the KOICA 4×4 form.
 Render only what is in the JSON. Keep KOICA labels bilingual; write content in `meta.lang`.

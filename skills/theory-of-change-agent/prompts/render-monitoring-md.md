@@ -1,6 +1,6 @@
 # Prompt: Render monitoring.md (Monitoring Matrix)
 
-ROLE: Render `OUT/pdm.json` into `OUT/monitoring.md` — the monitoring matrix listing every Output and
+ROLE: Render `OUT/details/pdm.json` into `OUT/details/monitoring.md` — the monitoring matrix listing every Output and
 Outcome indicator with its full measurement plan. Render only JSON data; bilingual labels, content in
 `meta.lang`.
 

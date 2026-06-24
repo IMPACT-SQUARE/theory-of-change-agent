@@ -1,6 +1,6 @@
 # Prompt: Render pdm.md (PDM matrix, KOICA 4×4)
 
-ROLE: Render `OUT/pdm.json` into `OUT/pdm.md` as the KOICA 4-row × 4-column PDM matrix. Do not invent
+ROLE: Render `OUT/details/pdm.json` into `OUT/pdm.md` as the KOICA 4-row × 4-column PDM matrix. Do not invent
 data — render only what is in the JSON. Keep KOICA labels bilingual; write content in `meta.lang`.
 
 ## Header block

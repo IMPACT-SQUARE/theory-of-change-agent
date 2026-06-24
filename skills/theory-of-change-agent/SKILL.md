@@ -29,17 +29,22 @@ first, then the interaction mode** (Phase 1); never pick either unilaterally.
 </Purpose>
 
 <Output_Contract>
-The skill writes files to the working directory (default `./out/`, override with `--out`):
-- **`pdm.json`** — the single source of truth. An ID-linked results-chain DAG conforming to
-  `schema/pdm-schema.json`. All other outputs are RENDERED from it.
-- **`pdm.md`** — the PDM matrix (4-row × 4-column KOICA format). Primary end-view for `intl-dev`.
-- **`toc.md`** — the Theory-of-Change view (Mermaid node diagram + ToC narrative). Primary end-view for
-  `biz-dev`/`csr-esg`; optional for `intl-dev`.
-- **`monitoring.md`** — the monitoring matrix (indicator definition / baseline / target / rationale /
-  source / timing / collector / disaggregation). Produced for all use-cases.
+The skill writes to the working directory (default `./out/`, override with `--out`). **The human-readable
+primary view sits at the top of `out/`; the source JSON and the monitoring detail live in `out/details/`**
+— so opening `out/` lands on the main view, not raw JSON:
+```
+out/
+├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For biz-dev/csr-esg this is toc.md instead.
+└── details/
+    ├── pdm.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
+    └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
+```
+- **Primary end-view at `out/` root** (written LAST): `pdm.md` for `intl-dev`, `toc.md` for
+  `biz-dev`/`csr-esg`. A non-primary view (e.g. `toc.md` on an intl-dev run) also goes in `out/details/`.
+- **`out/details/pdm.json`** conforms to `schema/pdm-schema.json`; all views are RENDERED from it.
+- Create `out/details/` as needed. Which files are written depends on `meta.use_case` (Phase 3 steps 8-9).
 
-Which files are written depends on `meta.use_case` (see Phase 3 steps 8-9). Out of scope (do NOT produce):
-the annual performance-check sheet, direct `.xlsx`, any web UI.
+Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx`, any web UI.
 </Output_Contract>
 
 <Reference_Files>
@@ -150,7 +155,7 @@ Hard interview rules (mirror `koica-rules.md`):
    references, and write narrative fields in the output language.
 2. **Shape-validate + recover (lightweight, pure-Python — no jq, no heavy schema engine at runtime):**
    confirm `pdm.json` is well-formed JSON and has the required shape:
-   `Bash: bash rules/validate-critical.sh --shape OUT/pdm.json` (exit 0 = OK; exit 1 = malformed/missing
+   `Bash: bash rules/validate-critical.sh --shape OUT/details/pdm.json` (exit 0 = OK; exit 1 = malformed/missing
    keys; exit 2 = invalid JSON). If it fails, **regenerate ONCE** with the error appended to the prompt;
    if it still fails, surface to the user and stop. (`schema/pdm-schema.json` remains the written data
    contract that `generate-pdm.md` follows; full JSON-Schema validation is a build-time check, not a
@@ -161,7 +166,7 @@ Hard interview rules (mirror `koica-rules.md`):
      **draft checklist** and offer **Finalize** (Phase 3b). Do not block.
    - **GATE** → steps 4-6.
 4. **Deterministic Critical check (C01-C05, C08):**
-   `Bash: bash rules/validate-critical.sh OUT/pdm.json`. If exit ≠ 0: show the FAIL lines, return to a
+   `Bash: bash rules/validate-critical.sh OUT/details/pdm.json`. If exit ≠ 0: show the FAIL lines, return to a
    **targeted** interview to fix exactly those rules, regenerate, and re-run. Loop until it passes.
 5. **LLM Critical check (C06 noun-form):** judge each output narrative against the C06 rubric. If any
    fails, return to interview to fix; do not proceed until 100% Critical pass.
@@ -172,12 +177,12 @@ Hard interview rules (mirror `koica-rules.md`):
    regressions), **max 3 rounds** (`--max-advisory-rounds`). Exit on: threshold met, max rounds reached,
    or user says "accept as-is". Report the final score + remaining failures.
 7. **Report-only check (AUDIT or DRAFT mode):** run ALL Critical + Advisory checks via
-   `bash rules/validate-critical.sh --audit OUT/pdm.json` plus the LLM checks, and present every finding
+   `bash rules/validate-critical.sh --audit OUT/details/pdm.json` plus the LLM checks, and present every finding
    as a list — block nothing. AUDIT → "deviation list" (already-approved PDMs that predate/deviate from
    the 2017 guideline). DRAFT → "draft gap checklist" (what to confirm/fill before finalizing). For DRAFT,
    skip A05 wherever `target` is `추후 확정` (koica-rules.md §4.8).
-8. **Render + write `monitoring.md`** via `prompts/render-monitoring-md.md` (indicator measurement plan;
-   all use-cases).
+8. **Render + write `out/details/monitoring.md`** via `prompts/render-monitoring-md.md` (indicator
+   measurement plan; all use-cases).
 9. **Render + write the PRIMARY end-view LAST** (Phase 1 step 0 routing):
    - `intl-dev` → **`pdm.md`** via `prompts/render-pdm-md.md` (KOICA 4×4: Impact row shows `-` in OVI/MoV;
      Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column). The
@@ -185,11 +190,11 @@ Hard interview rules (mirror `koica-rules.md`):
    - `biz-dev` / `csr-esg` → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
      diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). For `intl-dev`
      you MAY also write `toc.md`, but write `pdm.md` **last**.
-   > **Write order matters — end on the human-readable view.** Sequence: `pdm.json` (already written in
-   > step 1, the source of truth) → `monitoring.md` → the primary view (`pdm.md`/`toc.md`) **last**.
-   > Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written / last-touched file**, so
-   > ending on the primary view keeps that on screen instead of the raw `pdm.json`. Do **not** re-save
-   > `pdm.json` after the renders.
+   > **Write order matters — end on the human-readable view.** Sequence: `out/details/pdm.json` (written
+   > in step 1, the source of truth) → `out/details/monitoring.md` → the primary view (`out/pdm.md` or
+   > `out/toc.md`) **last**. Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written /
+   > last-touched file**, so keeping the JSON in `out/details/` AND writing the primary view last lands the
+   > user on the readable view, not the raw JSON. Do **not** re-save `out/details/pdm.json` after renders.
 10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
     closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. For DRAFT,
@@ -200,7 +205,7 @@ Hard interview rules (mirror `koica-rules.md`):
 Triggered only when a **Mode C / DRAFT** PDM's author says "확정"/"finalize":
 1. Set `meta.gate_mode = "GATE"`.
 2. Confirm or clear remaining `stale` flags with the user (regenerate any they still want changed).
-3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/pdm.json` (NO `--audit` → blocking), then
+3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/details/pdm.json` (NO `--audit` → blocking), then
    the C06 LLM check, then the Advisory refinement loop (steps 4-6 above). Loop until Critical passes.
 4. Baseline/target may legitimately remain `추후 확정` at finalize — that does NOT block (A05 is N/A while
    deferred; C04/MoV still enforced). Re-render and show the final self-check summary.
@@ -254,7 +259,7 @@ On any edit to node X:
 - **Connectivity is proactive, never silent.** Treat the `from_*` graph as the product's core. On any
   structural edit/add/remove, state the impact on connected nodes and nudge the fix BEFORE applying
   (Phase 4). You can compute the breakage deterministically: `bash rules/validate-critical.sh --json
-  OUT/pdm.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
+  OUT/details/pdm.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
 - **Interactive questions — use the environment's choice tool, whatever its name.** A tab/click
   single-select question tool exists in every supported environment, but under **different names**:
   **`AskUserQuestion`** in Claude Code, **`ask_user_input_v0`** in the Claude web/desktop apps (other
