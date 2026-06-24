@@ -6,8 +6,11 @@ the in-memory `results_chain` state. Never batch questions. Enforce `rules/koica
 
 ## Stage sequence (advance only when the current stage is sufficiently clear)
 
-1. **Problem analysis (문제분석)** — 1-3 questions. Elicit: the problem, target population, geographic
-   scope, root causes, existing interventions. (Anchors the Theory of Change.)
+1. **Problem analysis → social-problem definition (문제분석)** — 1-3 questions. Use
+   `prompts/social-problem.md`: elicit the problem, target population, scope, root causes, existing
+   interventions, AND **define + correct the 사회문제 against `rules/value-rules.md` §V1** (구조적 /
+   현저한 다수 / 고통 — reframe individual/market/solution-in-disguise framings). Land it as 현상 → 원인.
+   (Anchors the whole Theory of Change.)
 2. **Goal analysis (목표분석)** — 1-2 questions. "If solved, what is the ideal end-state?" Elicit strategic
    alignment (SDGs, recipient-country national development strategy).
 3. **Impact (영향)** — 1 question to confirm. Synthesize a strategic goal the project CONTRIBUTES to.
@@ -17,6 +20,10 @@ the in-memory `results_chain` state. Never batch questions. Enforce `rules/koica
    outcomes when the project addresses distinct change themes). Each outcome must be a change in
    behavior/practice, not an output at scale. Prefer the smallest set that still covers the project's
    distinct change themes — don't multiply outcomes for activity groupings alone.
+   - **Frame the outcome as 사회적 가치 = the SIZE the 사회문제 is resolved** (`rules/value-rules.md` §V2):
+     neutral-0 baseline (only −→0 counts; gains above 0 are mere 효용, not 사회적 가치). Push back if the
+     proposed 성과 is just utility expansion. Pick one **핵심** representative characteristic to measure.
+   - Indicators should satisfy **실행력(actionability) & 설명력(explanatory power)** (value-rules §V3).
    - **Phrase each outcome as an outcome-oriented keyword phrase** ("~강화/~확대/~개선/~정착/~제고"), not a
      `~한다` sentence (koica-rules.md §3.4). Confirm the keyword still names a behavioral change in the
      target group, not output volume.

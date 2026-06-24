@@ -19,9 +19,9 @@ Mapping (each `pdm.json` id → a Mermaid-safe node id by replacing non-alphanum
 `op-1` → `op_1`, `act-1.1` → `act_1_1`):
 - One node per **활동(activity)** (include sub-activities), **산출물(output)**, **성과(outcome)**, and the
   **영향(impact)**. Node label = the node's narrative (display number prefix optional, e.g. `1.1 …`).
-- A leading **사회문제(Social problem)** node from `results_chain.problem_analysis` (or the impact's
-  framing if no explicit problem) feeding the activities. *(The deeper social-problem sub-agent is
-  planned — koica-rules §11.2; for now use what the interview captured.)*
+- A leading **사회문제(Social problem)** node from `results_chain.problem_analysis` (현상 → 원인, defined
+  and corrected per `rules/value-rules.md` §V1) feeding the activities. The social problem anchors the
+  chain: its **해결 크기 = the Outcome (사회적 가치, §V2)**.
 - **투입물(Inputs)** node only when `meta.use_case = intl-dev` and `inputs` is present (ODA-specific —
   koica-rules §11.1). Omit for `biz-dev`/`csr-esg`.
 - **Edges (follow the DAG, child→parent in data becomes upstream→downstream in the flow):**

@@ -45,6 +45,8 @@ the annual performance-check sheet, direct `.xlsx`, any web UI.
 <Reference_Files>
 Load these (they live alongside this SKILL.md) and treat them as authoritative:
 - `rules/koica-rules.md` — the KOICA PDM writing rules (with guideline page citations).
+- `rules/value-rules.md` — 임팩트스퀘어 social-value methodology (사회문제 ①②③ / 사회적 가치 = 해결 크기,
+  중립0 / 지표 실행력·설명력). Used to define & correct the social problem and outcome.
 - `rules/checklist.json` — Critical (C01-C08) + Advisory (A01-A08) self-check definitions + thresholds.
 - `rules/validate-critical.sh` — deterministic validator for the structural Critical rules.
 - `schema/pdm-schema.json` — JSON Schema for `pdm.json`.
@@ -113,9 +115,12 @@ assumptions → add indicators. **Ask ONE question per turn** (deep-interview st
 update `results_chain` in state. Enforce the per-level rules from `koica-rules.md` §3 AS YOU GO (don't
 collect violations to reject later).
 
-- **Mode A (concept-first):** use `prompts/interview-a-concept.md`. Stages: (1) problem analysis →
-  (2) goal analysis → (3) impact statement [confirm SDGs + national strategy; **no indicators**] →
-  (4) outcome(s) [behavioral change; 1+ allowed] → (5) outputs [3-4, noun-form] → (6) activities [map each to an
+- **Mode A (concept-first):** use `prompts/interview-a-concept.md`. Stages: (1) **social-problem
+  definition + correction** (`prompts/social-problem.md` + `rules/value-rules.md` §V1 — 구조적/다수/고통;
+  reframe individual/market/solution-in-disguise) → (2) goal analysis → (3) impact statement [confirm SDGs
+  + national strategy; **no indicators**] →
+  (4) outcome(s) [사회적 가치 = 사회문제 해결 크기, neutral-0 (value-rules §V2); behavioral change; 1+ allowed] →
+  (5) outputs [3-4, noun-form] → (6) activities [map each to an
   output via `from_activities`; exclude M&E] → (7) inputs [period/budget/recipient resources] →
   (8) assumptions per causal link → (9) indicators for each output & outcome [baseline/target/MoV/source/
   timing/collector/disaggregation; SMART/CREAM; ≥1 gender-disaggregated]. ~12-20 rounds.

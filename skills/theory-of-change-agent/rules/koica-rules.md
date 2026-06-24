@@ -463,20 +463,21 @@ differ per `meta.use_case` (SKILL.md Phase 1 step 0).
 - C-rules unaffected: the deterministic gate (C01–C08) never inspects `inputs`/recipient, so relaxing
   them does not change benchmark behavior.
 
-### 11.2 PLANNED — deferred until 임팩트스퀘어 example cases arrive (do NOT block on these)
-These were prioritized in the 2026-06-23 meeting but wait on 세라 님's example material:
-1. **Social-problem definition sub-agent (심화).** A dedicated sub-stage that elicits and *corrects* the
-   social problem ("that is not a social problem; it should be defined as …"), grounded in 임팩트스퀘어's
-   own definition manual. The social problem must connect to the outcome/impact. → extension point in the
-   ToC interview.
-2. **Outcome indicator cross-verification (2-way).** (a) logical check using a large input/activity/
-   output/outcome example set, and (b) "this indicator is most similar to IRIS+ indicator X". Emit as a
-   **separate verification section/comment**, not a blocking gate. → extension point in Phase 3 / render.
-3. **Case-based verification.** Compare generated indicators/outcomes against 임팩트스퀘어's real measured
-   cases.
+### 11.2 Social-value methodology — IMPLEMENTED (2026-06-24, from 임팩트스퀘어 "Theory")
+The 2026-06-23 meeting deferred these until 임팩트스퀘어's material arrived. It arrived (the "Theory"
+working notes), so the **definition** parts are now implemented in `rules/value-rules.md`:
+1. **Social-problem definition + correction (DONE).** `value-rules.md` §V1 + `prompts/social-problem.md`:
+   a front sub-stage that elicits and **corrects** the 사회문제 against ① 구조적 ② 현저한 다수 ③ 고통, via
+   현상 → 원인. Wired into the Mode-A interview stage 1.
+2. **Outcome = 사회적 가치 definition (DONE).** `value-rules.md` §V2: 사회문제 해결 크기, neutral-0 baseline
+   (only −→0 counts), 핵심 대표 특성. Indicator quality = 실행력·설명력 (§V3). Wired into outcome stage.
 
-> Until the example material lands, the harness leaves clean extension points (this section + the ToC
-> render's "검증" placeholder) and does not fabricate IRIS+ matches or a social-problem rubric.
+**Still PENDING (do NOT fabricate — wait on more material):**
+3. **Outcome cross-verification (2-way).** (a) logical output↔outcome check against a large example set,
+   and (b) "nearest IRIS+ indicator X". The example set was not available yet (세라: ToC often omits/
+   generalizes outputs, so clean examples are hard) and the structure images are for reference only. Emit
+   a "검증 준비 중" note (ToC render §4 / value-rules §V5); do **not** invent IRIS+ matches.
+4. **Case-based verification** against 임팩트스퀘어's real measured cases — pending.
 
 ### 11.3 Backlog (separate workstream, see meeting minutes)
 - **투심 모드** — prose impact-review of an IR/business model (different output shape).
