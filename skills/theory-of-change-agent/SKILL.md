@@ -60,9 +60,20 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 </Reference_Files>
 
 <Language_Policy>
-- **Output language MIRRORS the user's input language**: if the user converses in Korean, every narrative
-  field, indicator, and rendered table is Korean; if English, English. (`--lang` overrides detection.)
-- KOICA structural labels are always kept bilingual in the render (e.g. `요약 (Narrative Summary)`).
+- **Detect the output language FIRST — before asking anything — and LOCK it for the whole session.** Read
+  the user's first substantive message: Korean → `meta.lang = ko`; English → `en`. `--lang` overrides. If
+  genuinely mixed/ambiguous, ask that one language question in both, then lock.
+- **Mirror that language CONSISTENTLY in EVERY user-facing surface**: the use-case / situation / pace
+  questions and their option labels, the progress lines, the connectivity nudges, the social-problem
+  reframes, the summaries, AND every narrative field / indicator / rendered table. Do **not** drift — an
+  English session stays English end-to-end; a Korean session stays Korean. *(This was the bug: detecting
+  language late and copying the Korean example strings verbatim made English sessions go Korean, and vice
+  versa.)*
+- **The Korean strings throughout SKILL.md and the prompts are DEFAULT EXAMPLES for `ko`.** When
+  `meta.lang = en`, translate them — the questions, option labels, the `[질문 N · …]` progress line, the
+  `최종 결과: …` closing line, the `그건 사회문제라기보다…` reframes, etc. They are illustrations, not literals
+  to print regardless of language.
+- KOICA structural labels stay **bilingual** in the render (e.g. `요약 (Narrative Summary)`).
 - **This SKILL.md and every prompt template are written in English** regardless of output language.
 </Language_Policy>
 
@@ -73,7 +84,11 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg>`, `--concept <brief>`, `--inputs <file>`,
    `--lang en|ko`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
 
-## Phase 1 — Use-case & mode selection
+## Phase 1 — Language, use-case & mode selection
+00. **Lock the output language FIRST** (before any question), per `<Language_Policy>`. Detect from the
+    user's first message (or `--lang`), set `meta.lang`, and conduct **everything below** — the use-case /
+    situation / pace questions, their option labels, progress lines, nudges — in that language. The Korean
+    option text shown below is the `ko` example; translate it when `meta.lang = en`.
 0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
    the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
    structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
@@ -112,7 +127,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
      all checks run **report-only**, nothing blocks.
    - **DRAFT** (when `interaction = draft`, including inputs+draft): report-only while the user edits the
      draft; flips to **GATE** at Finalize (Phase 3b). Set `meta.gate_mode = "DRAFT"` until then.
-3. Detect output language from the user's messages (or `--lang`).
+3. (Output language was already locked in step 00 — keep using `meta.lang` for everything from here on.)
 4. Initialize interview state (keep in working memory / scratch; not written to disk until generation):
    ```json
    {
@@ -265,7 +280,9 @@ On any edit to node X:
   fails `validate-critical.sh`.
 - Do NOT auto-overwrite downstream nodes on an edit; regeneration is opt-in.
 - Do NOT loosen Critical rules to make a real/approved PDM pass — use AUDIT mode to report deviations.
-- Keep prompts internal-English; keep output in the user's language.
+- Keep prompts internal-English; keep **all user-facing output in `meta.lang`**, locked at the first
+  message (Phase 1 step 00) and never drifting mid-session. The Korean strings in these prompts are `ko`
+  examples — translate them when `meta.lang = en`. Match the user's language; do not switch on them.
 - One interview question per turn.
 - **Connectivity is proactive, never silent.** Treat the `from_*` graph as the product's core. On any
   structural edit/add/remove, state the impact on connected nodes and nudge the fix BEFORE applying
