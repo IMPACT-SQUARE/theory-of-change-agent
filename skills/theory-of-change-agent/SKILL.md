@@ -191,21 +191,42 @@ Triggered only when a **Mode C / DRAFT** PDM's author says "확정"/"finalize":
 4. Baseline/target may legitimately remain `추후 확정` at finalize — that does NOT block (A05 is N/A while
    deferred; C04/MoV still enforced). Re-render and show the final self-check summary.
 
-## Phase 4 — Edit propagation (post-generation)
-When the user edits a node X after generation:
-1. **Find dependents (reverse lookup):** scan ALL nodes and collect those whose `from_*` arrays contain
-   `X.id`. (`from_*` points child→parent, so dependents are the nodes that *reference* X.) Propagate
-   **transitively** (a newly-stale node's dependents also become stale).
-2. Set `stale: true` on every dependent. (Indicators inherit their parent's staleness — no separate flag.)
-3. Present the stale set: "These depend on what you changed: […]. Regenerate?"
+## Phase 4 — Edit propagation + connectivity nudges (post-generation)
+The node graph (the `from_*` links) **is** the Theory of Change — what makes it a *theory* is that each
+activity connects to an output, each output to an outcome, each outcome to the impact. So whenever the
+user edits, adds, retargets, or removes a node, you **MUST proactively state the impact on connected
+nodes and nudge the fix BEFORE applying anything** — never silently accept a structural edit. This is the
+single most important interaction in the skill.
+
+On any edit to node X:
+1. **State the structural impact first (proactively, in plain language, naming specific nodes):**
+   a. **Staleness (reverse lookup):** scan all nodes; collect those whose `from_*` arrays contain `X.id`;
+      propagate **transitively**. "이 변경은 다음 하위 노드에 영향을 줍니다: […]."
+   b. **Breakage check** — run the C05/C08 connectivity logic on the *edited* graph and call out any
+      new disconnection BY NAME:
+      - **Remove / retarget an activity** → does any output lose **all** its activities? If so that output
+        is now produced by nothing. "act-3를 빼면 산출물 op-2를 만드는 활동이 없어집니다(고아 산출물)."
+      - **Remove an output** → (i) every outcome that referenced it (`from_outputs`) loses an input;
+        (ii) any activity that fed **only** that output becomes an orphan `[C08]`. Name both.
+      - **Remove an outcome** → its outputs are no longer referenced by any outcome (`[C05]`,
+        disconnected), and the impact loses an outcome. Name the now-dangling outputs.
+      - **Add a node** → it is **dangling** until wired: a new activity must feed an output
+        (`from_activities`), a new output must feed an outcome (`from_outputs`). Flag it as not-yet-connected.
+2. **Nudge the concrete fix** (offer the choices; never auto-delete a connected node):
+   "→ op-2도 함께 빼거나, 다른 활동(act-4 등)에 연결하시겠어요?" Let the user pick.
+3. Set `stale: true` on every dependent (indicators inherit their parent's staleness).
 4. Regenerate ONLY the nodes the user consents to; set their `stale: false`. Declined nodes stay
    `stale: true` and are listed in the self-check report.
-5. Re-run the Critical (deterministic + C06) and Advisory checks on modified nodes; re-render md.
+5. Re-run the Critical (deterministic C05/C08/C06) + Advisory checks on modified nodes; re-render.
 
-> **Worked example.** User edits `act-1`. Scan finds `op-1` (its `from_activities` contains `"act-1"`) →
-> mark `op-1` stale → its dependent `oc-1` (whose `from_outputs` contains `"op-1"`) becomes stale
-> transitively. User consents to regenerate `op-1` only → `op-1` cleared; `oc-1` stays stale and is
-> listed in the report.
+> **Worked example.** User edits `act-1`. Reverse-lookup finds `op-1` (its `from_activities` contains
+> `"act-1"`) → `op-1` stale → `oc-1` (whose `from_outputs` contains `"op-1"`) stale transitively. If the
+> edit *removed* `act-1` and `op-1` had no other activity, you FIRST say "op-1을 만드는 활동이 없어집니다"
+> and nudge before applying. User regenerates `op-1` only → `op-1` cleared; `oc-1` stays stale and is listed.
+
+> **The same connectivity nudges apply DURING the interview/draft, not only after generation.** The moment
+> a proposed activity has no output, a proposed output feeds no outcome, or a node would be orphaned, say
+> so and nudge immediately — don't wait for the final gate.
 </Steps>
 
 <Guardrails>
@@ -216,6 +237,10 @@ When the user edits a node X after generation:
 - Do NOT loosen Critical rules to make a real/approved PDM pass — use AUDIT mode to report deviations.
 - Keep prompts internal-English; keep output in the user's language.
 - One interview question per turn.
+- **Connectivity is proactive, never silent.** Treat the `from_*` graph as the product's core. On any
+  structural edit/add/remove, state the impact on connected nodes and nudge the fix BEFORE applying
+  (Phase 4). You can compute the breakage deterministically: `bash rules/validate-critical.sh --json
+  OUT/pdm.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
 - **Interactive questions — use the environment's choice tool, whatever its name.** A tab/click
   single-select question tool exists in every supported environment, but under **different names**:
   **`AskUserQuestion`** in Claude Code, **`ask_user_input_v0`** in the Claude web/desktop apps (other

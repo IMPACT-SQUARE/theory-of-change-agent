@@ -15,6 +15,7 @@ Usage:
   python3 validate-critical.py --audit <pdm.json>    # AUDIT: report only, always exit 0
   python3 validate-critical.py --json <pdm.json>     # emit {"C01":"pass",...}, exit 0
   python3 validate-critical.py --shape <pdm.json>    # shape pre-check, exit 1 if malformed
+  python3 validate-critical.py --connectivity <pdm.json>  # emit broken-link lists for Phase 4 nudges
 """
 import json
 import sys
@@ -124,6 +125,37 @@ def shape_ok(pdm):
     )
 
 
+def connectivity(pdm):
+    """Deterministic edit-impact / nudge helper (Phase 4): the exact broken-link lists.
+    - disconnected_outputs: output ids no outcome references (C05 breakage).
+    - orphan_activities: activity ids no output references (C08 breakage).
+    - outputs_without_activities: outputs produced by nothing (from_activities empty or pointing nowhere).
+    - outcomes_without_outputs: outcomes fed by no output.
+    """
+    outputs = _arr(pdm, "outputs")
+    outcomes = _arr(pdm, "outcomes")
+    activities = _arr(pdm, "activities")
+    act_ids = set()
+    for a in activities:
+        act_ids.add(a.get("id"))
+        for s in _arr(a, "sub"):
+            act_ids.add(s.get("id"))
+    actref = {x for op in outputs for x in _arr(op, "from_activities")}
+    opref = {x for oc in outcomes for x in _arr(oc, "from_outputs")}
+    orphan_activities = []
+    for a in activities:
+        ids = [a.get("id")] + [s.get("id") for s in _arr(a, "sub")]
+        if not any(i in actref for i in ids):
+            orphan_activities.append(a.get("id"))
+    return {
+        "disconnected_outputs": [op.get("id") for op in outputs if op.get("id") not in opref],
+        "orphan_activities": orphan_activities,
+        "outputs_without_activities": [op.get("id") for op in outputs
+                                       if not any(i in act_ids for i in _arr(op, "from_activities"))],
+        "outcomes_without_outputs": [oc.get("id") for oc in outcomes if not _arr(oc, "from_outputs")],
+    }
+
+
 def main(argv):
     mode = "gate"
     out = "human"
@@ -135,6 +167,8 @@ def main(argv):
             out = "json"
         elif a == "--shape":
             out = "shape"
+        elif a == "--connectivity":
+            out = "connectivity"
         elif a in ("-h", "--help"):
             sys.stdout.write(__doc__)
             return 0
@@ -142,7 +176,7 @@ def main(argv):
             file = a
 
     if not file:
-        sys.stderr.write("usage: validate-critical.py [--audit] [--json] [--shape] <pdm.json>\n")
+        sys.stderr.write("usage: validate-critical.py [--audit] [--json] [--shape] [--connectivity] <pdm.json>\n")
         return 2
 
     try:
@@ -157,6 +191,10 @@ def main(argv):
 
     if out == "shape":
         return 0 if shape_ok(pdm) else 1
+
+    if out == "connectivity":
+        print(json.dumps(connectivity(pdm), ensure_ascii=False))
+        return 0
 
     results = evaluate(pdm)
 

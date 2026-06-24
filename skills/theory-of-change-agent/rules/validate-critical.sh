@@ -13,6 +13,7 @@
 #   bash validate-critical.sh --audit <pdm.json>    # AUDIT: report only, always exit 0
 #   bash validate-critical.sh --json <pdm.json>     # emit {"C01":"pass",...}, exit 0
 #   bash validate-critical.sh --shape <pdm.json>    # shape pre-check, exit 1 if malformed
+#   bash validate-critical.sh --connectivity <pdm.json>  # broken-link lists (Phase 4 edit nudges)
 HERE="$(cd "$(dirname "$0")" && pwd)"
 if command -v python3 >/dev/null 2>&1; then
   exec python3 "$HERE/validate-critical.py" "$@"
