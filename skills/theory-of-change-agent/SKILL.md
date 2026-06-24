@@ -38,7 +38,7 @@ The skill writes files to the working directory (default `./out/`, override with
 - **`monitoring.md`** — the monitoring matrix (indicator definition / baseline / target / rationale /
   source / timing / collector / disaggregation). Produced for all use-cases.
 
-Which files are written depends on `meta.use_case` (see Phase 3 step 8). Out of scope (do NOT produce):
+Which files are written depends on `meta.use_case` (see Phase 3 steps 8-9). Out of scope (do NOT produce):
 the annual performance-check sheet, direct `.xlsx`, any web UI.
 </Output_Contract>
 
@@ -88,9 +88,9 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    ask using the environment's interactive choice tool (`AskUserQuestion` / `ask_user_input_v0` /
    equivalent — see Guardrails; plain text only if none exists) which of the three:
      - **[A] Guided interview — concept-first** ("아이디어만 있음. 한 번에 하나씩 질문받으며 결과사슬 구성.
-       **가장 꼼꼼함 · 예상 12–20문항 · 대략 20–40분**").
+       **가장 꼼꼼함 · 예상 12–20문항 · 대략 10–20분**").
      - **[B] Guided interview — inputs-held** ("문서/ToC 초안/부분·기존 PDM 있음. 빈칸만 채움.
-       **자료 따라 몇 문항 · 대략 5–15분**").
+       **자료 따라 몇 문항 · 대략 5–10분**").
      - **[C] Draft-first (표 먼저)** ("질문 1개만 받고 바로 PDM 초안 표를 보고 그 위에서 수정.
        **가장 빠름 · 질문 1개 → 즉시 초안 · 대략 2–5분**"). *(Runs
        alongside A/B as an A/B-test of interaction style — koica-rules.md §10 #7.)*
@@ -157,7 +157,7 @@ Hard interview rules (mirror `koica-rules.md`):
    runtime dependency.)
 3. **Branch on gate mode:**
    - **AUDIT** → skip to step 7 (report-only).
-   - **DRAFT** (Mode C) → skip to step 7 (report-only), then render (8-10), then present the non-blocking
+   - **DRAFT** (Mode C) → skip to step 7 (report-only), then render (8-9), then present the non-blocking
      **draft checklist** and offer **Finalize** (Phase 3b). Do not block.
    - **GATE** → steps 4-6.
 4. **Deterministic Critical check (C01-C05, C08):**
@@ -176,19 +176,25 @@ Hard interview rules (mirror `koica-rules.md`):
    as a list — block nothing. AUDIT → "deviation list" (already-approved PDMs that predate/deviate from
    the 2017 guideline). DRAFT → "draft gap checklist" (what to confirm/fill before finalizing). For DRAFT,
    skip A05 wherever `target` is `추후 확정` (koica-rules.md §4.8).
-8. **Render the end-view per `meta.use_case`** (Phase 1 step 0 routing):
+8. **Render + write `monitoring.md`** via `prompts/render-monitoring-md.md` (indicator measurement plan;
+   all use-cases).
+9. **Render + write the PRIMARY end-view LAST** (Phase 1 step 0 routing):
    - `intl-dev` → **`pdm.md`** via `prompts/render-pdm-md.md` (KOICA 4×4: Impact row shows `-` in OVI/MoV;
      Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column). The
      ToC node diagram (`prompts/render-toc-md.md` §1) MAY be appended as an optional figure.
    - `biz-dev` / `csr-esg` → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
-     diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). `pdm.md` MAY also
-     be rendered if the user also wants the PDM form (the underlying logic is identical).
-9. **Render `monitoring.md`** via `prompts/render-monitoring-md.md` (indicator measurement plan; applies to
-   all use-cases).
-10. Write the produced files to the out dir.
-11. **Display a self-check summary**: Critical (all pass / audit findings) + Advisory (% score), plus any
-    nodes still flagged `stale`. For DRAFT, frame it as a **draft checklist** and remind the user they can
-    edit any cell (Phase 4) or say **"확정"/"finalize"** to run the full gate (Phase 3b).
+     diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). For `intl-dev`
+     you MAY also write `toc.md`, but write `pdm.md` **last**.
+   > **Write order matters — end on the human-readable view.** Sequence: `pdm.json` (already written in
+   > step 1, the source of truth) → `monitoring.md` → the primary view (`pdm.md`/`toc.md`) **last**.
+   > Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written / last-touched file**, so
+   > ending on the primary view keeps that on screen instead of the raw `pdm.json`. Do **not** re-save
+   > `pdm.json` after the renders.
+10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
+    still `stale`) and then **present the primary view as the final artifact** — state its path as the
+    closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. For DRAFT,
+    frame the summary as a **draft checklist** and remind the user they can edit any cell (Phase 4) or say
+    **"확정"/"finalize"** to run the full gate (Phase 3b).
 
 ## Phase 3b — Finalize (DRAFT → GATE)
 Triggered only when a **Mode C / DRAFT** PDM's author says "확정"/"finalize":
