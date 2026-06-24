@@ -3,8 +3,8 @@ name: theory-of-change-agent
 description: |
   변화이론 에이전트 (Theory of Change Agent) — KOICA PDM (Project Design Matrix) 생성 스킬.
   Interviews the user following Theory-of-Change methodology, then produces a PDM matrix +
-  monitoring matrix grounded in the KOICA PDM guideline. ALWAYS asks the user first which of three
-  approaches to use: [A] concept-first interview, [B] inputs-held, or [C] draft-first (table-first).
+  monitoring matrix grounded in the KOICA PDM guideline. ALWAYS asks first: the purpose (use-case),
+  then the situation (아이디어만 있음 / 문서 있음) and the pace (차근차근 인터뷰 / 표 먼저).
   Output language mirrors the user's input language.
   Use when the user mentions: "변화이론 에이전트", "theory of change agent", "PDM",
   "project design matrix", "KOICA", "theory of change", "변화이론", "results chain", "로직 모델",
@@ -87,30 +87,37 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    **End-view routing (applied in Phase 3):** `intl-dev` → PDM matrix; `biz-dev`/`csr-esg` → ToC view;
    `invest-screen` → planned. The PDM gate/rules below apply in full to `intl-dev`; for `biz-dev`/`csr-esg`
    the same results-chain is built but PDM-form-specific requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
-1. Determine **entry/interaction mode** — **ALWAYS ask the user which of the three approaches to use
-   before doing anything else; never pick one unilaterally.** A `--concept`/`--inputs`/`--draft` flag
-   counts as the user having already answered (use it directly and skip the question). Otherwise you MUST
-   ask using the environment's interactive choice tool (`AskUserQuestion` / `ask_user_input_v0` /
-   equivalent — see Guardrails; plain text only if none exists) which of the three:
-     - **[A] Guided interview — concept-first** ("아이디어만 있음. 한 번에 하나씩 질문받으며 결과사슬 구성.
-       **가장 꼼꼼함 · 대략 10–20분**").
-     - **[B] Guided interview — inputs-held** ("문서/ToC 초안/부분·기존 PDM 있음. 빈칸만 채움.
-       **대략 5–10분**").
-     - **[C] Draft-first (표 먼저)** ("질문 1개만 받고 바로 PDM 초안 표를 보고 그 위에서 수정.
-       **가장 빠름 · 대략 2–5분**"). *(Runs
-       alongside A/B as an A/B-test of interaction style — koica-rules.md §10 #7.)*
+1. Determine the **approach via TWO friendly, user-facing questions** — ALWAYS ask both before doing
+   anything else; never pick unilaterally. Use the environment's interactive choice tool (plain text only
+   if none exists). A `--concept`/`--inputs` flag pre-answers Q1 and `--draft` pre-answers Q2 (skip what is
+   preset). Phrase the options in the user's language and keep them plain (no jargon like "concept-first"):
+   **Q1 — 지금 어떤 상태인가요?** (`input_source`)
+     - **아이디어만 있어요** (`concept`) — 사업 구상은 있는데 정리된 자료는 아직.
+     - **사업계획서·초안·기존 PDM 같은 문서가 있어요** (`inputs`) — 그 파일을 읽어 활용. (이미 *승인된* PDM을
+       점검만 하려는 거면 감사 모드로: AUDIT.)
+   **Q2 — 어떻게 진행할까요?** (`interaction`)
+     - **질문에 하나씩 답하며 차근차근 만들래요** (`interview`) — 가장 꼼꼼. 대략 아이디어 10–20분 / 문서 5–10분.
+     - **표를 먼저 만들고 그 위에서 고칠래요** (`draft`) — 가장 빠름, 대략 2–5분.
+   **Resolve to the internal flow** and set `meta.input_source`, `meta.interaction`, and `meta.mode`:
+     - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`.
+     - inputs  + interview → **Mode B** (`prompts/interview-b-inputs.md`); `mode:"B"`.
+     - concept + draft     → **Mode C** (`prompts/draft-first.md`); `mode:"C"`.
+     - inputs  + draft     → **Mode B → draft:** run `interview-b-inputs.md` steps 1-2 to read/extract the
+       file(s), then go straight to Phase 3 to generate + render a **draft** and edit on the table
+       (Phase 4), finalize → GATE. Record `mode:"B"` with `gate_mode:"DRAFT"`.
 2. Determine **gate mode** (see `koica-rules.md` §7):
-   - **GATE** (default for Mode A/B): authoring a *new* PDM → Critical failures block; Advisory triggers
-     refinement.
-   - **AUDIT** (`--audit`, or Mode B when the user says the input is an *already-approved/existing* PDM):
+   - **GATE** (default when `interaction = interview`): authoring a *new* PDM → Critical failures block;
+     Advisory triggers refinement.
+   - **AUDIT** (`--audit`, or when the user says the input is an *already-approved/existing* PDM):
      all checks run **report-only**, nothing blocks.
-   - **DRAFT** (Mode C): report-only while the user edits the draft; flips to **GATE** at Finalize
-     (Phase 3). Set `meta.gate_mode = "DRAFT"` until then.
+   - **DRAFT** (when `interaction = draft`, including inputs+draft): report-only while the user edits the
+     draft; flips to **GATE** at Finalize (Phase 3b). Set `meta.gate_mode = "DRAFT"` until then.
 3. Detect output language from the user's messages (or `--lang`).
 4. Initialize interview state (keep in working memory / scratch; not written to disk until generation):
    ```json
    {
-     "use_case": "intl-dev|biz-dev|csr-esg|invest-screen", "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
+     "use_case": "intl-dev|biz-dev|csr-esg|invest-screen", "input_source": "concept|inputs", "interaction": "interview|draft",
+     "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
      "results_chain": { "problem_analysis": null, "goal_analysis": null,
        "impact": null, "outcomes": [], "outputs": [], "activities": [], "inputs": null },
      "assumptions": {}, "interview_rounds": []
@@ -135,9 +142,13 @@ collect violations to reject later).
 - **Mode B (inputs-held):** use `prompts/interview-b-inputs.md`. (1) `Read` the provided file(s) and
   extract whatever results-chain/PDM structure exists. (2) Gap-identify against the schema. (3) Ask ONE
   targeted question per gap. (4) Run assumption/indicator development only for gaps.
-- **Mode C (draft-first):** use `prompts/draft-first.md`. Ask **one** scoping question, then **skip
+- **Mode C (concept + draft):** use `prompts/draft-first.md`. Ask **one** scoping question, then **skip
   straight to Phase 3** to generate + render a non-blocking **draft** (gate_mode DRAFT). No multi-turn
   interview — refinement happens on the rendered table via Phase 4, and gating happens at Finalize.
+- **Mode B → draft (inputs + draft):** run `interview-b-inputs.md` steps 1-2 (read + extract the file(s)),
+  then **skip straight to Phase 3** to generate + render a **draft** from the extracted structure
+  (gate_mode DRAFT) and edit on the table (Phase 4); finalize → GATE. (No per-gap interview up front — the
+  user fixes things on the rendered draft instead.)
 
 Hard interview rules (mirror `koica-rules.md`):
 - Impact carries **no** indicators/MoV `[C01]`.
@@ -202,7 +213,7 @@ Hard interview rules (mirror `koica-rules.md`):
     **"확정"/"finalize"** to run the full gate (Phase 3b).
 
 ## Phase 3b — Finalize (DRAFT → GATE)
-Triggered only when a **Mode C / DRAFT** PDM's author says "확정"/"finalize":
+Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+draft) says "확정"/"finalize":
 1. Set `meta.gate_mode = "GATE"`.
 2. Confirm or clear remaining `stale` flags with the user (regenerate any they still want changed).
 3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/details/pdm.json` (NO `--audit` → blocking), then
