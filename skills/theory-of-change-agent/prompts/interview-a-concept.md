@@ -53,7 +53,11 @@ the in-memory `results_chain` state. Never batch questions. Enforce `rules/koica
   open-ended. Use plain text only if no such tool is actually available.
 - Surface KOICA constraints inline (e.g., when the user proposes a 5th output: "KOICA limits outputs to
   3-4 — which is least central, or can two merge?").
-- Track which stage you are in; show brief progress ("Stage 5/9: Outputs").
+- **Show a progress line at the TOP of every question** so the user always knows where they are: the
+  running question number, the rough total, and the current stage. Keep a counter across turns. Format
+  (in the output language), e.g.:
+  `[질문 7 · 예상 12–20문항 중 · 단계 5/9 산출물]` then the question.
+  Use a **range** for the total (it is not fixed); never imply false precision like "7/15".
 - ~12-20 questions total. Stop interviewing when all 5 levels + assumptions + indicators are populated.
 
 OUTPUT OF THIS PHASE: a fully populated `results_chain` + `assumptions` in state, ready for

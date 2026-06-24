@@ -15,6 +15,8 @@ fill only the gaps. Work in the user's language. One question per turn. Enforce 
 3. **Gap identification** — compare the extracted structure against the full results chain + indicator
    fields. List exactly what is missing or under-specified (per level).
 4. **Targeted fill** — ask ONE question per gap, in priority order (structure before indicators).
+   After gap-identify, tell the user how many gaps remain, then prefix each question with a progress line,
+   e.g. `[질문 3 · 남은 빈칸 4개]`, counting down as gaps close.
    Confirm (don't re-ask) anything already provided: "Your draft sets the outcome as X — keep it?"
 5. **Assumptions & indicators** — run the same development as Mode A stages 8-9, but ONLY for gaps.
 
