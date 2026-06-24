@@ -93,11 +93,11 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    ask using the environment's interactive choice tool (`AskUserQuestion` / `ask_user_input_v0` /
    equivalent — see Guardrails; plain text only if none exists) which of the three:
      - **[A] Guided interview — concept-first** ("아이디어만 있음. 한 번에 하나씩 질문받으며 결과사슬 구성.
-       **가장 꼼꼼함 · 예상 12–20문항 · 대략 10–20분**").
+       **가장 꼼꼼함 · 대략 10–20분**").
      - **[B] Guided interview — inputs-held** ("문서/ToC 초안/부분·기존 PDM 있음. 빈칸만 채움.
-       **자료 따라 몇 문항 · 대략 5–10분**").
+       **대략 5–10분**").
      - **[C] Draft-first (표 먼저)** ("질문 1개만 받고 바로 PDM 초안 표를 보고 그 위에서 수정.
-       **가장 빠름 · 질문 1개 → 즉시 초안 · 대략 2–5분**"). *(Runs
+       **가장 빠름 · 대략 2–5분**"). *(Runs
        alongside A/B as an A/B-test of interaction style — koica-rules.md §10 #7.)*
 2. Determine **gate mode** (see `koica-rules.md` §7):
    - **GATE** (default for Mode A/B): authoring a *new* PDM → Critical failures block; Advisory triggers
