@@ -438,9 +438,13 @@ while a target is deferred.
    `prompts/render-pdm-md.md`, `prompts/render-monitoring-md.md`, `prompts/interview-a-concept.md`,
    `prompts/generate-pdm.md`.
 
----
-
-## 11. Use-cases & what is PLANNED (2026-06-23 meeting)
+### 2026-07-01
+9. **ToC node diagram redesign (임팩트스퀘어/세라 feedback + user decisions).** The `toc.md` Mermaid diagram
+   (`prompts/render-toc-md.md` §1): (a) **remove the `subgraph` level containers** — the big level boxes
+   hid the nodes; levels are now shown by LR flow + per-node `classDef` color only. (b) **Outcome
+   indicators render as small nodes attached (`-.->`) to their outcome** so 아웃컴+지표 show together (임톨
+   image-2 style). (c) Keep **LR** orientation and **single-level** outcomes for now; Mermaid stays the
+   renderer (a polished PPT/SVG export is a separate future track). Render/style only — no rule changes.
 
 변화이론 에이전트 is broader than KOICA PDM. The results-chain engine (problem → activities → outputs →
 outcomes → impact, wired by `from_*`) is shared; only the **end-view** and which structures are required

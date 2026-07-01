@@ -12,38 +12,55 @@ Render only what is in the JSON. Keep KOICA labels bilingual; write content in `
 If `meta.use_case` is present, note it (e.g. `사업개발 (biz-dev)` / `CSR·ESG (csr-esg)`).
 
 ## 1. Node diagram (Mermaid) — the heart of the view
-Emit a Mermaid `flowchart LR` built from the `from_*` causal links. The point of a Theory of Change is
-that activities connect to outputs, outputs to outcomes, outcomes to impact; **show those edges.**
+Emit a Mermaid `flowchart LR` built from the `from_*` causal links. What makes it a *theory* is the
+connections: **사회문제 → 활동 → 산출물 → 성과(+지표) → 영향**. Show every edge; keep the nodes prominent.
 
-Mapping (each `pdm.json` id → a Mermaid-safe node id by replacing non-alphanumerics with `_`, e.g.
-`op-1` → `op_1`, `act-1.1` → `act_1_1`):
-- One node per **활동(activity)** (include sub-activities), **산출물(output)**, **성과(outcome)**, and the
-  **영향(impact)**. Node label = the node's narrative (display number prefix optional, e.g. `1.1 …`).
-- A leading **사회문제(Social problem)** node from `results_chain.problem_analysis` (현상 → 원인, defined
-  and corrected per `rules/value-rules.md` §V1) feeding the activities. The social problem anchors the
-  chain: its **해결 크기 = the Outcome (사회적 가치, §V2)**.
-- **투입물(Inputs)** node only when `meta.use_case = intl-dev` and `inputs` is present (ODA-specific —
-  koica-rules §11.1). Omit for `biz-dev`/`csr-esg`.
-- **Edges (follow the DAG, child→parent in data becomes upstream→downstream in the flow):**
-  - activity `a` → output `o` for every `o` whose `from_activities` contains `a` (or a sub-id of `a`).
-  - output `o` → outcome `c` for every `c` whose `from_outputs` contains `o`.
-  - outcome `c` → impact for every outcome.
-  - 사회문제 → each activity (or each top-level activity); 투입물(if shown) → each activity.
-- Group each level with a `subgraph` (사회문제 / 투입물 / 활동 / 산출물 / 성과 / 영향) so the columns read
-  left→right. Keep labels short; escape `"` in labels.
+**No level boxes.** Do **NOT** wrap levels in `subgraph` containers — the big boxes hide the nodes
+(임팩트스퀘어 feedback 2026-07-01). The `flowchart LR` flow already gives the left→right level ordering; use a
+per-node `classDef` color for the level cue *without* an outer box. Each node stays its own small box.
 
+Node id: each `pdm.json` id → Mermaid-safe (replace non-alphanumerics with `_`: `op-1`→`op_1`,
+`ind-oc-1.1`→`ind_oc_1_1`). Label = the narrative (display-number prefix optional). Escape `"` in labels.
+
+**Nodes & classes:**
+- **사회문제** — one node from `results_chain.problem_analysis` (현상 → 원인, value-rules §V1); class `problem`.
+  It anchors the chain (its 해결 크기 = the Outcome, §V2).
+- **활동 / 산출물 / 성과 / 영향** — one node each (activities include sub-activities); classes
+  `act` / `out` / `outcome` / `impact`.
+- **성과지표 (outcome indicators)** — render EACH outcome indicator as a **small node attached to its
+  outcome** (class `ind`), so the outcome and its indicators appear together (임톨 스타일, per user
+  2026-07-01). Label = the indicator name with its `j-m` number; **NO baseline/target numbers**. (Output/
+  activity indicators stay in §3 + monitoring to keep the diagram readable; add them only on request.)
+- **투입물(Inputs)** — a node only when `meta.use_case = intl-dev` and `inputs` is present (§11.1); class
+  `input`. Omit for `biz-dev`/`csr-esg`.
+
+**Edges** (child→parent in data = upstream→downstream in the flow):
+- 사회문제 → each top-level activity; 투입물(if shown) → each activity.
+- activity `a` → output `o` for every `o` whose `from_activities` contains `a` (or a sub-id).
+- output `o` → outcome `c` for every `c` whose `from_outputs` contains `o`.
+- outcome `c` → impact (every outcome).
+- outcome `c` **-.->** each of its indicator nodes (dashed link = "measured by").
+
+Skeleton (colors are light fills / thin borders — a level cue with no container box; renderers vary):
 ```
 flowchart LR
-  subgraph 활동 [활동 Activities]
-    act_1["1.1 ..."]
-  end
-  subgraph 산출물 [산출물 Outputs]
-    op_1["1.1 ..."]
-  end
-  ...
+  classDef problem fill:#fdecea,stroke:#e57373;
+  classDef act fill:#fff3e0,stroke:#ffb74d;
+  classDef out fill:#e8f5e9,stroke:#81c784;
+  classDef outcome fill:#e3f2fd,stroke:#64b5f6;
+  classDef ind fill:#f5f5f5,stroke:#bdbdbd,color:#555;
+  classDef impact fill:#ede7f6,stroke:#9575cd;
+  prob(["사회문제: …"]):::problem
+  act_1["1.1 …"]:::act
+  op_1["1.1 …"]:::out
+  oc_1["성과 1 …"]:::outcome
+  ind_oc_1_1("1-1 지표명"):::ind
+  imp_1["영향 …"]:::impact
+  prob --> act_1
   act_1 --> op_1
   op_1 --> oc_1
   oc_1 --> imp_1
+  oc_1 -.-> ind_oc_1_1
 ```
 
 ## 2. Narrative ToC (level by level)
@@ -78,5 +95,7 @@ similarity), pending 임팩트스퀘어 example cases (koica-rules §11.2). Do *
 ## Fidelity checks (must hold)
 - Every activity/output/outcome/impact in `pdm.json` appears as a node; every `from_*` link appears as an
   edge (no silent drops, no invented edges).
+- **No `subgraph` level containers** — levels are shown by LR flow + per-node class color only.
+- Each **outcome's indicators** appear as attached (`-.->`) nodes; no baseline/target numbers in the diagram.
 - Mermaid node ids are unique and contain only `[A-Za-z0-9_]`.
 - For `biz-dev`/`csr-esg`: no 수원기관/투입물 nodes are forced in.
