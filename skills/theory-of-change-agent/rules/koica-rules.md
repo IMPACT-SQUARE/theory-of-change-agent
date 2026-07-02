@@ -480,9 +480,12 @@ working notes), so the **definition** parts are now implemented in `rules/value-
 3a. **Logical check — IMPLEMENTED (2026-07-02).** `prompts/outcome-verify.md` judges each outcome
     (change-of-state vs output-at-scale; recovers the cause vs utility; indicator = 변화분 with 실행력·
     설명력). Advisory, in the "검증" section. No example set needed (reasoned, not example-matched).
-3b. **Nearest-IRIS+ metric — IN PROGRESS (grounded).** Built off the real IRIS+ Catalog of Metrics
-    (`rules/iris-metrics.json`, impact-section metrics; GIIN-attributed). Suggest from that list only;
-    never invent a code. (value-rules §V5.)
+3b. **Nearest-IRIS+ metric — IMPLEMENTED (2026-07-02, grounded).** `prompts/iris-match.md` +
+    `rules/iris-search.py` (deterministic keyword search) suggest the nearest metric for each outcome
+    indicator from the real IRIS+ catalog (`rules/iris-metrics.json`, 593 PI/OI/II impact metrics;
+    `build-iris-metrics.py`, GIIN-attributed). Shortlist-only, "참고용 · 공식 매핑 아님"; never invent a
+    code; catalog absent → "매칭 준비 중". JSON git-ignored (GIIN-copyright), shipped in local zip only.
+    (value-rules §V5b.)
 4. **Case-based verification** against real measured cases — still pending.
 
 ### 11.3 Backlog (separate workstream, see meeting minutes)

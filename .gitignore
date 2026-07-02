@@ -32,3 +32,5 @@ meetings/
 # IRIS+ catalog (GIIN copyrighted — do not redistribute the raw file) + build artifacts
 *.xlsx
 skills/theory-of-change-agent/rules/iris-metrics.json
+/Theory*.pdf
+/image.png

@@ -64,11 +64,13 @@ Type axes — choose deliberately: 전후(A vs B) vs 변화분(A−B); 단위당
 - **(a) Logical check — IMPLEMENTED.** `prompts/outcome-verify.md`: for each outcome, judge (change-of-state
   vs output-at-scale; recovers the problem's cause vs general utility; indicator = 변화분 with 실행력·설명력).
   Advisory, emitted in the "검증" section (render-toc §4). No example set required.
-- **(b) Nearest-IRIS+ metric — IN PROGRESS (grounded, never fabricated).** Match each outcome indicator
-  against the **real** IRIS+ Catalog of Metrics. The catalog is distilled to `rules/iris-metrics.json`
-  (outcome/impact metrics only; ID + name + short definition + theme/SDG), built from the GIIN IRIS+ Excel
-  (`build-iris-metrics.py`, GIIN-attributed). If `iris-metrics.json` is present, suggest the nearest
-  metric(s) **from that list only** with a "참고용, 공식 매핑 아님" caveat; if absent, show "IRIS+ 매칭 준비
-  중" and **NEVER invent an IRIS+ code**.
-  > Note: IRIS+ does not label metrics as "outcome" vs "output"; the build filters to **impact-section**
-  > metrics (Product/Operational/Investment Impact) as the outcome-relevant universe.
+- **(b) Nearest-IRIS+ metric — IMPLEMENTED (grounded, never fabricated).** `prompts/iris-match.md`: for each
+  **outcome** indicator, distill English keywords → `python3 rules/iris-search.py --json --top 6 "…"` (a
+  deterministic keyword search over the catalog) → suggest the nearest metric(s) **from the returned
+  shortlist only**, tagged "참고용 · 공식 매핑 아님 · IRIS+ © GIIN". If the catalog is absent (search exits 3),
+  show "IRIS+ 매칭 준비 중" and **NEVER invent an IRIS+ code**. Emitted in render-toc §4 after the logical verdicts.
+  > **Catalog build:** `rules/iris-metrics.json` (593 impact metrics: ID + name + definition + theme/SDG) is
+  > produced by `build-iris-metrics.py` from the GIIN IRIS+ Excel, filtered by ID prefix **PI/OI/II**
+  > (Product/Operational/Investment Impact — IRIS+ has no explicit outcome label; Description/Financial rows
+  > dropped). The JSON is **git-ignored** (GIIN-copyrighted) and shipped only in the local team zip; public
+  > plugin users build it from their own IRIS+ download, else the section shows "매칭 준비 중".

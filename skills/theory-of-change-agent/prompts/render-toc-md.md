@@ -99,9 +99,11 @@ important to track).
 - **논리 검증 (implemented):** run `prompts/outcome-verify.md` for each outcome — is it a real Outcome (a
   change-of-state recovering the problem's cause), or output-at-scale / general utility? Emit the per-outcome
   `✅ 부합` / `⚠️ 교정 필요` verdicts here, in `meta.lang`, grounded in 변화이론·로직모델. Advisory (non-blocking).
-- **IRIS+ 유사 지표 (in progress):** the nearest-IRIS+ matching runs off the real IRIS+ catalog (value-rules
-  §V5). If `rules/iris-metrics.json` is present, suggest the nearest metric(s) **from that list only**; if
-  absent, show "IRIS+ 유사 지표 매칭 준비 중" and **do NOT invent any IRIS+ code**.
+- **IRIS+ 유사 지표 (implemented):** run `prompts/iris-match.md` for each **outcome** indicator — it distills
+  English keywords, calls `python3 rules/iris-search.py --json --top 6 "…"` (deterministic search over the
+  593-metric IRIS+ catalog), and suggests the nearest metric(s) **from the returned shortlist only**, tagged
+  "참고용 · 공식 매핑 아님 · IRIS+ © GIIN". If `iris-search.py` exits 3 (catalog `rules/iris-metrics.json`
+  absent), show "IRIS+ 유사 지표 매칭 준비 중" and **NEVER invent an IRIS+ code**.
 
 ## Fidelity checks (must hold)
 - **DRAFT (`gate_mode=DRAFT`): §1 is the "확정 후 출력" placeholder, NOT a Mermaid diagram.** The full
