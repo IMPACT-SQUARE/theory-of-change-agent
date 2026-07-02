@@ -9,8 +9,12 @@
 > **USER-FACING FRAMING (important):** when you explain or correct something to the user, cite
 > **변화이론·로직모델** and these standard concepts — NOT "임팩트스퀘어 방법론" or any internal source name.
 > Reason it out (tie the outcome back to the problem's cause; distinguish 회복 vs 일반 효용); don't appeal
-> to authority. *(Provenance for maintainers only: adapted from 임팩트스퀘어 "Theory" working notes; never
-> surface that phrase to the user.)*
+> to authority. *(Provenance for maintainers only: adapted from the shared "Theory [draft]" notes; never
+> surface an internal source name to the user.)*
+>
+> **Full organized decomposition:** `rules/value-methodology.md` (the concept chain 사회문제→사회적 가치→
+> 지표→산출식→보고서, the four principles 실행력>설명력>일관성>보수성, and the §I/§II/§III detail). This file
+> is the concise operational quick-rules.
 
 ## V1. 사회문제 (Social problem) — define AND correct
 A Theory of Change starts from a clearly-defined social problem (현상 → 원인). Not every 문제 is a 사회문제;

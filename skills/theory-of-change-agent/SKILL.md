@@ -50,8 +50,10 @@ Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx
 <Reference_Files>
 Load these (they live alongside this SKILL.md) and treat them as authoritative:
 - `rules/koica-rules.md` — the KOICA PDM writing rules (with guideline page citations).
-- `rules/value-rules.md` — 임팩트스퀘어 social-value methodology (사회문제 ①②③ / 사회적 가치 = 해결 크기,
-  중립0 / 지표 실행력·설명력). Used to define & correct the social problem and outcome.
+- `rules/value-rules.md` — social-value quick-rules (사회문제 ①②③ / 사회적 가치 = 해결 크기, 중립0 / 지표
+  실행력·설명력), grounded in 변화이론·로직모델. Used to define & correct the social problem and outcome.
+- `rules/value-methodology.md` — the full organized decomposition behind those rules (concept chain +
+  four principles + §I/§II/§III detail). Read for depth when defining/correcting.
 - `rules/checklist.json` — Critical (C01-C08) + Advisory (A01-A08) self-check definitions + thresholds.
 - `rules/validate-critical.sh` — deterministic validator for the structural Critical rules.
 - `schema/pdm-schema.json` — JSON Schema for `pdm.json`.
