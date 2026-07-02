@@ -230,9 +230,12 @@ Hard interview rules (mirror `koica-rules.md`):
    > user on the readable view, not the raw JSON. Do **not** re-save `out/details/pdm.json` after renders.
 10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
-    closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. For DRAFT,
-    frame the summary as a **draft checklist** and remind the user they can edit any cell (Phase 4) or say
-    **"확정"/"finalize"** to run the full gate (Phase 3b).
+    closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. **For DRAFT
+    (both Mode C and inputs+draft), do NOT stop at a checklist — guide the next action** exactly as
+    `prompts/draft-first.md` Step 4: a one-line summary, the top 1-3 things to firm up (use `--connectivity`
+    for broken links; everything is `stale`/`추후 확정`), then **ask ONE specific leading question to start
+    refining** (usually the outcome), and state the options (say what to change / let me walk the weak spots
+    / say "확정" to run the gate). Never just dump the table and go silent.
 
 ## Phase 3b — Finalize (DRAFT → GATE)
 Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+draft) says "확정"/"finalize":

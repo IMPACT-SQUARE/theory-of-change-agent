@@ -1,9 +1,11 @@
 # Prompt: Draft-first — Mode C (table-first)
 
-ROLE: The user wants to **see a PDM table fast and edit on top of it**, not answer a long interview. Ask
-**one** scoping question, then immediately generate a full **draft** PDM, render it, and hand control to
-the edit loop. Work in the user's language. This mode runs in **gate_mode `DRAFT`** (report-only) until
-the user finalizes. The existing guided interview (Mode A/B + GATE) is the control; do NOT merge them.
+ROLE: The user wants to **see a draft fast and refine it by talking**, not answer a long interview. The
+draft is the primary view for the use-case (the PDM table for `intl-dev`, the 변화이론 도식 `toc.md` for
+`biz-dev`/`csr-esg`). Ask **one** scoping question, generate a full **draft**, render the primary view,
+then **immediately start the refinement conversation** (Step 4) — do not go silent. Work in `meta.lang`.
+This mode runs in **gate_mode `DRAFT`** (report-only) until the user says "확정". The guided interview
+(interview modes + GATE) is the control; do NOT merge them.
 
 ## Step 1 — One scoping question (the only required question)
 Ask a single open question that captures enough to anchor the results chain. Suggested framing:
@@ -18,30 +20,46 @@ Ask a single open question that captures enough to anchor the results chain. Sug
 
 ## Step 2 — Generate a full draft (best-guess)
 Call `prompts/generate-pdm.md` in **draft mode**:
-- Populate **every** level: impact (SDGs + national strategy), **1+ outcomes** (behavioral-change),
-  **3-4 noun-form outputs** (C06), activities wired to outputs (C08), inputs, per-link assumptions, and
-  indicators each with a **MoV** (C04).
-- Best-guess any field the user did not give; mark **`stale: true` on every node** (signals "draft —
-  confirm me"); use **`"추후 확정"`** for `baseline`/`target`/`target_rationale` and any other ungrounded
-  value (koica-rules.md §4.8).
-- Set `meta.mode = "C"`, `meta.gate_mode = "DRAFT"`.
+- Populate **every** level: impact, **1+ outcomes** (behavioral-change), **3-4 noun-form outputs** (C06),
+  activities wired to outputs (C08), inputs (where applicable), per-link assumptions, and indicators each
+  with a **MoV** (C04). For `biz-dev`/`csr-esg` apply the use-case relaxations (no 수원기관; ToC framing —
+  koica-rules §11).
+- Best-guess anything the user didn't give; mark **`stale: true` on every node** ("draft — confirm me");
+  use **`"추후 확정"`** for `baseline`/`target`/`target_rationale` (koica-rules §4.8).
+- Set `meta.mode = "C"`, `meta.input_source = "concept"`, `meta.interaction = "draft"`, `meta.gate_mode = "DRAFT"`.
 
-## Step 3 — Render immediately + non-blocking report
-- Render `pdm.md` and `monitoring.md` right away (`render-pdm-md.md`, `render-monitoring-md.md`).
-- Run checks **report-only**: `bash rules/validate-critical.sh --audit OUT/details/pdm.json` + the LLM checks.
-  Present results as a **draft checklist** ("아직 비어있거나 보완이 필요한 부분"), **blocking nothing**.
-- Tell the user explicitly: *this is a draft — edit any cell, and say "확정"/"finalize" when ready to run
-  the full quality gate.*
+## Step 3 — Render the primary view immediately
+- Write files per Phase 3 steps 8-9 (source + monitoring in `out/details/`, **primary view LAST**):
+  the primary view is **`out/toc.md`** for `biz-dev`/`csr-esg` (변화이론 도식) or **`out/pdm.md`** for
+  `intl-dev`, plus `out/details/monitoring.md`.
+- Compute the report-only checks for the nudges: `bash rules/validate-critical.sh --audit
+  OUT/details/pdm.json` and `--connectivity OUT/details/pdm.json`. Block nothing.
 
-## Step 4 — Edit loop
-Hand off to **SKILL.md Phase 4 (edit propagation)**: the user edits a node, you mark dependents stale and
-regenerate only on consent. Stay in `DRAFT` (report-only) during editing.
+## Step 4 — Guide the next action (DON'T just stop) ★
+The draft is a **starting point, not the answer.** After showing it, immediately make the next step clear
+and **start refining conversationally** — never dump the table and go silent. In the SAME turn:
+1. **One-line summary** of what you drafted: the core 성과(아웃컴) + the 산출물, in plain language.
+2. **Top 1-3 things to firm up** — the highest-leverage weak spots (everything is `stale`/`추후 확정`; use the
+   `--connectivity` result for any orphan/disconnected node). Keep it short and specific, not a long dump.
+   Prioritize the **outcome** (사회적 가치 = 사회문제 해결 크기, value-rules §V2) and any **broken links**.
+3. **Ask ONE specific, leading question to start** — usually the outcome, since it's the crux, e.g.:
+   "먼저 성과부터 맞춰볼게요. 지금 초안은 성과를 『…』로 잡았는데, 실제로 노리는 '변화'가 이게 맞나요? 아니면
+   어떻게 바꿀까요?" Then go one node at a time.
+4. **State the options once** so the path is clear:
+   - 바꾸고 싶은 걸 그냥 말하면 됨 (예: "산출물 2를 ~로", "활동 하나 추가").
+   - 제가 약한 곳부터 하나씩 여쭤보며 같이 다듬음 (기본).
+   - 다 됐으면 **"확정"** → 품질 게이트.
+   (Render all of this in `meta.lang`; the Korean above is the `ko` example.)
 
-## Step 5 — Finalize (on the user's request)
-When the user says "확정"/"finalize", hand off to **SKILL.md Phase 3 Finalize**: flip
-`meta.gate_mode = "GATE"`, clear `stale` flags the user has confirmed, and run the **hard Critical gate**
-(`validate-critical.sh` without `--audit`, then C06, then the Advisory loop). Only a PDM that passes the
-GATE gate is a finalized, guideline-compliant PDM.
+## Step 5 — Edit loop
+Drive the refinement conversation; on **every** edit apply **SKILL Phase 4** — state the connectivity
+impact and nudge BEFORE applying, mark dependents `stale`, regenerate only on consent, re-render (primary
+view last). Stay in `DRAFT` (report-only).
 
-OUTPUT OF THIS PHASE: a rendered **draft** PDM (pdm.json/pdm.md/monitoring.md, gate_mode DRAFT) plus a
-non-blocking gap checklist, ready for editing and later finalization.
+## Step 6 — Finalize (on "확정"/"finalize")
+Hand off to **SKILL.md Phase 3b**: flip `meta.gate_mode = "GATE"`, clear the `stale` flags the user has
+confirmed, and run the **hard Critical gate** (`validate-critical.sh` without `--audit`, then C06, then the
+Advisory loop). baseline/target may stay `추후 확정`. Only then is it finalized.
+
+OUTPUT OF THIS PHASE: a rendered **draft** (primary view + monitoring, gate_mode DRAFT) followed by a
+clear next-action prompt that has already started the refinement conversation.
