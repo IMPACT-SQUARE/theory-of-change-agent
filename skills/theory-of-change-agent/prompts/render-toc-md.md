@@ -95,10 +95,13 @@ For every output and outcome indicator, list a row:
 Render as a short table or checklist, ordered outcome-first (outcome indicators are the hardest and most
 important to track).
 
-## 4. 검증 (Verification) — placeholder (planned)
-Add a short section noting that **outcome verification is planned** (logical output↔outcome check + IRIS+
-similarity), pending 임팩트스퀘어 example cases (koica-rules §11.2). Do **not** fabricate IRIS+ matches.
-> 예: "이 성과가 진짜 '성과(아웃컴)'인지, 어떤 글로벌 지표(IRIS+)와 가까운지에 대한 검증은 준비 중입니다."
+## 4. 검증 (Verification)
+- **논리 검증 (implemented):** run `prompts/outcome-verify.md` for each outcome — is it a real Outcome (a
+  change-of-state recovering the problem's cause), or output-at-scale / general utility? Emit the per-outcome
+  `✅ 부합` / `⚠️ 교정 필요` verdicts here, in `meta.lang`, grounded in 변화이론·로직모델. Advisory (non-blocking).
+- **IRIS+ 유사 지표 (in progress):** the nearest-IRIS+ matching runs off the real IRIS+ catalog (value-rules
+  §V5). If `rules/iris-metrics.json` is present, suggest the nearest metric(s) **from that list only**; if
+  absent, show "IRIS+ 유사 지표 매칭 준비 중" and **do NOT invent any IRIS+ code**.
 
 ## Fidelity checks (must hold)
 - **DRAFT (`gate_mode=DRAFT`): §1 is the "확정 후 출력" placeholder, NOT a Mermaid diagram.** The full

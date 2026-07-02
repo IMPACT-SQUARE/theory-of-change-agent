@@ -28,3 +28,7 @@ docs/*_PDM.pdf
 meetings/
 /New note*.txt
 /*회의록*.md
+
+# IRIS+ catalog (GIIN copyrighted — do not redistribute the raw file) + build artifacts
+*.xlsx
+skills/theory-of-change-agent/rules/iris-metrics.json

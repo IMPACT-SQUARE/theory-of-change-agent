@@ -60,9 +60,15 @@ Type axes — choose deliberately: 전후(A vs B) vs 변화분(A−B); 단위당
 **실행력 > 설명력 > 일관성 > 보수성.** When sub-rules conflict, the earlier principle wins. Be
 **conservative** — do not overstate the value (cf. SROI "do not over-claim", GRI reporting principles).
 
-## V5. IMP / IRIS+ alignment — PLANNED (do not fabricate yet)
-Theory-of-Change / logic-model samples often mark indicators as **Reached** / **Impacted** (IMP / IRIS+
-global-indicator markers). The planned **2-way outcome verification** (`koica-rules.md` §11.2) will (a)
-logically check output ↔ outcome against an example set and (b) suggest the **nearest IRIS+ indicator**.
-This is **pending** additional example material + structure images — until then, surface a "검증 준비 중"
-note and **do NOT invent IRIS+ matches**.
+## V5. Outcome verification (2-way)
+- **(a) Logical check — IMPLEMENTED.** `prompts/outcome-verify.md`: for each outcome, judge (change-of-state
+  vs output-at-scale; recovers the problem's cause vs general utility; indicator = 변화분 with 실행력·설명력).
+  Advisory, emitted in the "검증" section (render-toc §4). No example set required.
+- **(b) Nearest-IRIS+ metric — IN PROGRESS (grounded, never fabricated).** Match each outcome indicator
+  against the **real** IRIS+ Catalog of Metrics. The catalog is distilled to `rules/iris-metrics.json`
+  (outcome/impact metrics only; ID + name + short definition + theme/SDG), built from the GIIN IRIS+ Excel
+  (`build-iris-metrics.py`, GIIN-attributed). If `iris-metrics.json` is present, suggest the nearest
+  metric(s) **from that list only** with a "참고용, 공식 매핑 아님" caveat; if absent, show "IRIS+ 매칭 준비
+  중" and **NEVER invent an IRIS+ code**.
+  > Note: IRIS+ does not label metrics as "outcome" vs "output"; the build filters to **impact-section**
+  > metrics (Product/Operational/Investment Impact) as the outcome-relevant universe.

@@ -476,12 +476,14 @@ working notes), so the **definition** parts are now implemented in `rules/value-
 2. **Outcome = 사회적 가치 definition (DONE).** `value-rules.md` §V2: 사회문제 해결 크기, neutral-0 baseline
    (only −→0 counts), 핵심 대표 특성. Indicator quality = 실행력·설명력 (§V3). Wired into outcome stage.
 
-**Still PENDING (do NOT fabricate — wait on more material):**
-3. **Outcome cross-verification (2-way).** (a) logical output↔outcome check against a large example set,
-   and (b) "nearest IRIS+ indicator X". The example set was not available yet (세라: ToC often omits/
-   generalizes outputs, so clean examples are hard) and the structure images are for reference only. Emit
-   a "검증 준비 중" note (ToC render §4 / value-rules §V5); do **not** invent IRIS+ matches.
-4. **Case-based verification** against 임팩트스퀘어's real measured cases — pending.
+**Outcome cross-verification (2-way):**
+3a. **Logical check — IMPLEMENTED (2026-07-02).** `prompts/outcome-verify.md` judges each outcome
+    (change-of-state vs output-at-scale; recovers the cause vs utility; indicator = 변화분 with 실행력·
+    설명력). Advisory, in the "검증" section. No example set needed (reasoned, not example-matched).
+3b. **Nearest-IRIS+ metric — IN PROGRESS (grounded).** Built off the real IRIS+ Catalog of Metrics
+    (`rules/iris-metrics.json`, impact-section metrics; GIIN-attributed). Suggest from that list only;
+    never invent a code. (value-rules §V5.)
+4. **Case-based verification** against real measured cases — still pending.
 
 ### 11.3 Backlog (separate workstream, see meeting minutes)
 - **투심 모드** — prose impact-review of an IR/business model (different output shape).
