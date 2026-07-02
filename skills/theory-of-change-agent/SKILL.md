@@ -244,7 +244,12 @@ Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+
 3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/details/pdm.json` (NO `--audit` → blocking), then
    the C06 LLM check, then the Advisory refinement loop (steps 4-6 above). Loop until Critical passes.
 4. Baseline/target may legitimately remain `추후 확정` at finalize — that does NOT block (A05 is N/A while
-   deferred; C04/MoV still enforced). Re-render and show the final self-check summary.
+   deferred; C04/MoV still enforced).
+5. **Re-render ALL views from the finalized `pdm.json`, per Phase 3 steps 8-9** — do not skip this. The
+   finalize (clearing `stale`, the Advisory refinement) changed nodes, so the rendered views are stale:
+   rewrite `out/details/monitoring.md`, then the **primary view LAST** — **`out/toc.md`** for
+   `biz-dev`/`csr-esg` (the 변화이론 도식 MUST be regenerated so its nodes/edges match the finalized chain)
+   or **`out/pdm.md`** for `intl-dev`. Then show the final self-check summary + the primary view path.
 
 ## Phase 4 — Edit propagation + connectivity nudges (post-generation)
 The node graph (the `from_*` links) **is** the Theory of Change — what makes it a *theory* is that each
@@ -272,7 +277,10 @@ On any edit to node X:
 3. Set `stale: true` on every dependent (indicators inherit their parent's staleness).
 4. Regenerate ONLY the nodes the user consents to; set their `stale: false`. Declined nodes stay
    `stale: true` and are listed in the self-check report.
-5. Re-run the Critical (deterministic C05/C08/C06) + Advisory checks on modified nodes; re-render.
+5. Re-run the Critical (deterministic C05/C08/C06) + Advisory checks on modified nodes, then **re-render
+   ALL views from the updated `pdm.json` per Phase 3 steps 8-9** (monitoring.md, then the primary view
+   LAST — `toc.md` for `biz-dev`/`csr-esg` so the 변화이론 도식 reflects the edit, or `pdm.md` for
+   `intl-dev`). An edit that isn't re-rendered leaves a stale diagram.
 
 > **Worked example.** User edits `act-1`. Reverse-lookup finds `op-1` (its `from_activities` contains
 > `"act-1"`) → `op-1` stale → `oc-1` (whose `from_outputs` contains `"op-1"`) stale transitively. If the
