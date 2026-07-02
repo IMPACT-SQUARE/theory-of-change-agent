@@ -99,13 +99,13 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
    the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
    structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
-   environment's interactive choice tool (4 options). Set `meta.use_case`.
+   environment's interactive choice tool (**3 options**). Set `meta.use_case`.
      - **국제개발 / KOICA PDM (`intl-dev`)** — ODA·KOICA 사업의 PDM 설계. End-view = **PDM 매트릭스** (`pdm.md`).
      - **사업개발(`biz-dev`)** — 소셜벤처·사회공헌·비영리·창업의 임팩트 모델 정리 / 아이디어. End-view =
        **변화이론(ToC) 뷰** (`toc.md`, node diagram). PDM 양식(수원기관 등)은 강제하지 않는다.
      - **CSR / ESG (`csr-esg`)** — 기업 사회공헌/ESG 프로젝트. End-view = **ToC 뷰** (`toc.md`).
-     - **투심 / 임팩트 투자심사 (`invest-screen`)** — **아직 준비 중**(meeting backlog). Politely say it is
-       planned, and offer one of the other three (or produce a ToC view as a stand-in). Do **not** block.
+     - *(투심 / 임팩트 투자심사 `invest-screen` is **backlog** — do NOT offer it as a choice. If the user
+       explicitly asks for 투심, say it's planned and offer the ToC view as a stand-in; koica-rules §11.3.)*
    **End-view routing (applied in Phase 3):** `intl-dev` → PDM matrix; `biz-dev`/`csr-esg` → ToC view;
    `invest-screen` → planned. The PDM gate/rules below apply in full to `intl-dev`; for `biz-dev`/`csr-esg`
    the same results-chain is built but PDM-form-specific requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
