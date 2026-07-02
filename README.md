@@ -117,25 +117,30 @@ ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/sk
 
 업데이트는 `git pull`로 받습니다. 연결을 끊으려면 `rm ~/.claude/skills/theory-of-change-agent`를 입력합니다. 원본 폴더는 그대로 남습니다.
 
-### 방법 3. Claude 데스크톱 / 웹(claude.ai)에 올리기
+### 방법 3. zip 파일 업로드 (Claude 데스크톱 · Antigravity · claude.ai)
 
-Claude Code가 아닌 데스크톱 앱이나 브라우저에서 쓰려면 스킬을 압축 파일(zip)로 만들어 올립니다.
+Claude Code가 아니라 **앱에서 바로** 쓰려면 스킬을 압축 파일(zip)로 만들어 업로드합니다.
 
-1. **준비 사항**: 유료 요금제(Pro / Max / Team / Enterprise)와 **코드 실행(code execution) 기능 켜기**가 필요합니다.
-2. **압축 파일 만들기**: 내려받은 폴더의 `skills` 폴더 안에서 아래 명령을 실행합니다.
+1. **압축 파일 만들기**: 내려받은 폴더의 `skills` 폴더 안에서 아래 명령을 실행합니다.
    ```bash
    cd skills
    zip -r theory-of-change-agent.zip theory-of-change-agent \
      -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
    ```
-3. **올리기**: 데스크톱 앱이나 claude.ai에서 `설정(Settings) → Capabilities → Skills → Upload`로 들어가
-   방금 만든 `theory-of-change-agent.zip`을 선택하고 켜(Enable) 줍니다.
-   (메뉴 이름은 버전에 따라 조금 다를 수 있으니, 설정 안에서 *Skills* 또는 *Capabilities* 항목을 찾으세요.)
-4. **사용하기**: 채팅에 "변화이론 에이전트로 KOICA PDM 만들어줘"처럼 적으면 시작합니다.
-   완성된 표(`pdm.md`, `monitoring.md`)는 채팅에 뜨는 다운로드 링크로 받습니다.
+   (레포에 이미 만들어진 `theory-of-change-agent.zip`이 있으면 그걸 그대로 써도 됩니다.)
 
-앱에 올린 스킬은 자동으로 업데이트되지 않습니다. 내용이 바뀌면 새 압축 파일을 다시 올려야 합니다.
-자동 업데이트가 필요하면 방법 1을 사용하세요.
+2. **업로드** — 쓰는 앱에 맞춰:
+   - **Claude 데스크톱**: `설정(Settings) → Skills → Add → Upload` 에서 `theory-of-change-agent.zip` 선택 → 켜기(Enable).
+   - **Antigravity**: Skills 화면에서 `theory-of-change-agent.zip` 을 업로드.
+   - **claude.ai(웹)**: `Settings → Capabilities → Skills → Upload`.
+
+   > 전제: Claude 앱은 **유료 요금제 + 코드 실행(code execution) 기능 켜기**가 필요합니다(품질 점검이 python3로 돕니다). 메뉴 이름은 버전에 따라 조금 다를 수 있어요.
+
+3. **사용하기**: 채팅에 "변화이론 에이전트로 KOICA PDM 만들어줘"처럼 적으면 시작합니다.
+   완성된 결과물은 채팅에 뜨는 다운로드 링크로 받습니다.
+
+> 앱에 올린 스킬은 **자동 업데이트되지 않습니다.** 내용이 바뀌면 새 zip을 다시 업로드하세요.
+> 자동 업데이트가 필요하면 **방법 1(Claude Code 플러그인)** 을 쓰세요.
 
 더 자세한 안내는 [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md)에 있습니다.
 

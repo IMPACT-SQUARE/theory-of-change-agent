@@ -34,12 +34,15 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 
 ---
 
-## 2. 데스크톱/웹에 업로드
+## 2. 앱에 업로드 (zip)
 
-1. Claude 데스크톱(또는 claude.ai) → **Settings → Capabilities → Skills**.
-2. **Upload skill**(또는 `Add skill`) → `theory-of-change-agent.zip` 선택.
-3. 업로드 후 목록에서 **theory-of-change-agent**를 **Enable**.
-4. **Code execution이 켜져 있는지** 다시 확인.
+쓰는 앱에 맞춰 `theory-of-change-agent.zip`을 업로드합니다.
+
+- **Claude 데스크톱**: `Settings → Skills → Add → Upload` 에서 `theory-of-change-agent.zip` 선택 → 목록에서 **Enable**.
+- **Antigravity**: Skills 화면에서 `theory-of-change-agent.zip` 을 업로드.
+- **claude.ai(웹)**: `Settings → Capabilities → Skills → Upload`.
+
+업로드 후 **Code execution이 켜져 있는지** 확인하세요(품질 점검이 python3로 돕니다). 메뉴 이름은 앱/버전에 따라 조금 다를 수 있으니, 설정 안에서 *Skills* 항목을 찾으면 됩니다.
 
 ---
 
