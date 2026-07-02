@@ -12,8 +12,16 @@ Render only what is in the JSON. Keep KOICA labels bilingual; write content in `
 If `meta.use_case` is present, note it (e.g. `사업개발 (biz-dev)` / `CSR·ESG (csr-esg)`).
 
 ## 1. Node diagram (Mermaid) — the heart of the view
-Emit a Mermaid `flowchart LR` built from the `from_*` causal links. What makes it a *theory* is the
-connections: **사회문제 → 활동 → 산출물 → 성과(+지표) → 영향**. Show every edge; keep the nodes prominent.
+**Draft gate (important):** if `meta.gate_mode = "DRAFT"` (a draft-first draft not yet finalized), do
+**NOT** emit the Mermaid diagram yet — the chain is still being shaped. Instead show a short, friendly
+placeholder in `meta.lang`, e.g. ko: `> 📊 변화이론 도식은 **확정(finalize) 후** 그려집니다. 내용을 다듬고
+"확정"이라고 하면 이 자리에 도식이 나타납니다.` / en: `> 📊 The Theory-of-Change diagram is drawn **after
+you finalize**. Refine the content and say "확정"/finalize to generate it here.` Emit the **full diagram
+only when finalized** (`meta.gate_mode` is `GATE`, or `AUDIT` for an existing PDM).
+
+When you DO draw it, emit a Mermaid `flowchart LR` built from the `from_*` causal links. What makes it a
+*theory* is the connections: **사회문제 → 활동 → 산출물 → 성과(+지표) → 영향**. Show every edge; keep the
+nodes prominent.
 
 **No level boxes.** Do **NOT** wrap levels in `subgraph` containers — the big boxes hide the nodes
 (임팩트스퀘어 feedback 2026-07-01). The `flowchart LR` flow already gives the left→right level ordering; use a
@@ -93,8 +101,10 @@ similarity), pending 임팩트스퀘어 example cases (koica-rules §11.2). Do *
 > 예: "이 성과가 진짜 '성과(아웃컴)'인지, 어떤 글로벌 지표(IRIS+)와 가까운지에 대한 검증은 준비 중입니다."
 
 ## Fidelity checks (must hold)
-- Every activity/output/outcome/impact in `pdm.json` appears as a node; every `from_*` link appears as an
-  edge (no silent drops, no invented edges).
+- **DRAFT (`gate_mode=DRAFT`): §1 is the "확정 후 출력" placeholder, NOT a Mermaid diagram.** The full
+  diagram appears only once finalized (`gate_mode` GATE/AUDIT).
+- When drawn: every activity/output/outcome/impact in `pdm.json` appears as a node; every `from_*` link
+  appears as an edge (no silent drops, no invented edges).
 - **No `subgraph` level containers** — levels are shown by LR flow + per-node class color only.
 - Each **outcome's indicators** appear as attached (`-.->`) nodes; no baseline/target numbers in the diagram.
 - Mermaid node ids are unique and contain only `[A-Za-z0-9_]`.

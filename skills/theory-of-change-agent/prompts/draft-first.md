@@ -30,8 +30,11 @@ Call `prompts/generate-pdm.md` in **draft mode**:
 
 ## Step 3 — Render the primary view immediately
 - Write files per Phase 3 steps 8-9 (source + monitoring in `out/details/`, **primary view LAST**):
-  the primary view is **`out/toc.md`** for `biz-dev`/`csr-esg` (변화이론 도식) or **`out/pdm.md`** for
+  the primary view is **`out/toc.md`** for `biz-dev`/`csr-esg` (변화이론 뷰) or **`out/pdm.md`** for
   `intl-dev`, plus `out/details/monitoring.md`.
+- **In DRAFT, the ToC diagram is NOT drawn yet** — `toc.md` shows the narrative + a friendly placeholder
+  ("📊 변화이론 도식은 확정 후 그려집니다", render-toc §1). The diagram is generated at Finalize (Step 6).
+  Tell the user this in plain language so they know the picture comes after "확정".
 - Compute the report-only checks for the nudges: `bash rules/validate-critical.sh --audit
   OUT/details/pdm.json` and `--connectivity OUT/details/pdm.json`. Block nothing.
 
@@ -60,6 +63,9 @@ view last). Stay in `DRAFT` (report-only).
 Hand off to **SKILL.md Phase 3b**: flip `meta.gate_mode = "GATE"`, clear the `stale` flags the user has
 confirmed, and run the **hard Critical gate** (`validate-critical.sh` without `--audit`, then C06, then the
 Advisory loop). baseline/target may stay `추후 확정`. Only then is it finalized.
+- **Now the ToC diagram gets drawn.** Because `gate_mode = "GATE"`, re-rendering `toc.md` (Phase 3b step 5)
+  emits the full Mermaid diagram in place of the earlier "확정 후 출력" placeholder. Confirm the diagram is
+  present in the finalized `toc.md`.
 
 OUTPUT OF THIS PHASE: a rendered **draft** (primary view + monitoring, gate_mode DRAFT) followed by a
 clear next-action prompt that has already started the refinement conversation.

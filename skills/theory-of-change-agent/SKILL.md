@@ -249,7 +249,9 @@ Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+
    finalize (clearing `stale`, the Advisory refinement) changed nodes, so the rendered views are stale:
    rewrite `out/details/monitoring.md`, then the **primary view LAST** — **`out/toc.md`** for
    `biz-dev`/`csr-esg` (the 변화이론 도식 MUST be regenerated so its nodes/edges match the finalized chain)
-   or **`out/pdm.md`** for `intl-dev`. Then show the final self-check summary + the primary view path.
+   or **`out/pdm.md`** for `intl-dev`. Because `gate_mode` is now `GATE`, `render-toc-md.md` emits the
+   **actual Mermaid diagram** in place of the draft "확정 후 출력" placeholder — verify the diagram is
+   present. Then show the final self-check summary + the primary view path.
 
 ## Phase 4 — Edit propagation + connectivity nudges (post-generation)
 The node graph (the `from_*` links) **is** the Theory of Change — what makes it a *theory* is that each
