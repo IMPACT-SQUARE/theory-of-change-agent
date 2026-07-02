@@ -60,9 +60,10 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 </Reference_Files>
 
 <Language_Policy>
-- **Detect the output language FIRST — before asking anything — and LOCK it for the whole session.** Read
-  the user's first substantive message: Korean → `meta.lang = ko`; English → `en`. `--lang` overrides. If
-  genuinely mixed/ambiguous, ask that one language question in both, then lock.
+- **Set the output language FIRST — before asking anything — and LOCK it for the whole session.** Priority:
+  `--lang` > a clear full-sentence in the user's first message > **ASK**. If the message is a bare skill
+  call, a single keyword, mixed, or there is ANY doubt, **ask a neutral bilingual question (`한국어` /
+  `English`) and never default to Korean.** Then lock `meta.lang`.
 - **Mirror that language CONSISTENTLY in EVERY user-facing surface**: the use-case / situation / pace
   questions and their option labels, the progress lines, the connectivity nudges, the social-problem
   reframes, the summaries, AND every narrative field / indicator / rendered table. Do **not** drift — an
@@ -85,10 +86,16 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    `--lang en|ko`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
 
 ## Phase 1 — Language, use-case & mode selection
-00. **Lock the output language FIRST** (before any question), per `<Language_Policy>`. Detect from the
-    user's first message (or `--lang`), set `meta.lang`, and conduct **everything below** — the use-case /
-    situation / pace questions, their option labels, progress lines, nudges — in that language. The Korean
-    option text shown below is the `ko` example; translate it when `meta.lang = en`.
+00. **Set the output language FIRST — before any other question, and NEVER default to Korean silently.**
+    - If `--lang` is given, use it.
+    - Else if the user's first message is clearly a full request in one language (an English or Korean
+      sentence), use that language.
+    - **Otherwise — a bare skill call (e.g. just invoking the skill), a single keyword, mixed, or ANY
+      doubt — ASK**, using the interactive choice tool, with a **bilingual** (neutral) question:
+      question `Language / 언어`, options `한국어` and `English`. Do not guess.
+    Set `meta.lang`. From here, **every** user-facing string — all the questions below, their option
+    labels, progress lines, nudges, narratives — is in `meta.lang`; the Korean text in these prompts is the
+    `ko` default, translate it when `meta.lang = en`.
 0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
    the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
    structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
