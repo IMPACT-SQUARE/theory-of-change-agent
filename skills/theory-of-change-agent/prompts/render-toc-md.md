@@ -71,6 +71,19 @@ flowchart LR
   oc_1 -.-> ind_oc_1_1
 ```
 
+### 1b. Text fallback (ALWAYS emit right below the Mermaid block, when drawn)
+Some viewers don't render Mermaid (e.g. **Antigravity / VS Code without the Mermaid preview extension** — see
+README "Antigravity"). So directly under the ```mermaid``` block, also emit a **renderer-independent ASCII
+causal flow** in a plain (no-language) fenced block, built from the **same `from_*` links** — identical
+content, never a reduced version. This guarantees the theory is visible everywhere. Format: one line per
+chain, left→right with `→`, outcome indicators in `[ ]`, one indented `└─` branch when an output feeds
+multiple outcomes. Example:
+```
+사회문제: 산모 사망 → [활동 1.1 산전관리 교육] → [산출물 1.1 교육 이수] → (성과 1 시설분만 실천 ↑) → 영향: 모자보건 개선
+                                                                          └ 지표: [1-1 시설분만율]
+```
+Keep it compact; every node and edge in the Mermaid diagram must also appear here.
+
 ## 2. Narrative ToC (level by level)
 Top→bottom: **사회문제 → 투입물(있을 때) → 활동 → 산출물 → 성과 → 영향**. For each level list the items with
 their narratives. For 성과/산출물, show indicators by name only (NO baseline/target numbers — those live in
@@ -80,11 +93,12 @@ the monitoring view and default to `추후 확정`). Use the dotted/dash display
 ## 3. 측정 준비 — 직접 수집해야 할 데이터 (Measurement readiness)
 The most useful insight for a `biz-dev`/`csr-esg` user is: *"to measure your impact later, you must
 collect THESE data."* The agent cannot collect these for the user, so make the to-do explicit. Build this
-section **only from existing indicator fields** (`name`, `data_source`, `timing`, `collector`, `baseline`)
-— do not invent indicators.
+section **only from existing indicator fields** (`name`, `definition`, `formula`, `data_source`, `timing`,
+`collector`, `baseline`) — do not invent indicators.
 
 For every output and outcome indicator, list a row:
-- **지표** (name) · **무엇을/어디서** (data_source) · **언제** (timing) · **누가** (collector).
+- **지표** (name) · **지표 정의** (definition) · **산출식** (formula, `-` if qualitative) · **무엇을/어디서**
+  (data_source) · **언제** (timing) · **누가** (collector).
 - Mark **"직접 트래킹 필요"** when the data is not an operational by-product the team already has — i.e.
   survey / interview / FGD / assessment / 평가-based, or `collector` is the project team. Mark
   **"운영데이터(자동 확보)"** when it falls out of normal operations (e.g. 보급/판매 로그, 가입 로그).
@@ -110,6 +124,9 @@ important to track).
   diagram appears only once finalized (`gate_mode` GATE/AUDIT).
 - When drawn: every activity/output/outcome/impact in `pdm.json` appears as a node; every `from_*` link
   appears as an edge (no silent drops, no invented edges).
+- **When drawn, the §1b text fallback is ALSO emitted** (plain fenced block) with the same nodes/edges — so
+  the flow is visible in viewers without Mermaid (Antigravity).
+- **Measurement tables (§3, monitoring) carry `지표 정의` and `산출식`** (formula `-` when qualitative).
 - **No `subgraph` level containers** — levels are shown by LR flow + per-node class color only.
 - Each **outcome's indicators** appear as attached (`-.->`) nodes; no baseline/target numbers in the diagram.
 - Mermaid node ids are unique and contain only `[A-Za-z0-9_]`.

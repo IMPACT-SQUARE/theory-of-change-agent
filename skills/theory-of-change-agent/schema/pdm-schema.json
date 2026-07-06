@@ -131,7 +131,8 @@
       "properties": {
         "id": { "type": "string", "pattern": "^ind-[a-z]+-\\d+(\\.\\d+)*$" },
         "name": { "type": "string" },
-        "definition": { "type": "string" },
+        "definition": { "type": "string", "description": "What the indicator measures, in one line (지표 정의)." },
+        "formula": { "type": ["string", "null"], "description": "산출식 — the calculation, when derivable (rate/ratio/index/count): e.g. \"시설분만율 = 시설분만 건수 ÷ 전체 분만 건수 × 100\". Null for purely qualitative indicators." },
         "baseline": { "type": ["string", "number", "null"], "description": "Deferred by default: the canonical placeholder is the string \"추후 확정\" (set post-finalization from field survey — koica-rules.md §4.8). A concrete value may be supplied if the user volunteers one." },
         "target": { "type": ["string", "number", "null"], "description": "Deferred by default: canonical placeholder \"추후 확정\". When deferred, A05 (target realism) is N/A. koica-rules.md §4.8." },
         "target_rationale": { "type": ["string", "null"], "description": "Deferred with the target ('추후 확정') unless a concrete target is supplied." },

@@ -22,6 +22,12 @@ conforms to `schema/pdm-schema.json` and the rules in `rules/koica-rules.md`. Us
 - `outputs`: 3-4 (C02); narrative in NOUN form (C06); each has ≥1 indicator with a non-empty `mov` (C04).
 - every indicator: name, definition, mov, data_source, timing, collector, disaggregation (use
   `"성별"`/`"gender"` on ≥1 indicator), is_proxy (+justification if true).
+  - **`definition`**: one line stating what the indicator actually measures (지표 정의) — always fill it.
+  - **`formula`** (산출식, *when derivable*): if the indicator is quantitative (a **율/비율/지수/건수/평균**),
+    write the calculation, e.g. `"시설분만율 = 시설분만 건수 ÷ 전체 분만 건수 × 100"`, `"교육 이수율 = 이수자 수 ÷
+    등록자 수 × 100"`. Prefer a **change/rate** form over a raw count where the indicator implies one. For a
+    purely qualitative indicator set `formula` to `null` (don't force one). Never invent numbers in the
+    formula — it's the *expression*, not a target.
   - **`baseline`, `target`, `target_rationale` default to the string `"추후 확정"`** (deferred to
     post-finalization field survey — koica-rules.md §4.8). Only set a concrete value if the user
     explicitly volunteered one. **Never invent baseline/target numbers.**

@@ -13,13 +13,13 @@ Outcome indicator with its full measurement plan. Render only JSON data; bilingu
 
 Then two sections — **성과 (Outcomes)** then **산출물 (Outputs)** — each a table:
 
-| 지표명 (Indicator) | 지표 정의 (Definition) | 기초치 (Baseline) | 목표치 (Target) | 목표치 선정 근거 (Rationale) | 데이터 출처 (Source) | 측정 시기 (Timing) | 수집 주체 (Collector) | 분리 (Disaggregation) |
-|---|---|---|---|---|---|---|---|---|
+| 지표명 (Indicator) | 지표 정의 (Definition) | 산출식 (Formula) | 기초치 (Baseline) | 목표치 (Target) | 목표치 선정 근거 (Rationale) | 데이터 출처 (Source) | 측정 시기 (Timing) | 수집 주체 (Collector) | 분리 (Disaggregation) |
+|---|---|---|---|---|---|---|---|---|---|
 
 One row per indicator (iterate `outcomes[].indicators[]`, then `outputs[].indicators[]`). Use the
-indicator fields: name, definition, baseline, target, target_rationale, data_source, timing, collector,
-disaggregation. Show empty fields as `-`. For proxy indicators, append "(proxy: {proxy_justification})"
-to the definition.
+indicator fields: name, definition, **formula**, baseline, target, target_rationale, data_source, timing,
+collector, disaggregation. Show empty fields as `-` (a qualitative indicator's `산출식` is `-`). For proxy
+indicators, append "(proxy: {proxy_justification})" to the definition.
 
 - **Prefix each 지표명 with its display number** (same scheme as `render-pdm-md.md` §Display numbering):
   output `j.k`'s m-th indicator → `j.k.m` (DOTS), outcome j's m-th indicator → `j-m` (DASH). e.g.
