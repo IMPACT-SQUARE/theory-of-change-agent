@@ -93,12 +93,15 @@ the monitoring view and default to `추후 확정`). Use the dotted/dash display
 ## 3. 측정 준비 — 직접 수집해야 할 데이터 (Measurement readiness)
 The most useful insight for a `biz-dev`/`csr-esg` user is: *"to measure your impact later, you must
 collect THESE data."* The agent cannot collect these for the user, so make the to-do explicit. Build this
-section **only from existing indicator fields** (`name`, `definition`, `formula`, `data_source`, `timing`,
-`collector`, `baseline`) — do not invent indicators.
+section **only from existing indicator fields** (`name`, `definition`, `measurement_target`, `formula`,
+`data_source`, `timing`, `collector`, `baseline`) — do not invent indicators.
 
-For every output and outcome indicator, list a row:
-- **지표** (name) · **지표 정의** (definition) · **산출식** (formula, `-` if qualitative) · **무엇을/어디서**
-  (data_source) · **언제** (timing) · **누가** (collector).
+For every output and outcome indicator, list a row (this mirrors the 사회공헌 지표 DB: 지표명 · 지표 정의 ·
+측정 대상 · 측정방법):
+- **지표** (name) · **지표 정의** (definition) · **측정 대상** (measurement_target, `-` if null) ·
+  **측정방법·산출식** (formula — the 사회공헌 지표 DB style: a short 측정방법 문장/식 such as `(사후 평균) − (사전 평균)`
+  or `해당 기간 … 인원 수`; `-` if qualitative) · **무엇을/어디서** (data_source) · **언제** (timing) · **누가**
+  (collector).
 - Mark **"직접 트래킹 필요"** when the data is not an operational by-product the team already has — i.e.
   survey / interview / FGD / assessment / 평가-based, or `collector` is the project team. Mark
   **"운영데이터(자동 확보)"** when it falls out of normal operations (e.g. 보급/판매 로그, 가입 로그).
@@ -126,7 +129,8 @@ important to track).
   appears as an edge (no silent drops, no invented edges).
 - **When drawn, the §1b text fallback is ALSO emitted** (plain fenced block) with the same nodes/edges — so
   the flow is visible in viewers without Mermaid (Antigravity).
-- **Measurement tables (§3, monitoring) carry `지표 정의` and `산출식`** (formula `-` when qualitative).
+- **Measurement tables (§3, monitoring) carry `지표 정의` and `산출식`** (formula `-` when qualitative); the
+  §3 사회공헌 table also carries `측정 대상` (`-` when null / for intl-dev).
 - **No `subgraph` level containers** — levels are shown by LR flow + per-node class color only.
 - Each **outcome's indicators** appear as attached (`-.->`) nodes; no baseline/target numbers in the diagram.
 - Mermaid node ids are unique and contain only `[A-Za-z0-9_]`.

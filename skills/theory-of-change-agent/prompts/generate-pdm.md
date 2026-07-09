@@ -23,11 +23,23 @@ conforms to `schema/pdm-schema.json` and the rules in `rules/koica-rules.md`. Us
 - every indicator: name, definition, mov, data_source, timing, collector, disaggregation (use
   `"성별"`/`"gender"` on ≥1 indicator), is_proxy (+justification if true).
   - **`definition`**: one line stating what the indicator actually measures (지표 정의) — always fill it.
-  - **`formula`** (산출식, *when derivable*): if the indicator is quantitative (a **율/비율/지수/건수/평균**),
-    write the calculation, e.g. `"시설분만율 = 시설분만 건수 ÷ 전체 분만 건수 × 100"`, `"교육 이수율 = 이수자 수 ÷
-    등록자 수 × 100"`. Prefer a **change/rate** form over a raw count where the indicator implies one. For a
-    purely qualitative indicator set `formula` to `null` (don't force one). Never invent numbers in the
-    formula — it's the *expression*, not a target.
+  - **`formula`** (산출식, *when derivable*) — **use-case conditional** (never a target number; a purely
+    qualitative 정성 수준·충족여부 indicator stays `null`):
+    - **`intl-dev` (KOICA PDM) — keep the concise rate/expression form (UNCHANGED):** if the indicator is a
+      **율/비율/지수/건수/평균**, write the calculation, e.g. `"시설분만율 = 시설분만 건수 ÷ 전체 분만 건수 × 100"`,
+      `"교육 이수율 = 이수자 수 ÷ 등록자 수 × 100"`. Prefer a change/rate form over a raw count where the indicator
+      implies one. This is the PDM-matrix style — do **not** switch it to the 측정방법-sentence form below.
+    - **`biz-dev`/`csr-esg` (사업계획·사회공헌) — write a 측정방법-style expression:** phrase `formula` as the
+      actual measurement method (사회공헌·비영리 지표 DB grammar), matching one of these forms:
+      - **사전-사후 변화량** (역량·인식·만족·효능감 변화): `(사후 평가 점수 평균) − (사전 평가 점수 평균)` — the signature
+        Outcome form; prefer it when the indicator names a 향상/증대/변화 in a measured attribute.
+      - **평균** (만족도·추천도(NPS)·척도 점수): `대상 인원의 [속성] 점수의 평균`.
+      - **카운트** (건수·횟수·인원 수): `해당 기간 [대상]의 건수/횟수/인원 수` (typical for 산출·과정 지표).
+      - **비율/율**: `분자 ÷ 분모 × 100`.
+      Write it as a short 측정방법 문장/식 in `meta.lang`, not a KOICA rate name.
+  - **`measurement_target`** (측정 대상) — **biz-dev/csr-esg only:** who/what is measured, e.g. `"교육 수료
+    인원"`, `"프로그램 참여 창업팀"`, `"설문 응답 참여자"`. For `intl-dev` (KOICA PDM) leave it `null` (the PDM
+    form has no 측정 대상 column). Don't repeat the whole definition — just name the measured unit/population.
   - **`baseline`, `target`, `target_rationale` default to the string `"추후 확정"`** (deferred to
     post-finalization field survey — koica-rules.md §4.8). Only set a concrete value if the user
     explicitly volunteered one. **Never invent baseline/target numbers.**
