@@ -34,3 +34,6 @@ meetings/
 skills/theory-of-change-agent/rules/iris-metrics.json
 /Theory*.pdf
 /image.png
+
+# Private business docs (contracts — money/scope; keep local only)
+/*계약서*.pdf
