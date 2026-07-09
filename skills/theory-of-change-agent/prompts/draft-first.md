@@ -2,7 +2,7 @@
 
 ROLE: The user wants to **see a draft fast and refine it by talking**, not answer a long interview. The
 draft is the primary view for the use-case (the PDM table for `intl-dev`, the 변화이론 도식 `toc.md` for
-`biz-dev`/`csr-esg`). Ask **one** scoping question, generate a full **draft**, render the primary view,
+`biz-dev`/`csr-esg`/`nonprofit`). Ask **one** scoping question, generate a full **draft**, render the primary view,
 then **immediately start the refinement conversation** (Step 4) — do not go silent. Work in `meta.lang`.
 This mode runs in **gate_mode `DRAFT`** (report-only) until the user says "확정". The guided interview
 (interview modes + GATE) is the control; do NOT merge them.
@@ -22,7 +22,7 @@ Ask a single open question that captures enough to anchor the results chain. Sug
 Call `prompts/generate-pdm.md` in **draft mode**:
 - Populate **every** level: impact, **1+ outcomes** (behavioral-change), **3-4 noun-form outputs** (C06),
   activities wired to outputs (C08), inputs (where applicable), per-link assumptions, and indicators each
-  with a **MoV** (C04). For `biz-dev`/`csr-esg` apply the use-case relaxations (no 수원기관; ToC framing —
+  with a **MoV** (C04). For `biz-dev`/`csr-esg`/`nonprofit` apply the use-case relaxations (no 수원기관; ToC framing —
   koica-rules §11).
 - Best-guess anything the user didn't give; mark **`stale: true` on every node** ("draft — confirm me");
   use **`"추후 확정"`** for `baseline`/`target`/`target_rationale` (koica-rules §4.8).
@@ -30,7 +30,7 @@ Call `prompts/generate-pdm.md` in **draft mode**:
 
 ## Step 3 — Render the primary view immediately
 - Write files per Phase 3 steps 8-9 (source + monitoring in `out/details/`, **primary view LAST**):
-  the primary view is **`out/toc.md`** for `biz-dev`/`csr-esg` (변화이론 뷰) or **`out/pdm.md`** for
+  the primary view is **`out/toc.md`** for `biz-dev`/`csr-esg`/`nonprofit` (변화이론 뷰) or **`out/pdm.md`** for
   `intl-dev`, plus `out/details/monitoring.md`.
 - **In DRAFT, the ToC diagram is NOT drawn yet** — `toc.md` shows the narrative + a friendly placeholder
   ("📊 변화이론 도식은 확정 후 그려집니다", render-toc §1). The diagram is generated at Finalize (Step 6).

@@ -4,13 +4,13 @@ description: |
   변화이론 에이전트 (Theory of Change Agent) — KOICA PDM (Project Design Matrix) 생성 스킬.
   Interviews the user following Theory-of-Change methodology, then produces a PDM matrix +
   monitoring matrix grounded in the KOICA PDM guideline. ALWAYS asks first: the purpose (use-case),
-  then the situation (아이디어만 있음 / 문서 있음) and the pace (차근차근 인터뷰 / 표 먼저).
+  then the situation (아이디어만 있음 / 문서 있음) and the pace (차근차근 인터뷰 / 결과물 먼저).
   Output language mirrors the user's input language.
   Use when the user mentions: "변화이론 에이전트", "theory of change agent", "PDM",
   "project design matrix", "KOICA", "theory of change", "변화이론", "results chain", "로직 모델",
   "logframe", "logical framework", "impact harness", "임팩트 하네스" (legacy name), or wants to
   draft/audit a development-cooperation results matrix.
-argument-hint: "[--use-case intl-dev|biz-dev|csr-esg] [--concept <brief> | --inputs <file> | --draft] [--lang en|ko] [--advisory-threshold 0.8] [--audit]"
+argument-hint: "[--use-case intl-dev|biz-dev|csr-esg|nonprofit] [--concept <brief> | --inputs <file> | --draft] [--lang en|ko] [--advisory-threshold 0.8] [--audit]"
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
@@ -20,9 +20,9 @@ allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 **변화이론 에이전트 (Theory of Change Agent)** turns a vague project idea (or a partial draft) into a
 guideline-aligned results chain through a one-question-at-a-time interview, then renders it. It serves
 several **use-cases** that share one underlying results-chain engine and differ only in the rendered
-end-view (Phase 1 step 0): **국제개발/KOICA PDM** renders a **KOICA-compliant PDM matrix** (the most
-mature path); **사업개발(소셜벤처·사회공헌·비영리)** and **CSR/ESG** render a **Theory-of-Change view**
-(node diagram); **투심(임팩트 투자심사)** is planned. The KOICA PDM path encodes the writing rules
+end-view (Phase 1 step 0): **국제개발협력(PDM)** renders a **KOICA-guideline-compliant PDM matrix** (the most
+mature path); **임팩트 스타트업(신규사업개발)**, **사회공헌(CSR, ESG)**, and **비영리** render a
+**Theory-of-Change view** (node diagram); **임팩트 투자사(투심)** is planned. The KOICA PDM path encodes the writing rules
 (`rules/koica-rules.md`) and gates on a deterministic + LLM-judged self-check (`rules/checklist.json`,
 `rules/validate-critical.sh`), the same checklist that scores the benchmark. **Always ask the use-case
 first, then the interaction mode** (Phase 1); never pick either unilaterally.
@@ -34,13 +34,13 @@ primary view sits at the top of `out/`; the source JSON and the monitoring detai
 — so opening `out/` lands on the main view, not raw JSON:
 ```
 out/
-├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For biz-dev/csr-esg this is toc.md instead.
+├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For ToC-view use-cases (biz-dev/csr-esg/nonprofit) this is toc.md instead.
 └── details/
     ├── pdm.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
     └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
 ```
 - **Primary end-view at `out/` root** (written LAST): `pdm.md` for `intl-dev`, `toc.md` for
-  `biz-dev`/`csr-esg`. A non-primary view (e.g. `toc.md` on an intl-dev run) also goes in `out/details/`.
+  `biz-dev`/`csr-esg`/`nonprofit`. A non-primary view (e.g. `toc.md` on an intl-dev run) also goes in `out/details/`.
 - **`out/details/pdm.json`** conforms to `schema/pdm-schema.json`; all views are RENDERED from it.
 - Create `out/details/` as needed. Which files are written depends on `meta.use_case` (Phase 3 steps 8-9).
 
@@ -84,7 +84,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 
 ## Phase 0 — Load context
 1. Read `rules/koica-rules.md`, `rules/checklist.json`, and `schema/pdm-schema.json` into context.
-2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg>`, `--concept <brief>`, `--inputs <file>`,
+2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg|nonprofit>`, `--concept <brief>`, `--inputs <file>`,
    `--lang en|ko`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
 
 ## Phase 1 — Language, use-case & mode selection
@@ -101,16 +101,39 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
    the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
    structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
-   environment's interactive choice tool (**3 options**). Set `meta.use_case`.
-     - **국제개발 / KOICA PDM (`intl-dev`)** — ODA·KOICA 사업의 PDM 설계. End-view = **PDM 매트릭스** (`pdm.md`).
-     - **사업개발(`biz-dev`)** — 소셜벤처·사회공헌·비영리·창업의 임팩트 모델 정리 / 아이디어. End-view =
-       **변화이론(ToC) 뷰** (`toc.md`, node diagram). PDM 양식(수원기관 등)은 강제하지 않는다.
-     - **CSR / ESG (`csr-esg`)** — 기업 사회공헌/ESG 프로젝트. End-view = **ToC 뷰** (`toc.md`).
-     - *(투심 / 임팩트 투자심사 `invest-screen` is **backlog** — do NOT offer it as a choice. If the user
+   environment's interactive choice tool (**4 options** — confirmed labels 2026-07-09; do NOT put "KOICA"
+   in a label, PDM is the deliverable name). Set `meta.use_case`.
+     - **국제개발협력 / PDM (`intl-dev`)** — 국제개발(ODA) 사업의 PDM 설계. End-view = **PDM 매트릭스** (`pdm.md`).
+       사업(프로젝트) 단위.
+     - **임팩트 스타트업 / 신규사업개발 (`biz-dev`)** — 소셜벤처·임팩트 스타트업의 임팩트 모델 정리 / 아이디어.
+       End-view = **변화이론(ToC) 뷰** (`toc.md`, node diagram). PDM 양식(수원기관 등)은 강제하지 않는다.
+       조직 단위 입력(사업계획서에 다수 프로젝트) 가능 → step 0b.
+     - **사회공헌 / CSR, ESG (`csr-esg`)** — 기업 사회공헌·ESG 프로젝트. End-view = **ToC 뷰** (`toc.md`). 사업 단위.
+     - **비영리 (`nonprofit`)** — 재단·NGO의 프로그램/보고(기부금 리포트 등). End-view = **ToC 뷰** (`toc.md`).
+       조직 단위 입력(특히 **연차보고서** — 당해년도 전체 사업 포함) 가능 → step 0b.
+     - *(임팩트 투자사 (`invest-screen`, 투심) is **backlog** — do NOT offer it as a choice. If the user
        explicitly asks for 투심, say it's planned and offer the ToC view as a stand-in; koica-rules §11.3.)*
-   **End-view routing (applied in Phase 3):** `intl-dev` → PDM matrix; `biz-dev`/`csr-esg` → ToC view;
-   `invest-screen` → planned. The PDM gate/rules below apply in full to `intl-dev`; for `biz-dev`/`csr-esg`
-   the same results-chain is built but PDM-form-specific requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
+   **End-view routing (applied in Phase 3):** `intl-dev` → PDM matrix; **ToC-view use-cases**
+   (`biz-dev`/`csr-esg`/`nonprofit`) → ToC view; `invest-screen` → planned. The PDM gate/rules below apply
+   in full to `intl-dev`; for ToC-view use-cases the same results-chain is built but PDM-form-specific
+   requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
+0b. **Unit branching — 다수 프로젝트 감지 (org-unit inputs).** 변화이론은 **프로젝트 단위**로 만들어진다.
+   `intl-dev`/`csr-esg` are project-unit by nature — set `meta.unit = "project"` and skip this step.
+   For **`biz-dev`/`nonprofit`**, when the user provides documents (Phase 1 Q1 = `inputs`), READ them first
+   and judge whether they describe **one project or multiple projects** (예: 조직 사업계획서, 비영리 연차보고서
+   — 당해년도 전체 사업이 들어 있음).
+   - **Single project detected** → `meta.unit = "project"`, proceed normally.
+   - **다수 프로젝트 detected** → `meta.unit = "org"`, record `meta.org_context` (org_name, mission if stated,
+     projects[] with one-line summaries), then ASK the user with the interactive choice tool — **exactly 2
+     options** (never offer a "여러 프로젝트를 하나씩 전부 돌리기" option):
+       1. **전체 프로젝트** — 조직 전체 구조도: 미션 → 프로젝트들이 어떻게 연결되는지 한눈에. Full ToC를 프로젝트마다
+          만들지 않는다. Render a compact **조직 구조도** (mission at the root, each project as a node with its
+          핵심 성과 한 줄; Mermaid + text fallback, same style rules as render-toc §1/1b) and, below it, offer:
+          "특정 프로젝트 하나를 골라 full 변화이론으로 들어갈 수도 있어요."
+       2. **특정 프로젝트** — 감지된 프로젝트 목록에서 하나를 고르게 한 뒤(`meta.org_context.selected_project`),
+          그 프로젝트를 대상으로 normal single-project flow를 진행한다 (project_name = 선택 프로젝트; org/mission
+          은 org_context에 보존 — the ToC view may note the mission linkage).
+   Wording rule: say **"프로젝트"**, not "프로그램" (다수 프로젝트, 전체 프로젝트, 특정 프로젝트).
 1. Determine the **approach via TWO friendly, user-facing questions** — ALWAYS ask both before doing
    anything else; never pick unilaterally. Use the environment's interactive choice tool (plain text only
    if none exists). A `--concept`/`--inputs` flag pre-answers Q1 and `--draft` pre-answers Q2 (skip what is
@@ -121,7 +144,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
        점검만 하려는 거면 감사 모드로: AUDIT.)
    **Q2 — 어떻게 진행할까요?** (`interaction`)
      - **질문에 하나씩 답하며 차근차근 만들래요** (`interview`) — 가장 꼼꼼. 대략 아이디어 10–20분 / 문서 5–10분.
-     - **표를 먼저 만들고 그 위에서 고칠래요** (`draft`) — 가장 빠름, 대략 2–5분.
+     - **결과물을 먼저 만들고 그 위에서 고칠래요** (`draft`) — 가장 빠름, 대략 2–5분.
    **Resolve to the internal flow** and set `meta.input_source`, `meta.interaction`, and `meta.mode`:
      - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`.
      - inputs  + interview → **Mode B** (`prompts/interview-b-inputs.md`); `mode:"B"`.
@@ -140,7 +163,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 4. Initialize interview state (keep in working memory / scratch; not written to disk until generation):
    ```json
    {
-     "use_case": "intl-dev|biz-dev|csr-esg|invest-screen", "input_source": "concept|inputs", "interaction": "interview|draft",
+     "use_case": "intl-dev|biz-dev|csr-esg|nonprofit|invest-screen", "input_source": "concept|inputs", "interaction": "interview|draft",
      "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
      "results_chain": { "problem_analysis": null, "goal_analysis": null,
        "impact": null, "outcomes": [], "outputs": [], "activities": [], "inputs": null },
@@ -222,7 +245,7 @@ Hard interview rules (mirror `koica-rules.md`):
    - `intl-dev` → **`pdm.md`** via `prompts/render-pdm-md.md` (KOICA 4×4: Impact row shows `-` in OVI/MoV;
      Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column). The
      ToC node diagram (`prompts/render-toc-md.md` §1) MAY be appended as an optional figure.
-   - `biz-dev` / `csr-esg` → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
+   - ToC-view use-cases (`biz-dev`/`csr-esg`/`nonprofit`) → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
      diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). For `intl-dev`
      you MAY also write `toc.md`, but write `pdm.md` **last**.
    > **Write order matters — end on the human-readable view.** Sequence: `out/details/pdm.json` (written
@@ -250,7 +273,7 @@ Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+
 5. **Re-render ALL views from the finalized `pdm.json`, per Phase 3 steps 8-9** — do not skip this. The
    finalize (clearing `stale`, the Advisory refinement) changed nodes, so the rendered views are stale:
    rewrite `out/details/monitoring.md`, then the **primary view LAST** — **`out/toc.md`** for
-   `biz-dev`/`csr-esg` (the 변화이론 도식 MUST be regenerated so its nodes/edges match the finalized chain)
+   `biz-dev`/`csr-esg`/`nonprofit` (the 변화이론 도식 MUST be regenerated so its nodes/edges match the finalized chain)
    or **`out/pdm.md`** for `intl-dev`. Because `gate_mode` is now `GATE`, `render-toc-md.md` emits the
    **actual Mermaid diagram** in place of the draft "확정 후 출력" placeholder — verify the diagram is
    present. Then show the final self-check summary + the primary view path.
@@ -283,7 +306,7 @@ On any edit to node X:
    `stale: true` and are listed in the self-check report.
 5. Re-run the Critical (deterministic C05/C08/C06) + Advisory checks on modified nodes, then **re-render
    ALL views from the updated `pdm.json` per Phase 3 steps 8-9** (monitoring.md, then the primary view
-   LAST — `toc.md` for `biz-dev`/`csr-esg` so the 변화이론 도식 reflects the edit, or `pdm.md` for
+   LAST — `toc.md` for ToC-view use-cases so the 변화이론 도식 reflects the edit, or `pdm.md` for
    `intl-dev`). An edit that isn't re-rendered leaves a stale diagram.
 
 > **Worked example.** User edits `act-1`. Reverse-lookup finds `op-1` (its `from_activities` contains

@@ -453,14 +453,15 @@ differ per `meta.use_case` (SKILL.md Phase 1 step 0).
 | use_case | who | end-view | PDM-form requirements |
 |---|---|---|---|
 | `intl-dev` | 국제개발 / KOICA 사업 | PDM 매트릭스 (`pdm.md`) | full (this file applies in full) |
-| `biz-dev` | 소셜벤처·사회공헌·비영리·창업 | ToC 뷰 (`toc.md`, node diagram) | relaxed (no 수원기관, inputs optional — §4.1, §11.1) |
-| `csr-esg` | 기업 CSR/ESG | ToC 뷰 (`toc.md`) | relaxed |
+| `biz-dev` | 임팩트 스타트업 / 신규사업개발 (소셜벤처) — 조직 단위 가능 | ToC 뷰 (`toc.md`, node diagram) | relaxed (no 수원기관, inputs optional — §4.1, §11.1) |
+| `csr-esg` | 사회공헌 / CSR, ESG (기업) | ToC 뷰 (`toc.md`) | relaxed |
+| `nonprofit` | 비영리 (재단·NGO) — 조직 단위 가능(연차보고서) | ToC 뷰 (`toc.md`) | relaxed (same as biz-dev/csr-esg) |
 | `invest-screen` | 투심 / 임팩트 투자심사 | (planned) prose opinion | n/a |
 
 ### 11.1 ODA-form requirements are use-case-specific
 - **`inputs` (투입물) and the recipient/수원기관 column are ODA/`intl-dev` constructs** [§3.1, p.19–20].
   KOICA 사업은 전체 예산 기반이라 투입물·수원기관이 핵심이지만, 창업·사회공헌 모델은 인풋 규모가 자유롭고
-  대상이 기관이 아니라 최종 수혜자다. For `biz-dev`/`csr-esg`, **OMIT the `recipient`/수원기관 block**
+  대상이 기관이 아니라 최종 수혜자다. For `biz-dev`/`csr-esg`/`nonprofit`, **OMIT the `recipient`/수원기관 block**
   and keep `inputs` minimal (the venture's own resources/period); do not force a 수원기관 row. The
   variable, behavioral logic (활동 → 산출물 → 성과) is what matters there. (`schema/pdm-schema.json` makes
   `inputs.recipient` optional accordingly; `inputs` itself stays present for shape validity.)

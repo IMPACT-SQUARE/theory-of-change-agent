@@ -3,7 +3,7 @@
 ROLE: Before building the results chain, pin down the **사회문제** and **correct** it against the
 social-problem definition (`rules/value-rules.md` §V1), grounded in **변화이론/로직모델** (do NOT cite any
 internal source name to the user — see value-rules.md USER-FACING FRAMING). The social problem is the first slide of a Theory of
-Change and the anchor for the whole chain. This stage matters most for `biz-dev`/`csr-esg`; it also
+Change and the anchor for the whole chain. This stage matters most for `biz-dev`/`csr-esg`/`nonprofit`; it also
 sharpens the problem analysis for `intl-dev` PDMs. Ask **one question per turn**.
 
 ## Steps

@@ -1,7 +1,7 @@
 # Prompt: Render toc.md (Theory-of-Change view + node diagram)
 
 ROLE: Render `OUT/details/pdm.json` into `OUT/toc.md` — the **Theory-of-Change (변화이론) view** used for the
-`biz-dev` and `csr-esg` use-cases (and optionally alongside the PDM for `intl-dev`). Same underlying data
+ToC-view use-cases (`biz-dev`/`csr-esg`/`nonprofit`; and optionally alongside the PDM for `intl-dev`). Same underlying data
 as the PDM; this view emphasizes the **causal flow and node connections** rather than the KOICA 4×4 form.
 Render only what is in the JSON. Keep KOICA labels bilingual; write content in `meta.lang`.
 
@@ -9,7 +9,7 @@ Render only what is in the JSON. Keep KOICA labels bilingual; write content in `
 ```
 # 변화이론 (Theory of Change) — {meta.project_name}
 ```
-If `meta.use_case` is present, note it (e.g. `사업개발 (biz-dev)` / `CSR·ESG (csr-esg)`).
+If `meta.use_case` is present, note it (e.g. `임팩트 스타트업/신규사업개발 (biz-dev)` / `사회공헌 (csr-esg)` / `비영리 (nonprofit)`).
 
 ## 1. Node diagram (Mermaid) — the heart of the view
 **Draft gate (important):** if `meta.gate_mode = "DRAFT"` (a draft-first draft not yet finalized), do
@@ -40,7 +40,7 @@ Node id: each `pdm.json` id → Mermaid-safe (replace non-alphanumerics with `_`
   2026-07-01). Label = the indicator name with its `j-m` number; **NO baseline/target numbers**. (Output/
   activity indicators stay in §3 + monitoring to keep the diagram readable; add them only on request.)
 - **투입물(Inputs)** — a node only when `meta.use_case = intl-dev` and `inputs` is present (§11.1); class
-  `input`. Omit for `biz-dev`/`csr-esg`.
+  `input`. Omit for `biz-dev`/`csr-esg`/`nonprofit`.
 
 **Edges** (child→parent in data = upstream→downstream in the flow):
 - 사회문제 → each top-level activity; 투입물(if shown) → each activity.
@@ -91,7 +91,7 @@ the monitoring view and default to `추후 확정`). Use the dotted/dash display
 `render-pdm-md.md` (output `j.k`, output indicator `j.k.m`, outcome indicator `j-m`).
 
 ## 3. 측정 준비 — 직접 수집해야 할 데이터 (Measurement readiness)
-The most useful insight for a `biz-dev`/`csr-esg` user is: *"to measure your impact later, you must
+The most useful insight for a ToC-view (`biz-dev`/`csr-esg`/`nonprofit`) user is: *"to measure your impact later, you must
 collect THESE data."* The agent cannot collect these for the user, so make the to-do explicit. Build this
 section **only from existing indicator fields** (`name`, `definition`, `measurement_target`, `formula`,
 `data_source`, `timing`, `collector`, `baseline`) — do not invent indicators.
@@ -134,4 +134,4 @@ important to track).
 - **No `subgraph` level containers** — levels are shown by LR flow + per-node class color only.
 - Each **outcome's indicators** appear as attached (`-.->`) nodes; no baseline/target numbers in the diagram.
 - Mermaid node ids are unique and contain only `[A-Za-z0-9_]`.
-- For `biz-dev`/`csr-esg`: no 수원기관/투입물 nodes are forced in.
+- For `biz-dev`/`csr-esg`/`nonprofit`: no 수원기관/투입물 nodes are forced in.

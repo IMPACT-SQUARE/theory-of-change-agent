@@ -15,7 +15,14 @@
         "created_at": { "type": "string", "format": "date" },
         "approved_at": { "type": ["string", "null"] },
         "lang": { "type": "string", "enum": ["ko", "en"] },
-        "use_case": { "type": "string", "enum": ["intl-dev", "biz-dev", "csr-esg", "invest-screen"], "description": "What the user is doing (asked first, before mode). intl-dev = 국제개발/KOICA PDM (PDM matrix view); biz-dev = 사업개발 소셜벤처·사회공헌·비영리 (Theory-of-Change view); csr-esg = CSR/ESG project (ToC view); invest-screen = 투심 임팩트 투자심사 (planned, not yet implemented). The results-chain logic is identical across use-cases; only the rendered end-view and which structures are required differ." },
+        "use_case": { "type": "string", "enum": ["intl-dev", "biz-dev", "csr-esg", "nonprofit", "invest-screen"], "description": "What the user is doing (asked first, before mode). Confirmed labels (2026-07-09): intl-dev = 국제개발협력(PDM) — PDM matrix view, 사업 단위; biz-dev = 임팩트 스타트업(신규사업개발) — ToC view, 조직 단위 가능; csr-esg = 사회공헌(CSR, ESG) — ToC view, 사업 단위; nonprofit = 비영리(재단·NGO) — ToC view, 조직 단위 가능(연차보고서 입력 잦음); invest-screen = 임팩트 투자사 (투심; backlog, not offered). The results-chain logic is identical across use-cases; only the rendered end-view and which structures are required differ. ToC-view use-cases = biz-dev, csr-esg, nonprofit." },
+        "unit": { "type": "string", "enum": ["project", "org"], "description": "입력 단위. project = 사업(프로젝트) 하나 (intl-dev, csr-esg 기본). org = 조직 단위 입력 (biz-dev, nonprofit에서 가능 — 다수 프로젝트 포함 문서). 변화이론은 프로젝트 단위로 만들어지므로, org 입력이며 다수 프로젝트가 감지되면 사용자에게 [전체 프로젝트 vs 특정 프로젝트] 분기를 물어야 한다 (SKILL Phase 1 step 0b)." },
+        "org_context": { "type": ["object", "null"], "description": "unit=org일 때의 조직 컨텍스트. 특정 프로젝트를 골라 내려간 경우에도 부모 조직 정보를 보존한다.", "properties": {
+          "org_name": { "type": "string" },
+          "mission": { "type": ["string", "null"], "description": "조직 미션 — 전체 프로젝트 뷰에서 각 프로젝트가 미션과 어떻게 연결되는지 보여주는 축." },
+          "projects": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "summary": { "type": ["string", "null"] } }, "required": ["name"] }, "description": "입력에서 감지된 프로젝트 목록." },
+          "selected_project": { "type": ["string", "null"], "description": "특정 프로젝트 분기에서 사용자가 고른 프로젝트 이름. 전체 프로젝트 뷰면 null." }
+        } },
         "input_source": { "type": "string", "enum": ["concept", "inputs"], "description": "Q1 of Phase 1: concept = user has only an idea; inputs = user has documents (plan/draft/existing PDM) to read." },
         "interaction": { "type": "string", "enum": ["interview", "draft"], "description": "Q2 of Phase 1: interview = step-by-step Q&A; draft = table-first (generate a draft then edit)." },
         "mode": { "type": "string", "enum": ["A", "B", "C"], "description": "Resolved legacy label: A = concept+interview, B = inputs+interview (also inputs+draft, with gate_mode DRAFT), C = concept+draft. Derived from input_source × interaction." },
@@ -102,7 +109,7 @@
     "inputs": {
       "type": "object",
       "required": ["koica"],
-      "description": "투입물. ODA/intl-dev construct (KOICA 사업은 전체 예산 기반). For biz-dev/csr-esg, keep minimal and omit the recipient/수원기관 block (koica-rules.md §11.1).",
+      "description": "투입물. ODA/intl-dev construct (KOICA 사업은 전체 예산 기반). For ToC-view use-cases (biz-dev/csr-esg/nonprofit), keep minimal and omit the recipient/수원기관 block (koica-rules.md §11.1).",
       "properties": {
         "koica": {
           "type": "object",
@@ -114,7 +121,7 @@
         },
         "recipient": {
           "type": "object",
-          "description": "수원기관 분담재원/기타자원. ODA/intl-dev only — OMIT for biz-dev/csr-esg use-cases (the target is the end beneficiary, not a recipient institution).",
+          "description": "수원기관 분담재원/기타자원. ODA/intl-dev only — OMIT for ToC-view use-cases (biz-dev/csr-esg/nonprofit) (the target is the end beneficiary, not a recipient institution).",
           "properties": {
             "contribution": { "type": ["string", "null"] },
             "other_resources": { "type": ["string", "null"] }
@@ -133,7 +140,7 @@
         "name": { "type": "string" },
         "definition": { "type": "string", "description": "What the indicator measures, in one line (지표 정의)." },
         "formula": { "type": ["string", "null"], "description": "산출식 — the calculation, when derivable (rate/ratio/index/count): e.g. \"시설분만율 = 시설분만 건수 ÷ 전체 분만 건수 × 100\". Null for purely qualitative indicators." },
-        "measurement_target": { "type": ["string", "null"], "description": "측정 대상 — what/whom is being measured (사회공헌·비영리 지표 DB column). Fill ONLY for biz-dev/csr-esg use-cases; null for intl-dev (KOICA PDM), which does not use this column." },
+        "measurement_target": { "type": ["string", "null"], "description": "측정 대상 — what/whom is being measured (사회공헌·비영리 지표 DB column). Fill ONLY for ToC-view use-cases (biz-dev/csr-esg/nonprofit); null for intl-dev (KOICA PDM), which does not use this column." },
         "baseline": { "type": ["string", "number", "null"], "description": "Deferred by default: the canonical placeholder is the string \"추후 확정\" (set post-finalization from field survey — koica-rules.md §4.8). A concrete value may be supplied if the user volunteers one." },
         "target": { "type": ["string", "number", "null"], "description": "Deferred by default: canonical placeholder \"추후 확정\". When deferred, A05 (target realism) is N/A. koica-rules.md §4.8." },
         "target_rationale": { "type": ["string", "null"], "description": "Deferred with the target ('추후 확정') unless a concrete target is supplied." },

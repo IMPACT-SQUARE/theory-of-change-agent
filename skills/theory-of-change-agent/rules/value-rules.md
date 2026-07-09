@@ -1,7 +1,7 @@
 # Social-value rules (grounded in Theory of Change / logic model)
 
 > Encodes working definitions of **사회문제 / 사회적 가치(=Outcome) / 지표** so the agent can *define and
-> correct* them during the interview — most important for `biz-dev`/`csr-esg`, but it also sharpens the
+> correct* them during the interview — most important for `biz-dev`/`csr-esg`/`nonprofit`, but it also sharpens the
 > Outcome for `intl-dev` PDMs. These definitions are grounded in **변화이론(Theory of Change) / 로직모델**
 > and standard impact-measurement principles (the **counterfactual / 반사실** and **부가성(additionality)**,
 > and **과대추정 지양(conservatism)**). Cross-ref: `koica-rules.md` §3.4 (outcome), §11.
