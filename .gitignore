@@ -37,3 +37,6 @@ skills/theory-of-change-agent/rules/iris-metrics.json
 
 # Private business docs (contracts — money/scope; keep local only)
 /*계약서*.pdf
+
+# Real project budget + PDM source docs (private — keep local only)
+/budget/
