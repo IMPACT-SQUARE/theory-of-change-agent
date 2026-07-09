@@ -59,6 +59,8 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 - `rules/validate-critical.sh` — deterministic validator for the structural Critical rules.
 - `rules/budget-rollup.py` — deterministic budget rollup/validation (B01-B06, koica-rules.md §12); the
   LLM never does budget arithmetic.
+- `rules/hwp-extract.py` — pure-stdlib `.hwp`/`.hwpx` → text extractor for mode-B inputs (no npm needed;
+  routing in `prompts/interview-b-inputs.md` step 1; exit 3 = encrypted/배포용 → ask for a PDF).
 - `schema/pdm-schema.json` — JSON Schema for `pdm.json`.
 - `schema/pdm-example.json` — a complete, guideline-compliant reference instance (Nicaragua).
 - `prompts/*.md` — prompt templates for each phase (see each phase below).

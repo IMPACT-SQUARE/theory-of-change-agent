@@ -49,7 +49,7 @@ nonprofits and impact startups — and multiple projects are detected, it asks w
 **(2) Where are you now?**
 
 - **I only have an idea** — the concept exists but nothing is written down yet.
-- **I have documents — a business plan, a draft, an existing PDM** — it reads and uses them. (If the
+- **I have documents — a business plan, a draft, an existing PDM** — it reads and uses them, including PDFs and **Korean HWP files (.hwp/.hwpx)**. (If the
   PDM is already approved, you can get an audit-only review that changes nothing.)
 
 **(3) How do you want to proceed?**

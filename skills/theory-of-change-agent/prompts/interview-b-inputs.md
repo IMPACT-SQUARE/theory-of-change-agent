@@ -6,7 +6,19 @@ fill only the gaps. Work in the user's language. One question per turn. Enforce 
 ## Steps
 
 1. **Ingest** — `Read` the provided file(s). Extract whatever results-chain / PDM structure exists into
-   the `results_chain` state. Map non-standard / pre-2017 labels to the canonical levels:
+   the `results_chain` state.
+   **HWP files (`.hwp`/`.hwpx`)** cannot be `Read` directly — convert to text FIRST (routing per the
+   k-skill hwp convention):
+   - **Route 1 (rich, local only):** if `hwpjs` is available on PATH (`command -v hwpjs` — the
+     `@ohah/hwpjs` npm CLI), prefer `hwpjs to-markdown input.hwp -o out/details/input.md` — it keeps
+     tables/structure. Do NOT `npm install` on the user's machine without asking.
+   - **Route 2 (always works, bundled):** `python3 rules/hwp-extract.py input.hwp -o out/details/input.txt`
+     — pure-stdlib extractor (hwpx = zip+XML full text; hwp 5.x = CFB → BodyText records; falls back to
+     the PrvText preview). Works in the desktop/Antigravity sandbox where npm is unavailable.
+   - **Route 3 (fallback):** exit code 3 means password-encrypted or 배포용 문서 with no readable text —
+     tell the user in `meta.lang` and ask for a **PDF export** of the same document instead.
+   Then `Read` the converted text and proceed. Tell the user the conversion happened (one line).
+   Map non-standard / pre-2017 labels to the canonical levels:
    - 목적 (Project Purpose) → 성과 (Outcome); 목표 (Goal) → 영향 (Impact); 사업목적 → 성과;
      상위목표 → 영향. Record any structure that does not fit the schema (e.g. year-by-year targets,
      multiple outcome groupings) as notes; do NOT force it.

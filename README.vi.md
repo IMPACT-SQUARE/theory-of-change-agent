@@ -49,7 +49,7 @@ chức phi lợi nhuận và startup tạo tác động — và công cụ phát
 **(2) Bạn đang ở giai đoạn nào?**
 
 - **Tôi mới chỉ có ý tưởng** — đã có hình dung về dự án nhưng chưa có tài liệu.
-- **Tôi có tài liệu — kế hoạch kinh doanh, bản nháp, PDM sẵn có** — công cụ sẽ đọc và tận dụng chúng.
+- **Tôi có tài liệu — kế hoạch kinh doanh, bản nháp, PDM sẵn có** — công cụ sẽ đọc và tận dụng chúng, bao gồm PDF và **tệp HWP tiếng Hàn (.hwp/.hwpx)**.
   (Nếu PDM đã được phê duyệt, bạn có thể chỉ yêu cầu rà soát mà không chỉnh sửa gì.)
 
 **(3) Bạn muốn tiến hành như thế nào?**
