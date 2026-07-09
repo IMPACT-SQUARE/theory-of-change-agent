@@ -1,6 +1,6 @@
 # セオリー・オブ・チェンジ エージェント (Theory of Change Agent)
 
-[한국어](README.md) · [English](README.en.md) · **日本語** · [Tiếng Việt](README.vi.md)
+[English](README.md) · [한국어](README.ko.md) · **日本語** · [Tiếng Việt](README.vi.md)
 
 事業の成果構造を**セオリー・オブ・チェンジ（変化の理論）**で整理するツールです。会話のように質問に
 答えていくと、国際開発協力事業なら **PDM（Project Design Matrix、プロジェクト・デザイン・マトリックス）**
@@ -215,7 +215,7 @@ theory-of-change-agent/
 │       ├── schema/          PDM データ形式とサンプル
 │       └── benchmark/       品質チェック用の架空サンプル
 ├── docs/                公開参考資料
-├── README.md            本文書（韓国語）
+├── README.md            英語版 README（本文書: README.ja.md）
 └── LICENSE              ライセンス（MIT）
 ```
 

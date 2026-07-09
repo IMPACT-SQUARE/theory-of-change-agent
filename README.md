@@ -1,209 +1,233 @@
-# 변화이론 에이전트 (Theory of Change Agent)
+# Theory of Change Agent (변화이론 에이전트)
 
-**한국어** · [English](README.en.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
+**English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
 
-사업의 성과 구조를 **변화이론(Theory of Change)** 으로 잡아 주는 도구입니다. 대화하듯 질문에 답하면,
-국제개발협력 사업이면 **PDM(Project Design Matrix, 성과체계표)** 을, 임팩트 스타트업·사회공헌·비영리
-사업이면 **변화이론 도식**을 만들어 줍니다. 클로드 같은 AI 비서 위에서 동작합니다.
+A tool that structures your project's results using a **Theory of Change**. Answer questions in a
+conversational flow, and it produces a **PDM (Project Design Matrix)** for international development
+cooperation projects, or a **Theory-of-Change diagram** for impact startups, corporate social
+responsibility, and nonprofit projects. It runs on AI assistants such as Claude.
 
-빈 표를 앞에 두고 무엇부터 채워야 할지 막막한 순간을 줄이는 것이 목표입니다.
-한 번에 하나씩 묻는 질문에 답하다 보면, KOICA PDM 가이드라인에 맞는 표가 완성됩니다.
-한국어로 답하면 결과도 한국어로, 영어로 답하면 영어로 나옵니다.
-
----
-
-## 무엇을 도와주나요
-
-- **변화이론(Theory of Change)** 의 흐름(투입물 → 활동 → 산출물 → 성과 → 영향)에 따라
-  질문을 던지고, 답을 정리해 결과사슬을 함께 세워 줍니다.
-- 다 만들고 나면 **PDM 표**와 **모니터링 표** 두 가지 문서를 만들어 줍니다.
-- 만들어진 **성과(Outcome)가 진짜 성과인지 두 겹으로 검증**합니다 — ① 대상의 변화가 문제의 원인을
-  회복하는지 따지는 **논리 검증**, ② 글로벌 임팩트 지표 라이브러리 **IRIS+의 593개 지표** 중 가장 가까운
-  지표를 참고용으로 짚어 주는 **근접 지표 매칭**.
-- 마지막에 KOICA 가이드라인의 핵심 규칙을 지켰는지 **자동으로 점검**해 주기 때문에,
-  자주 지적받는 실수를 미리 걸러낼 수 있습니다.
-
-이런 분들에게 유용합니다.
-
-- KOICA 사업에 지원하려고 PDM을 처음 써 보는 분
-- 이미 초안이 있는데 가이드라인에 맞는지 확인받고 싶은 분
-- 아이디어만 있고 아직 성과 구조가 잡히지 않은 분
+The goal is to remove that overwhelming moment of staring at an empty matrix, not knowing where to
+start. Answer one question at a time, and you end up with a matrix aligned with the KOICA PDM
+guideline. Answer in Korean and the output is Korean; answer in English and the output is English.
 
 ---
 
-## 어떻게 시작하나요
+## What it helps with
 
-이 도구는 시작할 때 세 가지를 차례로 물어봅니다.
+- It asks questions following the **Theory of Change** flow (Inputs → Activities → Outputs → Outcomes →
+  Impact) and builds the results chain with you.
+- When done, it produces two documents: the **PDM matrix** and the **monitoring matrix**.
+- It **verifies your Outcomes twice** — ① a **logical check** asking whether the stated change actually
+  recovers the cause of the problem, and ② **nearest-metric matching** against the **593 metrics of
+  IRIS+**, the global impact-metrics library, offered as a reference.
+- Right before finishing, it **automatically checks** the output against the core rules of the KOICA
+  guideline, catching the mistakes reviewers most often flag.
 
-**(1) 무엇을 하려고 하나요?** 네 가지 중에서 고릅니다 — **국제개발협력(PDM)** 이면 PDM 표를,
-**임팩트 스타트업(신규사업개발)** · **사회공헌(CSR, ESG)** · **비영리** 면 변화이론 도식을 만들어 줍니다.
-어느 쪽이든 뒤에서 돌아가는 논리는 같고, 마지막에 보여 주는 결과물의 모양만 다릅니다.
-(다섯 번째인 '임팩트 투자사(투심)'는 이후 개발 예정입니다.)
+It is useful for:
 
-비영리·임팩트 스타트업처럼 **조직 단위 문서**(사업계획서, 연차보고서)를 넣어 여러 프로젝트가 감지되면,
-**전체 프로젝트**(미션과 프로젝트들의 연결 구조도)로 볼지 **특정 프로젝트** 하나로 들어갈지 물어봅니다.
-
-**(2) 지금 어떤 상태인가요?**
-
-- **아이디어만 있어요** — 사업 구상은 있는데 정리된 자료는 아직.
-- **사업계획서·초안·기존 PDM 같은 문서가 있어요** — 그 파일을 읽어서 활용합니다. (이미 승인된 PDM이면 고치지 않고 점검만 받을 수도 있어요.)
-
-**(3) 어떻게 진행할까요?**
-
-- **질문에 하나씩 답하며 차근차근** — 가장 꼼꼼합니다. (아이디어 약 10–20분 · 문서 약 5–10분)
-- **결과물을 먼저 만들고 그 위에서 고치기** — 가장 빠릅니다. (약 2–5분) 일단 초안 결과물을 만들어 주고, 마음에 안 드는 부분을 고쳐 나간 뒤 "확정"하면 품질 점검을 거쳐 마무리합니다.
+- People writing a PDM for the first time for a KOICA application
+- People with an existing draft who want it checked against the guideline
+- People with only an idea and no results structure yet
 
 ---
 
-## 무엇이 만들어지나요
+## How to start
 
-작업이 끝나면 결과물이 파일로 저장됩니다.
+The tool asks three things in order.
 
-- **PDM 표 (`pdm.md`)**: KOICA 양식 그대로, 영향 / 성과 / 산출물 / 활동을 가로 4칸(요약, 검증지표, 검증수단, 중요가정)으로 정리한 표입니다. 국제개발(KOICA) 사업의 기본 결과물입니다.
-- **변화이론 도식 (`toc.md`)**: 활동에서 산출물로, 산출물에서 성과로 이어지는 연결을 그림(노드 다이어그램)으로 보여 줍니다. 임팩트 스타트업·사회공헌·비영리에서는 이 도식이 기본 결과물이고, 임팩트를 측정하려면 어떤 데이터를 직접 모아 둬야 하는지도 함께 알려 줍니다.
-- **모니터링 표 (`monitoring.md`)**: 지표마다 정의, 산출식, 기초치, 목표치, 근거, 자료 출처, 측정 시기, 수집 주체, 분리 기준을 정리한 표입니다.
-- **사업 예산서 (`budget.md`, 선택)**: 국제개발협력(PDM)에서 원하면 활동별 세목·산출근거(단가×수량×횟수)·분담·일반관리비까지 PDM과 연결된 예산 초안을 함께 잡아 줍니다. 합계 계산과 검증은 스크립트가 결정적으로 수행합니다.
+**(1) What are you trying to do?** Pick one of four — **International development cooperation (PDM)**
+produces a PDM matrix; **Impact startup (new business development)** · **Corporate social contribution
+(CSR, ESG)** · **Nonprofit** produce a Theory-of-Change diagram. The underlying logic is identical;
+only the shape of the final deliverable differs. (A fifth, **Impact investor (investment screening)**,
+is planned.)
 
-기초치와 목표치는 보통 현장 답사와 자료 조사를 거쳐 정해지기 때문에, 처음에는 `추후 확정`으로 비워 둡니다.
-나중에 값이 정해지면 그 자리에 채워 넣으면 됩니다.
+When you upload an **organization-level document** (a business plan, an annual report) — common for
+nonprofits and impact startups — and multiple projects are detected, it asks whether you want the
+**whole-organization view** (a map of how the mission connects to the projects) or a **single project**.
 
-파일은 이렇게 정리됩니다. **메인 결과(`pdm.md` 또는 `toc.md`)가 `out/` 바로 아래에 있어 폴더를 열면 바로 보이고**,
-모니터링 표와 원본 데이터는 `out/details/` 안에 둡니다.
+**(2) Where are you now?**
+
+- **I only have an idea** — the concept exists but nothing is written down yet.
+- **I have documents — a business plan, a draft, an existing PDM** — it reads and uses them. (If the
+  PDM is already approved, you can get an audit-only review that changes nothing.)
+
+**(3) How do you want to proceed?**
+
+- **Step by step, one question at a time** — the most thorough. (~10–20 min from an idea, ~5–10 min
+  from documents)
+- **Draft first, then refine on top** — the fastest (~2–5 min). It generates a full draft deliverable,
+  you fix what you don't like, and saying "finalize" runs the quality gate and wraps up.
+
+---
+
+## What you get
+
+When the session ends, the results are saved as files.
+
+- **PDM matrix (`pdm.md`)**: the KOICA format as-is — Impact / Outcome / Outputs / Activities in four
+  columns (Summary, Indicators, Means of Verification, Important Assumptions). The default deliverable
+  for international development projects.
+- **Theory-of-Change diagram (`toc.md`)**: a node diagram showing how activities connect to outputs and
+  outputs to outcomes. For impact startups, CSR, and nonprofits this is the default deliverable — and
+  it also tells you which data you must collect yourself to measure your impact later.
+- **Monitoring matrix (`monitoring.md`)**: per indicator — definition, formula, baseline, target,
+  rationale, data source, timing, collector, and disaggregation.
+- **Project budget (`budget.md`, optional)**: for international development (PDM) projects, it can also
+  draft a budget linked to the PDM — line items per activity, calculation basis (unit price × quantity ×
+  frequency), funder split, and general management cost. All sums are computed and verified
+  deterministically by a script.
+
+Baselines and targets are usually set after field surveys, so they start as `TBD (추후 확정)` and can be
+filled in later.
+
+Files are organized so that **the main deliverable (`pdm.md` or `toc.md`) sits at the top of `out/`**,
+with the monitoring matrix and source data under `out/details/`:
 
 ```
 out/
-├── pdm.md          (또는 toc.md)   ← 메인 결과
+├── pdm.md          (or toc.md)   ← main deliverable
 └── details/
     ├── monitoring.md
-    └── pdm.json    (위 표들이 자동으로 만들어지는 원본 데이터)
+    └── pdm.json    (the source data all views are rendered from)
 ```
 
 ---
 
-## 품질 점검은 어떻게 하나요
+## How quality checking works
 
-마무리 직전에, 만들어진 PDM이 KOICA 가이드라인의 핵심 규칙을 지키는지 스스로 확인합니다. 예를 들면 이런 점들입니다.
+Right before finishing, it checks the PDM against the core rules of the KOICA guideline. For example:
 
-- 영향(Impact)에는 별도의 지표를 넣지 않습니다.
-- 산출물(Output)은 3~4개로 정리합니다.
-- 성과당 지표는 1~2개(최대 3개)로 둡니다.
-- 모든 지표에는 어떻게 측정할지(검증수단)가 적혀 있어야 합니다.
-- 활동은 산출물로, 산출물은 성과로 빠짐없이 연결되어야 합니다.
-- 성과는 양적 확대가 아니라 대상의 '행동 변화'로 표현합니다.
+- Impact carries no separate indicators.
+- Outputs are consolidated to 3–4.
+- Each outcome has 1–2 indicators (3 max).
+- Every indicator states how it will be measured (means of verification).
+- Every activity connects to an output, and every output to an outcome — no orphans.
+- Outcomes are phrased as a **behavioral change** of the target group, not quantitative expansion.
 
-반드시 지켜야 하는 규칙은 통과할 때까지 함께 다듬은 뒤에 마무리하고,
-권장 규칙(SMART, CREAM, 성별 분리지표 등)은 점수로 알려 줍니다.
-규칙의 전체 목록과 가이드라인 쪽수 근거는 [`skills/theory-of-change-agent/rules/koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md)에 정리돼 있습니다.
+Must-pass rules are refined together until they pass; advisory rules (SMART, CREAM,
+gender-disaggregated indicators, etc.) are reported as a score.
+The full rule list with guideline page citations is in
+[`skills/theory-of-change-agent/rules/koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md).
 
 ---
 
-## 설치하기
+## Installation
 
-평소 **Claude 데스크톱 앱이나 웹(claude.ai)** 을 쓰신다면 **방법 3**을 보세요.
-개발용 터미널 도구인 **Claude Code**에 익숙하시면 **방법 1**이 가장 편합니다.
+If you normally use the **Claude desktop app or claude.ai**, see **Method 3**.
+If you are comfortable with **Claude Code** (the terminal tool), **Method 1** is easiest.
 
-### 방법 1. Claude Code 플러그인 (자동 업데이트, 권장)
+### Method 1. Claude Code plugin (auto-update, recommended)
 
-Claude Code 안에서 아래 두 줄을 입력하면 설치됩니다.
+Type these two lines inside Claude Code:
 
 ```
 /plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
 /plugin install theory-of-change-agent@impact-square
 ```
 
-나중에 최신 버전을 받고 싶을 때는 아래처럼 업데이트합니다.
+To update later:
 
 ```
 /plugin marketplace update impact-square
 /plugin update theory-of-change-agent
 ```
 
-### 방법 2. 직접 연결하기 (빠른 설치)
+### Method 2. Direct link (quick install)
 
 ```bash
 git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
 ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
 ```
 
-업데이트는 `git pull`로 받습니다. 연결을 끊으려면 `rm ~/.claude/skills/theory-of-change-agent`를 입력합니다. 원본 폴더는 그대로 남습니다.
+Update with `git pull`. To unlink, run `rm ~/.claude/skills/theory-of-change-agent` — the original
+folder stays intact.
 
-### 방법 3. zip 파일 업로드 (Claude 데스크톱 · Antigravity · claude.ai)
+### Method 3. Upload a zip (Claude desktop · Antigravity · claude.ai)
 
-Claude Code가 아니라 **앱에서 바로** 쓰려면 스킬을 압축 파일(zip)로 만들어 업로드합니다.
+To use it **directly in an app** rather than Claude Code, package the skill as a zip and upload it.
 
-1. **압축 파일 만들기**: 내려받은 폴더의 `skills` 폴더 안에서 아래 명령을 실행합니다.
+1. **Create the zip**: inside the downloaded repo's `skills` folder, run:
    ```bash
    cd skills
    zip -r theory-of-change-agent.zip theory-of-change-agent \
      -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
    ```
-   (레포에 이미 만들어진 `theory-of-change-agent.zip`이 있으면 그걸 그대로 써도 됩니다.)
+   (If the repo already ships a pre-built `theory-of-change-agent.zip`, use it as-is.)
 
-2. **업로드** — 쓰는 앱에 맞춰:
-   - **Claude 데스크톱**: `설정(Settings) → Skills → Add → Upload` 에서 `theory-of-change-agent.zip` 선택 → 켜기(Enable).
-   - **Antigravity**: Skills 화면에서 `theory-of-change-agent.zip` 을 업로드.
-   - **claude.ai(웹)**: `Settings → Capabilities → Skills → Upload`.
+2. **Upload** — depending on your app:
+   - **Claude desktop**: `Settings → Skills → Add → Upload`, choose `theory-of-change-agent.zip` → Enable.
+   - **Antigravity**: upload `theory-of-change-agent.zip` on the Skills screen.
+   - **claude.ai (web)**: `Settings → Capabilities → Skills → Upload`.
 
-   > 전제: Claude 앱은 **유료 요금제 + 코드 실행(code execution) 기능 켜기**가 필요합니다(품질 점검이 python3로 돕니다). 메뉴 이름은 버전에 따라 조금 다를 수 있어요.
+   > Prerequisites: the Claude apps require a **paid plan + code execution enabled** (the quality gate
+   > runs on python3). Menu names can differ slightly across versions.
 
-3. **사용하기**: 채팅에 "변화이론 에이전트로 KOICA PDM 만들어줘"처럼 적으면 시작합니다.
+3. **Use it**: type something like "Create a KOICA PDM with the Theory of Change Agent" in the chat.
 
-#### 변화이론 도식(Mermaid)이 Antigravity에서 안 보일 때
+#### When the Theory-of-Change diagram (Mermaid) doesn't render in Antigravity
 
-`out/toc.md`의 변화이론 도식은 **Mermaid `flowchart`**로 그려집니다. Antigravity(및 Mermaid 미리보기가 없는 VS Code)는 기본 상태에서 ```mermaid``` 블록을 **그림으로 렌더하지 않아** 코드처럼 보일 수 있습니다. 두 가지 중 하나로 해결하세요.
+The diagram in `out/toc.md` is drawn with **Mermaid `flowchart`**. Antigravity (and VS Code without a
+Mermaid preview) does **not render** ```mermaid``` blocks by default, so it may look like code. Two fixes:
 
-- **(권장) Mermaid 미리보기 확장 설치** — Antigravity는 VS Code 계열이라 확장 마켓(**Open VSX**)에서 **`Markdown Preview Mermaid Support`**(퍼블리셔 `bierner`, id `bierner.markdown-mermaid`)를 설치하면 `toc.md` 미리보기에서 도식이 그림으로 나옵니다. *(확장은 앱에서 직접 설치해야 합니다 — 스킬이 자동 설치할 수는 없어요.)*
-- **설치 없이 그대로 보기** — 스킬은 Mermaid 블록 **바로 아래에 같은 내용의 텍스트 인과 흐름(→ 화살표)** 을 항상 함께 출력합니다. 확장이 없어도 사업의 논리 흐름은 그 텍스트로 읽을 수 있습니다.
-   완성된 결과물은 채팅에 뜨는 다운로드 링크로 받습니다.
+- **(Recommended) Install the Mermaid preview extension** — Antigravity is VS Code-based, so install
+  **`Markdown Preview Mermaid Support`** (publisher `bierner`, id `bierner.markdown-mermaid`) from the
+  **Open VSX** marketplace, and `toc.md` renders as a picture. *(Extensions must be installed in the
+  app yourself — a skill cannot auto-install them.)*
+- **Read it as-is, no install** — the skill always emits a **plain-text causal flow (→ arrows)** with
+  the same content right below the Mermaid block, so the logic stays readable without the extension.
+   The finished deliverables arrive as download links in the chat.
 
-> 앱에 올린 스킬은 **자동 업데이트되지 않습니다.** 내용이 바뀌면 새 zip을 다시 업로드하세요.
-> 자동 업데이트가 필요하면 **방법 1(Claude Code 플러그인)** 을 쓰세요.
+> Skills uploaded to an app do **not** auto-update. Re-upload a new zip when contents change.
+> If you want auto-updates, use **Method 1 (the Claude Code plugin)**.
 
-더 자세한 안내는 [`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md)에 있습니다.
+More details in
+[`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
 
-### 준비물
+### Requirements
 
-- **Claude** (Claude Code, 데스크톱 앱, 웹 중 무엇이든)
-- **`python3`**: 품질 점검을 돌리는 데 쓰입니다. 데스크톱/웹의 코드 실행 환경에는 기본으로 들어 있습니다.
+- **Claude** (any of Claude Code, the desktop app, or the web)
+- **`python3`**: used for the quality gate. Included by default in the desktop/web code-execution sandbox.
 
 ---
 
-## 데이터 정책
+## Data policy
 
-- 이 저장소에 들어 있는 `docs/`의 PDF는 공개 문서(KOICA PDM 가이드라인, Theory of Change 자료)뿐입니다.
-- 품질 점검용 예시 데이터(`benchmark/`)는 실명과 실제 금액을 모두 지운 가상의 PDM입니다. 구조만 남겨 두었습니다.
-- 실제 사업 PDM 원본은 이 저장소에 넣지 않으며, 별도로 비공개 보관합니다.
+- The PDFs in `docs/` are public documents only (the KOICA PDM guideline, Theory of Change references).
+- The benchmark data (`benchmark/`) consists of fictional PDMs with all real names and amounts removed —
+  only the structure remains.
+- Real project PDM originals are never stored in this repository; they are kept private elsewhere.
 
 ---
 
-## 폴더 구성
+## Repository layout
 
 ```
 theory-of-change-agent/
-├── .claude-plugin/      플러그인 설정 파일
+├── .claude-plugin/      plugin configuration
 ├── skills/
 │   └── theory-of-change-agent/
-│       ├── SKILL.md         전체 진행 방식 설명
-│       ├── README.md        스킬 단위 사용 안내
-│       ├── INSTALL-desktop.md  데스크톱/웹 설치 안내
-│       ├── prompts/         인터뷰와 문서 생성에 쓰는 안내문
-│       ├── rules/           KOICA 규칙과 자동 점검 도구
-│       ├── schema/          PDM 데이터 형식과 예시
-│       └── benchmark/       품질 점검용 가상 예시
-├── docs/                공개 참고 자료
-├── README.md            이 문서
-└── LICENSE              라이선스(MIT)
+│       ├── SKILL.md         the full procedure
+│       ├── README.md        skill-level usage guide
+│       ├── INSTALL-desktop.md  desktop/web install guide
+│       ├── prompts/         interview & document-generation prompts
+│       ├── rules/           KOICA rules and the automatic checker
+│       ├── schema/          PDM data format and example
+│       └── benchmark/       fictional examples for quality checks
+├── docs/                public references
+├── README.md            this document (English; 한국어: README.ko.md)
+└── LICENSE              license (MIT)
 ```
 
 ---
 
-## 상태
+## Status
 
-버전 1.0입니다. 세 가지 진행 방식, 자동 품질 점검, Claude Code 플러그인 배포가 준비돼 있습니다.
-이전 이름은 "Impact Harness"였고, 2026년 6월에 "변화이론 에이전트"로 이름을 바꿨습니다.
+Version 1.0 — three interaction modes, automatic quality checks, and Claude Code plugin distribution.
+Formerly named "Impact Harness"; renamed to "Theory of Change Agent (변화이론 에이전트)" in June 2026.
 
 ---
 
-## 라이선스
+## License
 
 [MIT](./LICENSE) © 2026 IMPACT SQUARE

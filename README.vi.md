@@ -1,6 +1,6 @@
 # Theory of Change Agent (Tác nhân Lý thuyết Thay đổi)
 
-[한국어](README.md) · [English](README.en.md) · [日本語](README.ja.md) · **Tiếng Việt**
+[English](README.md) · [한국어](README.ko.md) · [日本語](README.ja.md) · **Tiếng Việt**
 
 Đây là công cụ giúp xây dựng cấu trúc kết quả của dự án theo **Lý thuyết Thay đổi (Theory of Change)**.
 Chỉ cần trả lời các câu hỏi như đang trò chuyện: với dự án hợp tác phát triển quốc tế, công cụ sẽ tạo
@@ -219,7 +219,7 @@ theory-of-change-agent/
 │       ├── schema/          định dạng dữ liệu PDM và ví dụ
 │       └── benchmark/       ví dụ hư cấu để kiểm tra chất lượng
 ├── docs/                tài liệu tham khảo công khai
-├── README.md            tài liệu này (tiếng Hàn)
+├── README.md            README tiếng Anh (tài liệu này: README.vi.md)
 └── LICENSE              giấy phép (MIT)
 ```
 
