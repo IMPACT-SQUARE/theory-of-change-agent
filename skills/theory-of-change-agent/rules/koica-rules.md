@@ -491,5 +491,34 @@ working notes), so the **definition** parts are now implemented in `rules/value-
 
 ### 11.3 Backlog (separate workstream, see meeting minutes)
 - **투심 모드** — prose impact-review of an IR/business model (different output shape).
-- **PDM ↔ 예산표 연결** — the biggest PDM pain: budget line-items must map to inputs/activities and stay
-  in sync. Deferred; an example budget table will be provided.
+- ~~**PDM ↔ 예산표 연결**~~ → **IMPLEMENTED as MVP (2026-07-09) — see §12.**
+
+## 12. 예산 (PDM ↔ 사업예산서) — MVP 2026-07-09
+
+Grounded in two real KOICA-style budget sheets (private, `budget/` git-ignored). Both share one skeleton,
+which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_line`):
+
+```
+관(대분류)         항(=PDM Output)      목(=PDM Activity)     세목(line + 산출근거)
+직접사업비          1. …                 1.1 …                 단가 × 수량 × 횟수 (× 개월)
+간접사업비          (결과사슬 밖)          현지사무소 운영 / 본부 인건비 등
+일반관리비          rate × (직접+간접)     KOICA 통상 5%
+```
+
+**Observed rules (→ deterministic checks in `rules/budget-rollup.py`; LLM never does the arithmetic):**
+- **B01** 세목 금액 = 산출근거 곱 (`unit_price × qty × freq × (months||1)`). 인건비 = 월단가×인원×개월; 출장 =
+  단가×일수×횟수; 지원금 = 건단가×건수. amount는 null로 두면 스크립트가 계산.
+- **B02** 세목별 **분담 split** (KOICA/파트너): Σ(shares) = 금액; funder id must exist.
+- **B03** 일반관리비 = rate × (직접+간접); rate > 5% → warning (KOICA 통상 상한).
+- **B04** 모든 직접비 라인은 실재하는 PDM `output_id`/`activity_id`에 연결 (예산의 연결성 = C05/C08의 예산판).
+  PDM 노드가 삭제/변경되면 라인이 고아가 됨 → Phase 4에서 재실행해 경고.
+- **B05** (warning) 예산 미배정 활동 — every PDM activity should carry ≥1 budget line; missing ones are
+  listed, never silently ignored (and never invented).
+- **B06** (warning) funder 약정(pledged) vs 배분 합계 mismatch.
+- **간접사업비·일반관리비는 결과사슬 밖** — PDM 노드에 연결하지 않는다 (Inputs/관리 성격). Outcome/Impact에는
+  예산 라인이 없다 (성과는 비용이 아니다).
+
+**Flow:** gate pass 후 offer (SKILL Phase 3 step 11) → `prompts/budget-build.md` interview (단가·수량은
+사용자에게서만; never invent prices) → `budget` block in `pdm.json` → `budget-rollup.py` verify →
+`prompts/render-budget-md.md` → `out/budget.md` (숫자는 스크립트 출력 그대로). intl-dev only (MVP);
+연차 정교화·xlsx 내보내기·양방향 자동 동기화는 후속.

@@ -129,9 +129,68 @@
         },
         "pre_conditions": { "type": "array", "items": { "type": "string" }, "description": "Pre-conditions for activities to proceed" }
       }
+    },
+    "budget": {
+      "type": ["object", "null"],
+      "description": "사업 예산 (intl-dev MVP — koica-rules.md §12). Mirrors the KOICA budget-sheet skeleton: 관(직접/간접/일반관리) → 항(=PDM Output) → 목(=PDM Activity) → 세목(line). 산출근거 = 단가 × 수량 × 횟수 (× 개월). ALL sums/ratios/derived amounts are computed deterministically by rules/budget-rollup.py — the LLM never does the arithmetic. Line amounts may be null (the script computes them from basis).",
+      "properties": {
+        "currency": { "type": "string", "default": "KRW" },
+        "years": { "type": "array", "items": { "type": "string" }, "description": "연차 labels, e.g. [\"1차년\",\"2차년\"] — derived from inputs.koica.duration." },
+        "funders": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "object", "required": ["id", "name"], "properties": {
+            "id": { "type": "string", "description": "share key, e.g. \"koica\", \"partner\"" },
+            "name": { "type": "string" },
+            "pledged": { "type": ["number", "null"], "description": "약정 분담금 총액 (optional — checked against rollup if given)" } } },
+          "description": "분담 주체 (e.g. KOICA + 파트너). Every line's shares keys must be funder ids."
+        },
+        "direct": {
+          "type": "array",
+          "description": "직접사업비 — the ONLY 관 linked to the PDM results chain. One entry per PDM Output(항), each with its Activities(목) carrying 세목 lines.",
+          "items": { "type": "object", "required": ["output_id", "activities"], "properties": {
+            "output_id": { "type": "string", "pattern": "^op-\\d+$", "description": "must exist in pdm.json outputs" },
+            "activities": { "type": "array", "items": { "type": "object", "required": ["activity_id", "lines"], "properties": {
+              "activity_id": { "type": "string", "pattern": "^act-\\d+(\\.\\d+)?$", "description": "must exist in pdm.json activities (or sub)" },
+              "lines": { "type": "array", "items": { "$ref": "#/$defs/budget_line" } } } } } } }
+        },
+        "indirect": {
+          "type": "array",
+          "description": "간접사업비 (현지사무소 운영, 본부사업지원 인건비 등) — 결과사슬 밖, PDM 노드에 연결하지 않는다.",
+          "items": { "type": "object", "required": ["name", "lines"], "properties": {
+            "id": { "type": "string" }, "name": { "type": "string" },
+            "lines": { "type": "array", "items": { "$ref": "#/$defs/budget_line" } } } }
+        },
+        "general_mgmt": {
+          "type": ["object", "null"],
+          "description": "일반관리비 — rate × (직접 + 간접). KOICA 통상 5% 상한. amount는 null로 두면 스크립트가 계산.",
+          "properties": {
+            "rate": { "type": "number", "default": 0.05 },
+            "amount": { "type": ["number", "null"] },
+            "note": { "type": ["string", "null"] } }
+        }
+      }
     }
   },
   "$defs": {
+    "budget_line": {
+      "type": "object",
+      "required": ["name"],
+      "description": "세목 (budget line). Must carry basis and/or amount: with basis only, budget-rollup.py computes amount = unit_price × qty × freq × (months||1); with both, the script verifies they agree.",
+      "properties": {
+        "id": { "type": "string", "description": "optional stable id, e.g. \"bl-1.1.1\"" },
+        "name": { "type": "string", "description": "세목명, e.g. \"스타트업 투자금\", \"현지 PM 인건비\"" },
+        "basis": { "type": ["object", "null"], "description": "산출근거 — the expression, never a made-up total.", "properties": {
+          "unit_price": { "type": "number", "description": "단가(원)" },
+          "qty": { "type": "number", "description": "수량 (인원/건수/일수 등)" },
+          "freq": { "type": "number", "default": 1, "description": "횟수" },
+          "months": { "type": ["number", "null"], "description": "개월 (인건비·임차료 등 월단가일 때만)" },
+          "note": { "type": ["string", "null"], "description": "근거 설명, e.g. \"월 인건비 x 13개월\"" } } },
+        "amount": { "type": ["number", "null"], "description": "금액(원). null이면 스크립트가 basis로 계산." },
+        "shares": { "type": ["object", "null"], "additionalProperties": { "type": "number" }, "description": "funder id → 분담액. 합이 amount와 일치해야 함 (스크립트 검증). null이면 미배분(경고)." },
+        "year": { "type": ["string", "null"], "description": "연차 label (budget.years 중 하나). null = 미배분." },
+        "note": { "type": ["string", "null"] }
+      }
+    },
     "indicator": {
       "type": "object",
       "required": ["id", "name"],

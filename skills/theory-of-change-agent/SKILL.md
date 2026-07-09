@@ -35,6 +35,7 @@ primary view sits at the top of `out/`; the source JSON and the monitoring detai
 ```
 out/
 ├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For ToC-view use-cases (biz-dev/csr-esg/nonprofit) this is toc.md instead.
+├── budget.md       # OPTIONAL (intl-dev, on request after gate pass): 사업 예산서 — Phase 3 step 11
 └── details/
     ├── pdm.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
     └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
@@ -56,6 +57,8 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
   four principles + §I/§II/§III detail). Read for depth when defining/correcting.
 - `rules/checklist.json` — Critical (C01-C08) + Advisory (A01-A08) self-check definitions + thresholds.
 - `rules/validate-critical.sh` — deterministic validator for the structural Critical rules.
+- `rules/budget-rollup.py` — deterministic budget rollup/validation (B01-B06, koica-rules.md §12); the
+  LLM never does budget arithmetic.
 - `schema/pdm-schema.json` — JSON Schema for `pdm.json`.
 - `schema/pdm-example.json` — a complete, guideline-compliant reference instance (Nicaragua).
 - `prompts/*.md` — prompt templates for each phase (see each phase below).
@@ -239,6 +242,13 @@ Hard interview rules (mirror `koica-rules.md`):
    as a list — block nothing. AUDIT → "deviation list" (already-approved PDMs that predate/deviate from
    the 2017 guideline). DRAFT → "draft gap checklist" (what to confirm/fill before finalizing). For DRAFT,
    skip A05 wherever `target` is `추후 확정` (koica-rules.md §4.8).
+7b. **Outcome verification — ALL use-cases, not only when toc.md is rendered** (advisory, non-blocking):
+   run `prompts/outcome-verify.md` for **each outcome** (논리 검증: change-of-state / 원인 회복 / 지표=변화분)
+   and `prompts/iris-match.md` for **each outcome indicator** (IRIS+ 근접 지표 — outcome indicators ONLY;
+   `python3 rules/iris-search.py --json --top 6 "…"`, shortlist에서만 제시, exit 3 → "매칭 준비 중", never
+   invent a code). Include the per-outcome `✅ 부합`/`⚠️ 교정 필요` verdicts + IRIS+ suggestions in the
+   **step 10 self-check summary** (chat). When `toc.md` is rendered, its §4 embeds the same results — do
+   not run them twice; reuse.
 8. **Render + write `out/details/monitoring.md`** via `prompts/render-monitoring-md.md` (indicator
    measurement plan; all use-cases).
 9. **Render + write the PRIMARY end-view LAST** (Phase 1 step 0 routing):
@@ -261,6 +271,11 @@ Hard interview rules (mirror `koica-rules.md`):
     for broken links; everything is `stale`/`추후 확정`), then **ask ONE specific leading question to start
     refining** (usually the outcome), and state the options (say what to change / let me walk the weak spots
     / say "확정" to run the gate). Never just dump the table and go silent.
+11. **예산 offer (intl-dev only, after the gate has passed — not for DRAFT).** Ask once:
+    "PDM에 맞춘 **사업 예산서**도 잡아드릴까요? (활동별 세목 · 산출근거 · 분담 · 일반관리비)". If yes, run
+    `prompts/budget-build.md` → it writes the `budget` block into `out/details/pdm.json`, verifies with
+    `python3 rules/budget-rollup.py` (deterministic — the LLM never sums), and renders **`out/budget.md`**
+    via `prompts/render-budget-md.md`. If no, move on — the offer is never repeated unprompted.
 
 ## Phase 3b — Finalize (DRAFT → GATE)
 Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+draft) says "확정"/"finalize":
@@ -284,6 +299,11 @@ activity connects to an output, each output to an outcome, each outcome to the i
 user edits, adds, retargets, or removes a node, you **MUST proactively state the impact on connected
 nodes and nudge the fix BEFORE applying anything** — never silently accept a structural edit. This is the
 single most important interaction in the skill.
+
+**If a `budget` block exists**, every structural edit must also re-run
+`python3 rules/budget-rollup.py OUT/details/pdm.json`: a removed/renumbered activity turns its budget
+lines into **B04 고아 예산 라인** errors (ask where the cost moves), and a newly added activity surfaces
+in **B05 예산 미배정** (nudge: "새 활동에 예산을 배정할까요?"). See prompts/budget-build.md §connectivity.
 
 On any edit to node X:
 1. **State the structural impact first (proactively, in plain language, naming specific nodes):**
