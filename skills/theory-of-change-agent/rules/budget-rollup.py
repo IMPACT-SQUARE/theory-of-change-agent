@@ -131,15 +131,19 @@ def main():
         rollup["indirect"].append({"name": grp.get("name"), "subtotal": t, "lines": lines})
 
     # ---- general management (관: 일반관리비) ----
+    # Real budgets set 일반관리비 as an explicit amount UNDER the 5% cap (not a flat 5%) —
+    # e.g. an observed real sheet ran at ~1.36%. So: explicit amount wins; `rate` is only
+    # used to COMPUTE when amount is null. B03 checks the 5% cap, never equality.
     gm = budget.get("general_mgmt") or {}
     rate = gm.get("rate", 0.05)
-    gm_expected = rate * (direct_total + indirect_total)
     gm_amount = gm.get("amount")
-    if gm_amount is not None and abs(gm_amount - gm_expected) > TOL:  # B03
-        errors.append(f"[B03] 일반관리비 {gm_amount:,.0f} ≠ rate {rate:.0%} × (직접+간접) = {gm_expected:,.0f}")
-    gm_final = gm_amount if gm_amount is not None else gm_expected
-    if rate > 0.05 + 1e-9:
-        warnings.append(f"일반관리비율 {rate:.1%} > KOICA 통상 상한 5%")
+    base = direct_total + indirect_total
+    gm_final = gm_amount if gm_amount is not None else rate * base
+    eff_rate = gm_final / base if base else 0.0
+    if eff_rate > 0.05 + 1e-9:  # B03: KOICA 통상 상한
+        warnings.append(f"[B03] 일반관리비 실효율 {eff_rate:.2%} > KOICA 통상 상한 5% "
+                        f"({gm_final:,.0f} / 직접+간접 {base:,.0f})")
+    rate = eff_rate  # report the effective rate, not the nominal default
 
     # ---- funder totals ----
     for section in rollup["direct"]:
@@ -154,8 +158,10 @@ def main():
     for f in budget.get("funders", []):
         if f.get("pledged") is not None:
             got = rollup["funder_totals"].get(f["id"], 0)
-            if abs(got - f["pledged"]) > TOL:  # B06
-                warnings.append(f"[B06] {f['name']} 약정 {f['pledged']:,.0f} vs 배분 합계 {got:,.0f} (일반관리비 제외)")
+            # 약정액이 일반관리비 포함으로 표기되는 경우가 실무 표준 — 차이가 일반관리비와
+            # 정확히 일치하면 정상으로 본다 (B06 헛경고 방지).
+            if abs(got - f["pledged"]) > TOL and abs(got + gm_final - f["pledged"]) > TOL:  # B06
+                warnings.append(f"[B06] {f['name']} 약정 {f['pledged']:,.0f} vs 배분 합계 {got:,.0f} (일반관리비 제외 {got:,.0f} / 포함 {got + gm_final:,.0f} 어느 쪽과도 불일치)")
 
     # ---- B05: activities with no budget ----
     unbudgeted = sorted(a for a in act_ids if "." not in a and a not in budgeted_acts)
