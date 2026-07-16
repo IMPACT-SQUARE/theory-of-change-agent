@@ -514,6 +514,7 @@ which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_
   PDM 노드가 삭제/변경되면 라인이 고아가 됨 → Phase 4에서 재실행해 경고.
 - **B05** (warning) 예산 미배정 활동 — every PDM activity should carry ≥1 budget line; missing ones are
   listed, never silently ignored (and never invented).
+- **연차별 합계**: `year_totals` (직접+간접, 일반관리비 제외) — 총괄시트의 연차 컬럼; 세목의 `year`가 `budget.years`에 없으면 warning. (2026-07-16 5개년 총괄시트 검증에서 추가.)
 - **B06** (warning) funder 약정(pledged) vs 배분 합계 mismatch — 약정액은 **일반관리비 포함** 표기가 실무 표준이므로, 차이가 일반관리비와 정확히 일치하면 정상 처리 (헛경고 방지).
 - **간접사업비·일반관리비는 결과사슬 밖** — PDM 노드에 연결하지 않는다 (Inputs/관리 성격). Outcome/Impact에는
   예산 라인이 없다 (성과는 비용이 아니다).

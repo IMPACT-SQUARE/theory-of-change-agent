@@ -168,8 +168,23 @@ def main():
     if unbudgeted:
         warnings.append(f"[B05] 예산 미배정 활동: {', '.join(unbudgeted)}")
 
+    # ---- per-year totals (연차별 합계 — 총괄시트의 연차 컬럼; 일반관리비 제외) ----
+    year_totals = {}
+    for section in rollup["direct"]:
+        for act in section["activities"]:
+            for ln in act["lines"]:
+                year_totals[ln["year"] or "미배분"] = year_totals.get(ln["year"] or "미배분", 0) + ln["amount"]
+    for grp in rollup["indirect"]:
+        for ln in grp["lines"]:
+            year_totals[ln["year"] or "미배분"] = year_totals.get(ln["year"] or "미배분", 0) + ln["amount"]
+    declared_years = budget.get("years") or []
+    for y in year_totals:
+        if y != "미배분" and declared_years and y not in declared_years:
+            warnings.append(f"세목 연차 '{y}'가 budget.years {declared_years}에 없음")
+
     grand = direct_total + indirect_total + gm_final
     rollup.update({
+        "year_totals": year_totals,
         "direct_total": direct_total, "indirect_total": indirect_total,
         "general_mgmt": {"rate": rate, "amount": gm_final},
         "grand_total": grand,
@@ -190,6 +205,9 @@ def main():
         print(f"총사업비    {grand:>18,.0f}")
         for k, v in rollup["funder_totals"].items():
             print(f"  분담 {k}: {v:,.0f} ({rollup['funder_ratios'][k]:.1%})")
+        for y in (budget.get("years") or sorted(year_totals)):
+            if y in year_totals:
+                print(f"  연차 {y}: {year_totals[y]:,.0f} (일반관리비 제외)")
         for w in warnings:
             print(f"WARN  {w}")
         for e in errors:

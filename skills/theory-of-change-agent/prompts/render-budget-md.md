@@ -29,6 +29,9 @@ don't render this file.
 직접사업비 / 간접사업비 / 일반관리비({rate}) / **총사업비** — from `direct_total`, `indirect_total`,
 `general_mgmt`, `grand_total`, `ratios`.
 
+When `budget.years` has 2+ years, add a **연차별 (By year)** row set from `year_totals`
+(one row per year, verbatim; note "일반관리비 제외" — GM is a single project-level amount).
+
 ### 2. 직접사업비 상세 (항=Output → 목=Activity → 세목)
 One section per `direct[]` group, headed by the PDM output's display number + narrative
 (`항 1. {output.narrative} — 소계 {subtotal}`). Under it, one table per activity
