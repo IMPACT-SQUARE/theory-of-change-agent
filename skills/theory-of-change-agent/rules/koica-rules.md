@@ -509,7 +509,7 @@ which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_
 - **B01** 세목 금액 = 산출근거 곱 (`unit_price × qty × freq × (months||1)`). 인건비 = 월단가×인원×개월; 출장 =
   단가×일수×횟수; 지원금 = 건단가×건수. amount는 null로 두면 스크립트가 계산.
 - **B02** 세목별 **분담 split** (KOICA/파트너): Σ(shares) = 금액; funder id must exist.
-- **B03** 일반관리비: 명시 금액이 있으면 그 값을 쓰고(실무 예산은 5% 정액이 아니라 **상한 내 임의 금액** — 실측 사례 실효율 ~1.36%), **실효율 > 5%만 warning**. amount가 null일 때만 rate로 계산. (2026-07-16 실데이터 검증에서 equality 검사가 오탐임을 확인, 상한 검사로 수정.)
+- **B03** 일반관리비: 명시 금액이 있으면 그 값을 쓰고(실무 예산은 5% 정액이 아니라 **상한 내 임의 금액**), **실효율 > 5%만 warning**. 상한의 분모는 **총사업비(일반관리비 포함)** — 실제 시트 2종의 표기 비율(1.34%/1.38%/4.86%)이 모두 GM/총사업비와 일치하며, 그중 하나는 GM/(직접+간접)으로는 5.11%라 옛 분모였으면 합법 예산을 오탐. amount가 null일 때만 rate로 계산(gm = rate×(직접+간접)/(1−rate), 즉 gm/총사업비 = rate). (2026-07-16 실데이터 검증 3사이클에서 equality→상한, 분모 직접+간접→총사업비로 두 차례 수정.)
 - **B04** 모든 직접비 라인은 실재하는 PDM `output_id`/`activity_id`에 연결 (예산의 연결성 = C05/C08의 예산판).
   PDM 노드가 삭제/변경되면 라인이 고아가 됨 → Phase 4에서 재실행해 경고.
 - **B05** (warning) 예산 미배정 활동 — every PDM activity should carry ≥1 budget line; missing ones are

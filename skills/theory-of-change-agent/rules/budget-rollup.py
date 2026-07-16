@@ -131,19 +131,23 @@ def main():
         rollup["indirect"].append({"name": grp.get("name"), "subtotal": t, "lines": lines})
 
     # ---- general management (관: 일반관리비) ----
-    # Real budgets set 일반관리비 as an explicit amount UNDER the 5% cap (not a flat 5%) —
-    # e.g. an observed real sheet ran at ~1.36%. So: explicit amount wins; `rate` is only
-    # used to COMPUTE when amount is null. B03 checks the 5% cap, never equality.
+    # Real budgets set 일반관리비 as an explicit amount UNDER the 5% cap (not a flat 5%).
+    # The cap's base is the **총사업비 (grand total, GM 포함)** — verified against two real
+    # sheets whose printed GM ratios (1.34% / 1.38% / 4.86%) all equal GM/총사업비; one runs
+    # at 5.11% of (직접+간접), i.e. the old base would false-flag a legitimate budget.
+    # Explicit amount wins; `rate` only COMPUTES when amount is null (gm = rate×base/(1-rate)
+    # so that gm/총사업비 = rate). B03 checks the 5% cap, never equality.
     gm = budget.get("general_mgmt") or {}
     rate = gm.get("rate", 0.05)
     gm_amount = gm.get("amount")
     base = direct_total + indirect_total
-    gm_final = gm_amount if gm_amount is not None else rate * base
-    eff_rate = gm_final / base if base else 0.0
-    if eff_rate > 0.05 + 1e-9:  # B03: KOICA 통상 상한
+    gm_final = gm_amount if gm_amount is not None else (rate * base / (1 - rate) if rate < 1 else 0.0)
+    grand_pre = base + gm_final
+    eff_rate = gm_final / grand_pre if grand_pre else 0.0
+    if eff_rate > 0.05 + 1e-9:  # B03: KOICA 통상 상한 (총사업비 대비)
         warnings.append(f"[B03] 일반관리비 실효율 {eff_rate:.2%} > KOICA 통상 상한 5% "
-                        f"({gm_final:,.0f} / 직접+간접 {base:,.0f})")
-    rate = eff_rate  # report the effective rate, not the nominal default
+                        f"({gm_final:,.0f} / 총사업비 {grand_pre:,.0f})")
+    rate = eff_rate  # report the effective rate (of 총사업비), not the nominal default
 
     # ---- funder totals ----
     for section in rollup["direct"]:
