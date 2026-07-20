@@ -7,18 +7,18 @@ the activities, and the intended results, but turning them into a coherent PDM c
 
 **Theory of Change Agent guides you through that work in conversation.** It asks one question at a
 time and turns your answers into a results chain: social problem → activities → outputs → outcomes →
-impact. For international-development projects, it produces a **KOICA-guideline PDM (Project Design
-Matrix)**. For impact startups, CSR, and nonprofits, it produces a **Theory of Change diagram**.
+impact. For international-development projects, it produces a **PDM (Project Design Matrix)**. For
+impact startups, CSR, and nonprofits, it produces a **Theory of Change diagram**.
 It works with AI assistants such as Claude and responds in the language you use.
 
 It does more than fill out a template. It flags weak logic, such as an output that has been written
 as an outcome. Its checks are traceable: the deterministic quality gate scores **18/18 on the
-detection benchmark**, each rule cites a page in the **36-page KOICA guideline**, and the budget
-module reproduced two KOICA-style budget sheets **to the won**.
+detection benchmark**, the rule documentation explains each check, and the budget module reproduced
+two representative budget sheets **to the won**.
 
 **Who this is for:**
 
-- **First-time PDM writers** applying to KOICA or similar programs who need a structured process
+- **First-time PDM writers** who need a structured process
 - **Practitioners with a draft** who want to check it against the guideline before review
 - **Founders and CSR or nonprofit teams** who need to clarify an early impact model
 
@@ -36,7 +36,7 @@ final document depends on the use case.
 
 | Your situation | What the agent creates | Good starting material |
 |---|---|---|
-| International-development project | KOICA-guideline PDM | An idea, proposal, or PDM draft |
+| International-development project | PDM | An idea, proposal, or PDM draft |
 | Impact startup or new venture | Theory-of-Change diagram | A business plan or a problem statement |
 | CSR or ESG project | Theory-of-Change diagram | A program brief or proposal |
 | Nonprofit program or annual report | Theory-of-Change diagram | An annual report; choose the organization or one project |
@@ -94,7 +94,7 @@ mission to its projects, or focus on **one project**.
 
 | Deliverable | What it is |
 |---|---|
-| `pdm.md` | KOICA 4×4 PDM matrix: Impact / Outcome / Outputs / Activities × Summary / Indicators / MoV / Assumptions |
+| `pdm.md` | 4×4 PDM matrix: Impact / Outcome / Outputs / Activities × Summary / Indicators / MoV / Assumptions |
 | `toc.md` | Theory of Change diagram, with a text version for viewers that do not support Mermaid, plus data needed for future impact measurement |
 | `details/monitoring.md` | Per-indicator measurement plan: definition, formula, baseline, target, source, timing, collector, disaggregation |
 | `budget.md` *(optional)* | A PDM-linked budget: line items per activity, calculation basis (unit price × qty × frequency), funder split, per-year totals |
@@ -107,18 +107,15 @@ has no external dependencies, so it can run in app sandboxes.
 
 The checks are implemented in code and documented in this repository:
 
-- **Deterministic quality gate:** Pure Python enforces eight critical KOICA rules, including no
+- **Deterministic quality gate:** Pure Python enforces eight critical structural rules, including no
   impact indicators, three to four outputs, indicator limits, required means of verification, no
   orphan nodes, and noun-form outputs. It reached **18/18 detection accuracy** on the
   [seeded-violation benchmark](./skills/theory-of-change-agent/benchmark/).
-- **Page-cited rules:** Every rule in
-  [`koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md) cites the relevant page
-  in the official KOICA PDM guideline.
 - **Outcome review:** A logic check asks whether the intended change addresses its underlying cause.
   Outcome indicators are also matched to the closest of the **593 IRIS+ impact metrics** for
   reference only. This is not an official IRIS+ mapping.
 - **Scripted budget arithmetic:** A script calculates and validates every total, ratio, funder split,
-  and general-management cap. In three verification cycles using two KOICA-style budget sheets, it
+  and general-management cap. In three verification cycles using two budget sheets, it
   reproduced totals **to the won** and exposed three rule defects that were then fixed.
 - **Advisory rules:** SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
   You decide whether to act on the findings.
@@ -147,7 +144,7 @@ Update later with `/plugin update theory-of-change-agent`.
 2. Upload the archive in **Claude desktop** at `Settings → Skills → Add → Upload`, in Antigravity's
    Skills screen, or in **claude.ai** at `Settings → Capabilities → Skills → Upload`. A paid plan
    with code execution enabled is required.
-3. Say *"Create a KOICA PDM with the Theory of Change Agent"* in the chat.
+3. Say *"Create a PDM with the Theory of Change Agent"* in the chat.
 
 > Skills uploaded to an app do not update automatically. Upload a new archive after each change. For
 > Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.
@@ -163,7 +160,7 @@ ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/sk
 
 ## Data policy
 
-- `docs/` contains public documents only (the KOICA PDM guideline, Theory of Change references).
+- `docs/` contains public reference documents only.
 - `benchmark/` PDMs are fictional. They retain the structure of the originals but omit real names and amounts.
 - Real project PDMs and budgets are never stored in this repository.
 
@@ -175,7 +172,7 @@ theory-of-change-agent/
 ├── skills/theory-of-change-agent/
 │   ├── SKILL.md             the full procedure
 │   ├── prompts/             interview & rendering prompts
-│   ├── rules/               KOICA rules + deterministic validators (gate, budget, HWP)
+│   ├── rules/               writing rules + deterministic validators (gate, budget, HWP)
 │   ├── schema/              pdm.json schema and reference example
 │   └── benchmark/           seeded-violation fixtures (18/18)
 ├── docs/                    public references
