@@ -1,233 +1,174 @@
-# Theory of Change Agent (변화이론 에이전트)
+# Theory of Change Agent
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
 
-A tool that structures your project's results using a **Theory of Change**. Answer questions in a
-conversational flow, and it produces a **PDM (Project Design Matrix)** for international development
-cooperation projects, or a **Theory-of-Change diagram** for impact startups, corporate social
-responsibility, and nonprofit projects. It runs on AI assistants such as Claude.
+Every impact practitioner knows the moment: a blank results matrix on the screen, a submission
+deadline, and no idea which cell to fill first. The logic is in your head — the form refuses to
+receive it.
 
-The goal is to remove that overwhelming moment of staring at an empty matrix, not knowing where to
-start. Answer one question at a time, and you end up with a matrix aligned with the KOICA PDM
-guideline. Answer in Korean and the output is Korean; answer in English and the output is English.
+**Theory of Change Agent is an AI interviewer that gets it out.** Answer one question at a time, in
+plain language, and it builds your results chain — social problem → activities → outputs → outcomes →
+impact — then renders it as a **KOICA-guideline PDM (Project Design Matrix)** for international
+development projects, or a **Theory-of-Change diagram** for impact startups, CSR, and nonprofits.
+It runs on AI assistants such as Claude, and answers in whatever language you speak to it.
 
----
+It doesn't just fill cells. It pushes back — "that's an output at scale, not an outcome" — and it
+proves its work: a deterministic quality gate scores **18/18 on our detection benchmark**, every rule
+carries a **page citation from the 36-page KOICA guideline**, and the budget module reproduced two
+real KOICA-style budget sheets **to the won**.
 
-## What it helps with
+**Who this is for:**
 
-- It asks questions following the **Theory of Change** flow (Inputs → Activities → Outputs → Outcomes →
-  Impact) and builds the results chain with you.
-- When done, it produces two documents: the **PDM matrix** and the **monitoring matrix**.
-- It **verifies your Outcomes twice** — ① a **logical check** asking whether the stated change actually
-  recovers the cause of the problem, and ② **nearest-metric matching** against the **593 metrics of
-  IRIS+**, the global impact-metrics library, offered as a reference.
-- Right before finishing, it **automatically checks** the output against the core rules of the KOICA
-  guideline, catching the mistakes reviewers most often flag.
+- **First-time PDM writers** applying to KOICA or similar programs — structured questions instead of a blank form
+- **Practitioners with a draft** who want it audited against the guideline before reviewers see it
+- **Founders and CSR/nonprofit teams** with only an idea, who need their impact logic on one page
 
-It is useful for:
+## Quick start
 
-- People writing a PDM for the first time for a KOICA application
-- People with an existing draft who want it checked against the guideline
-- People with only an idea and no results structure yet
+1. Install (30 seconds — see below)
+2. Say: *"Create a PDM with the Theory of Change Agent"* — or attach your business plan / annual report
+3. Answer the questions. Say **"finalize"** when it looks right.
+4. Open `out/pdm.md`. You'll know if this is for you.
 
----
-
-## How to start
-
-The tool asks three things in order.
-
-**(1) What are you trying to do?** Pick one of four — **International development cooperation (PDM)**
-produces a PDM matrix; **Impact startup (new business development)** · **Corporate social contribution
-(CSR, ESG)** · **Nonprofit** produce a Theory-of-Change diagram. The underlying logic is identical;
-only the shape of the final deliverable differs. (A fifth, **Impact investor (investment screening)**,
-is planned.)
-
-When you upload an **organization-level document** (a business plan, an annual report) — common for
-nonprofits and impact startups — and multiple projects are detected, it asks whether you want the
-**whole-organization view** (a map of how the mission connects to the projects) or a **single project**.
-
-**(2) Where are you now?**
-
-- **I only have an idea** — the concept exists but nothing is written down yet.
-- **I have documents — a business plan, a draft, an existing PDM** — it reads and uses them, including PDFs and **Korean HWP files (.hwp/.hwpx)**. (If the
-  PDM is already approved, you can get an audit-only review that changes nothing.)
-
-**(3) How do you want to proceed?**
-
-- **Step by step, one question at a time** — the most thorough. (~10–20 min from an idea, ~5–10 min
-  from documents)
-- **Draft first, then refine on top** — the fastest (~2–5 min). It generates a full draft deliverable,
-  you fix what you don't like, and saying "finalize" runs the quality gate and wraps up.
-
----
-
-## What you get
-
-When the session ends, the results are saved as files.
-
-- **PDM matrix (`pdm.md`)**: the KOICA format as-is — Impact / Outcome / Outputs / Activities in four
-  columns (Summary, Indicators, Means of Verification, Important Assumptions). The default deliverable
-  for international development projects.
-- **Theory-of-Change diagram (`toc.md`)**: a node diagram showing how activities connect to outputs and
-  outputs to outcomes. For impact startups, CSR, and nonprofits this is the default deliverable — and
-  it also tells you which data you must collect yourself to measure your impact later.
-- **Monitoring matrix (`monitoring.md`)**: per indicator — definition, formula, baseline, target,
-  rationale, data source, timing, collector, and disaggregation.
-- **Project budget (`budget.md`, optional)**: for international development (PDM) projects, it can also
-  draft a budget linked to the PDM — line items per activity, calculation basis (unit price × quantity ×
-  frequency), funder split, and general management cost. All sums are computed and verified
-  deterministically by a script.
-
-Baselines and targets are usually set after field surveys, so they start as `TBD (추후 확정)` and can be
-filled in later.
-
-Files are organized so that **the main deliverable (`pdm.md` or `toc.md`) sits at the top of `out/`**,
-with the monitoring matrix and source data under `out/details/`:
+## See it work
 
 ```
-out/
-├── pdm.md          (or toc.md)   ← main deliverable
-└── details/
-    ├── monitoring.md
-    └── pdm.json    (the source data all views are rendered from)
+You:    Create a PDM with the Theory of Change Agent.
+Agent:  What are you working on?
+        ① International development (PDM)  ② Impact startup
+        ③ CSR / ESG                        ④ Nonprofit
+You:    ① — a maternal health project in Laos.
+Agent:  [Q1 · social problem] What problem does this project tackle —
+        who is suffering, and what is the cause?
+You:    Mothers in rural districts deliver at home. Clinics are far,
+        and people don't trust them.
+Agent:  That qualifies as a social problem (structural · affects many ·
+        real harm). Phenomenon: high home-delivery rate. Cause: low
+        access to and trust in facilities. So the outcome to aim for is
+        a change of state: "facility-delivery practice takes root" —
+        not "more training sessions delivered." Keep this framing?
+        …
+        [one question at a time: activities → outputs → indicators →
+         assumptions — each answer wired into the results chain]
+        …
+You:    finalize
+Agent:  ✔ Quality gate passed (8/8 critical rules).
+        ⚠ Outcome 2 reads as an output at scale — "education expanded"
+          counts sessions, not behavior change. Suggested rephrasing: …
+        ◇ Nearest IRIS+ metrics suggested for indicator 1-1
+          (reference only, not an official mapping).
+        Final result: out/pdm.md
 ```
 
----
+The agent listened to the *pain*, named the cause, and refused to let an output masquerade as an
+outcome. That correction — the one reviewers always make — happened before submission, not after.
 
-## How quality checking works
+## How it works
 
-Right before finishing, it checks the PDM against the core rules of the KOICA guideline. For example:
+**Interview → Build the chain → Verify → Gate → Render.** Each step feeds the next.
 
-- Impact carries no separate indicators.
-- Outputs are consolidated to 3–4.
-- Each outcome has 1–2 indicators (3 max).
-- Every indicator states how it will be measured (means of verification).
-- Every activity connects to an output, and every output to an outcome — no orphans.
-- Outcomes are phrased as a **behavioral change** of the target group, not quantitative expansion.
+The interview follows the Theory of Change: it anchors on a properly-defined **social problem**
+(structural · affects many · causes real harm), traces phenomenon → cause, and requires every
+outcome to be a **change of state that recovers the cause** — not a scaled-up output, not generic
+utility. Organization-level documents (a nonprofit's annual report, a startup's business plan) get a
+project-detection step: view the **whole organization** as a mission-to-projects map, or drill into
+**one project**.
 
-Must-pass rules are refined together until they pass; advisory rules (SMART, CREAM,
-gender-disaggregated indicators, etc.) are reported as a score.
-The full rule list with guideline page citations is in
-[`skills/theory-of-change-agent/rules/koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md).
+| Deliverable | What it is |
+|---|---|
+| `pdm.md` | The KOICA 4×4 PDM matrix — Impact / Outcome / Outputs / Activities × Summary / Indicators / MoV / Assumptions |
+| `toc.md` | Theory-of-Change node diagram (with a plain-text causal-flow fallback for viewers without Mermaid) + the data you must start collecting now to measure impact later |
+| `monitoring.md` | Per-indicator measurement plan: definition, formula, baseline, target, source, timing, collector, disaggregation |
+| `budget.md` *(optional)* | A PDM-linked budget: line items per activity, calculation basis (unit price × qty × frequency), funder split, per-year totals |
+| `details/pdm.json` | The single source of truth — every view above is rendered from it |
 
----
+Inputs: plain conversation, PDF, and **Korean HWP files (.hwp/.hwpx)** — the bundled extractor is
+dependency-free, so it works even in app sandboxes.
 
-## Installation
+## Verification you can check
 
-If you normally use the **Claude desktop app or claude.ai**, see **Method 3**.
-If you are comfortable with **Claude Code** (the terminal tool), **Method 1** is easiest.
+Nothing here is "trust the AI." The checks are code, and the receipts are in the repo:
 
-### Method 1. Claude Code plugin (auto-update, recommended)
+- **Deterministic quality gate** — 8 critical KOICA rules (no impact indicators, 3–4 outputs,
+  indicator caps, MoV required, no orphan nodes, noun-form outputs…) enforced by pure Python.
+  **18/18 detection accuracy** on the seeded-violation benchmark in [`benchmark/`](./skills/theory-of-change-agent/benchmark/).
+- **Page-cited rules** — every rule in
+  [`koica-rules.md`](./skills/theory-of-change-agent/rules/koica-rules.md) cites its page in the
+  official KOICA PDM guideline, so you can argue with the source, not with us.
+- **Outcome double-check** — a logical test (does the change recover the cause?) plus
+  nearest-metric matching against the **593 impact metrics of IRIS+** (reference only, © GIIN).
+- **Budget arithmetic by script, never by AI** — every sum, ratio, funder split, and the
+  general-management cap is computed and validated deterministically. Verified in three cycles
+  against two real KOICA-style budget sheets: totals reproduced **to the won**, and the exercise
+  caught (and fixed) three real rule bugs.
+- Advisory rules (SMART, CREAM, gender-disaggregated indicators) are scored, not enforced —
+  you stay in charge of taste.
 
-Type these two lines inside Claude Code:
+## Install — 30 seconds
+
+**Requirements:** Claude (Claude Code, desktop app, or claude.ai) · `python3` (bundled in the
+desktop/web code-execution sandbox)
+
+### Claude Code (auto-update, recommended)
 
 ```
 /plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
 /plugin install theory-of-change-agent@impact-square
 ```
 
-To update later:
+Update later with `/plugin update theory-of-change-agent`.
 
-```
-/plugin marketplace update impact-square
-/plugin update theory-of-change-agent
-```
+### Claude desktop · Antigravity · claude.ai (zip upload)
 
-### Method 2. Direct link (quick install)
+1. Zip the skill (or use the pre-built `theory-of-change-agent.zip`):
+   ```bash
+   cd skills && zip -r theory-of-change-agent.zip theory-of-change-agent \
+     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
+   ```
+2. Upload: **Claude desktop** `Settings → Skills → Add → Upload` · **Antigravity** Skills screen ·
+   **claude.ai** `Settings → Capabilities → Skills → Upload`. Requires a paid plan with code
+   execution enabled.
+3. Say *"Create a KOICA PDM with the Theory of Change Agent"* in the chat.
+
+> App-uploaded skills don't auto-update — re-upload the zip when it changes. Details, including the
+> fix when the Mermaid diagram shows as code in Antigravity (install `bierner.markdown-mermaid` from
+> Open VSX, or just read the built-in text fallback):
+> [`INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
+
+### Git (direct link)
 
 ```bash
 git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
 ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
 ```
 
-Update with `git pull`. To unlink, run `rm ~/.claude/skills/theory-of-change-agent` — the original
-folder stays intact.
-
-### Method 3. Upload a zip (Claude desktop · Antigravity · claude.ai)
-
-To use it **directly in an app** rather than Claude Code, package the skill as a zip and upload it.
-
-1. **Create the zip**: inside the downloaded repo's `skills` folder, run:
-   ```bash
-   cd skills
-   zip -r theory-of-change-agent.zip theory-of-change-agent \
-     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
-   ```
-   (If the repo already ships a pre-built `theory-of-change-agent.zip`, use it as-is.)
-
-2. **Upload** — depending on your app:
-   - **Claude desktop**: `Settings → Skills → Add → Upload`, choose `theory-of-change-agent.zip` → Enable.
-   - **Antigravity**: upload `theory-of-change-agent.zip` on the Skills screen.
-   - **claude.ai (web)**: `Settings → Capabilities → Skills → Upload`.
-
-   > Prerequisites: the Claude apps require a **paid plan + code execution enabled** (the quality gate
-   > runs on python3). Menu names can differ slightly across versions.
-
-3. **Use it**: type something like "Create a KOICA PDM with the Theory of Change Agent" in the chat.
-
-#### When the Theory-of-Change diagram (Mermaid) doesn't render in Antigravity
-
-The diagram in `out/toc.md` is drawn with **Mermaid `flowchart`**. Antigravity (and VS Code without a
-Mermaid preview) does **not render** ```mermaid``` blocks by default, so it may look like code. Two fixes:
-
-- **(Recommended) Install the Mermaid preview extension** — Antigravity is VS Code-based, so install
-  **`Markdown Preview Mermaid Support`** (publisher `bierner`, id `bierner.markdown-mermaid`) from the
-  **Open VSX** marketplace, and `toc.md` renders as a picture. *(Extensions must be installed in the
-  app yourself — a skill cannot auto-install them.)*
-- **Read it as-is, no install** — the skill always emits a **plain-text causal flow (→ arrows)** with
-  the same content right below the Mermaid block, so the logic stays readable without the extension.
-   The finished deliverables arrive as download links in the chat.
-
-> Skills uploaded to an app do **not** auto-update. Re-upload a new zip when contents change.
-> If you want auto-updates, use **Method 1 (the Claude Code plugin)**.
-
-More details in
-[`skills/theory-of-change-agent/INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
-
-### Requirements
-
-- **Claude** (any of Claude Code, the desktop app, or the web)
-- **`python3`**: used for the quality gate. Included by default in the desktop/web code-execution sandbox.
-
----
-
 ## Data policy
 
-- The PDFs in `docs/` are public documents only (the KOICA PDM guideline, Theory of Change references).
-- The benchmark data (`benchmark/`) consists of fictional PDMs with all real names and amounts removed —
-  only the structure remains.
-- Real project PDM originals are never stored in this repository; they are kept private elsewhere.
-
----
+- `docs/` contains public documents only (the KOICA PDM guideline, Theory of Change references).
+- `benchmark/` PDMs are fictional — real names and amounts removed, structure kept.
+- Real project PDMs and budgets are never stored in this repository.
 
 ## Repository layout
 
 ```
 theory-of-change-agent/
-├── .claude-plugin/      plugin configuration
-├── skills/
-│   └── theory-of-change-agent/
-│       ├── SKILL.md         the full procedure
-│       ├── README.md        skill-level usage guide
-│       ├── INSTALL-desktop.md  desktop/web install guide
-│       ├── prompts/         interview & document-generation prompts
-│       ├── rules/           KOICA rules and the automatic checker
-│       ├── schema/          PDM data format and example
-│       └── benchmark/       fictional examples for quality checks
-├── docs/                public references
-├── README.md            this document (English; 한국어: README.ko.md)
-└── LICENSE              license (MIT)
+├── .claude-plugin/          plugin configuration
+├── skills/theory-of-change-agent/
+│   ├── SKILL.md             the full procedure
+│   ├── prompts/             interview & rendering prompts
+│   ├── rules/               KOICA rules + deterministic validators (gate, budget, HWP)
+│   ├── schema/              pdm.json schema and reference example
+│   └── benchmark/           seeded-violation fixtures (18/18)
+├── docs/                    public references
+└── README.md                this document
 ```
-
----
 
 ## Status
 
-Version 1.0 — three interaction modes, automatic quality checks, and Claude Code plugin distribution.
-Formerly named "Impact Harness"; renamed to "Theory of Change Agent (변화이론 에이전트)" in June 2026.
-
----
+v1.0 — four use cases (international development / impact startup / CSR·ESG / nonprofit), three
+interaction modes, deterministic quality gate, budget module, HWP input, plugin distribution.
+Impact-investor screening mode is planned. Formerly "Impact Harness" (renamed June 2026).
 
 ## License
 
-[MIT](./LICENSE) © 2026 IMPACT SQUARE
+[MIT](./LICENSE) © 2026 IMPACT SQUARE. Free forever. Go build your theory of change.
