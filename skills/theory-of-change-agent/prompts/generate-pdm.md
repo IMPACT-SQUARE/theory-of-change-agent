@@ -1,6 +1,6 @@
-# Prompt: Generate pdm.json (interview state → single source of truth)
+# Prompt: Generate toc.json (interview state → single source of truth)
 
-ROLE: Convert the completed `results_chain` + `assumptions` interview state into a valid `pdm.json` that
+ROLE: Convert the completed `results_chain` + `assumptions` interview state into a valid `toc.json` that
 conforms to `schema/pdm-schema.json` and the rules in `rules/koica-rules.md`. Use `schema/pdm-example.json`
 (Nicaragua) as the structural reference.
 
@@ -63,6 +63,6 @@ Write every narrative / indicator / assumption field in the OUTPUT language (mir
 Keep numeric targets numeric where possible (but baseline/target default to `"추후 확정"` — see field rules).
 
 ## Output
-Emit ONLY the JSON to `OUT/details/pdm.json`. After writing, the skill runs the lightweight shape check
+Emit ONLY the JSON to `OUT/details/toc.json`. After writing, the skill runs the lightweight shape check
 (`bash rules/validate-critical.sh --shape`, pure-Python); if it fails, you will be re-invoked once with
 the error appended — fix and re-emit.

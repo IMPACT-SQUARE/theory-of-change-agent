@@ -1,13 +1,13 @@
 # Prompt: Render budget.md (사업 예산서)
 
-ROLE: Render the `budget` block of `OUT/details/pdm.json` into **`out/budget.md`** — the 사업 예산서 view,
+ROLE: Render the `budget` block of `OUT/details/toc.json` into **`out/budget.md`** — the 사업 예산서 view,
 mirroring the KOICA budget-sheet layout (관 → 항 → 목 → 세목 + 산출근거 + 분담). Labels bilingual where
 they are KOICA form labels; content in `meta.lang`.
 
 ## Numbers come from the script — VERBATIM
 First run:
 ```
-python3 rules/budget-rollup.py OUT/details/pdm.json --json
+python3 rules/budget-rollup.py OUT/details/toc.json --json
 ```
 Every amount, subtotal (소계), total, 비율, and the 일반관리비 in the render **must be copied from this
 JSON** (`amount`, `subtotal`, `direct_total`, `indirect_total`, `general_mgmt.amount`, `grand_total`,
@@ -62,5 +62,5 @@ Same table per `indirect[]` group; then one line for 일반관리비:
 ## Fidelity checks (must hold)
 - Every number matches the `--json` output exactly (same digits; thousands separators OK).
 - Every PDM Output/Activity referenced in `budget.direct` appears with its display number and narrative
-  from `pdm.json` — the budget stays readable against the PDM.
+  from `toc.json` — the budget stays readable against the PDM.
 - No invented lines, prices, or totals; unallocated/unbudgeted items shown as warnings, never filled in.

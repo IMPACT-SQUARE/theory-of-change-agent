@@ -11,11 +11,11 @@ Enforces the structurally-checkable Critical rules: C01, C02, C03, C04, C05, C08
 2026-06-05 — see rules/koica-rules.md §10.)
 
 Usage:
-  python3 validate-critical.py <pdm.json>            # GATE: exit 1 if any rule fails
-  python3 validate-critical.py --audit <pdm.json>    # AUDIT: report only, always exit 0
-  python3 validate-critical.py --json <pdm.json>     # emit {"C01":"pass",...}, exit 0
-  python3 validate-critical.py --shape <pdm.json>    # shape pre-check, exit 1 if malformed
-  python3 validate-critical.py --connectivity <pdm.json>  # emit broken-link lists for Phase 4 nudges
+  python3 validate-critical.py <toc.json>            # GATE: exit 1 if any rule fails
+  python3 validate-critical.py --audit <toc.json>    # AUDIT: report only, always exit 0
+  python3 validate-critical.py --json <toc.json>     # emit {"C01":"pass",...}, exit 0
+  python3 validate-critical.py --shape <toc.json>    # shape pre-check, exit 1 if malformed
+  python3 validate-critical.py --connectivity <toc.json>  # emit broken-link lists for Phase 4 nudges
 """
 import json
 import sys
@@ -176,7 +176,7 @@ def main(argv):
             file = a
 
     if not file:
-        sys.stderr.write("usage: validate-critical.py [--audit] [--json] [--shape] [--connectivity] <pdm.json>\n")
+        sys.stderr.write("usage: validate-critical.py [--audit] [--json] [--shape] [--connectivity] <toc.json>\n")
         return 2
 
     try:

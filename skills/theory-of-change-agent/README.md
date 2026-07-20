@@ -55,7 +55,7 @@ Claude Code·Claude 데스크톱 샌드박스 어디서나 동작. 선택: `jq`(
 메인 뷰는 `out/` 루트, 원본 json·모니터링은 `out/details/`에 둔다(폴더를 열면 메인 뷰가 먼저 보이도록):
 - `out/pdm.md` — PDM 4행4열 매트릭스(영향/성과/산출물/활동 × 요약/OVI/MoV/중요가정). **국제개발 메인 뷰**.
 - `out/toc.md` — 변화이론 뷰: `from_*` 링크로 그린 노드 도식(Mermaid) + 측정 준비(직접 수집할 데이터). **사업개발·CSR/ESG 메인 뷰**.
-- `out/details/pdm.json` — 단일 진실원본. ID로 연결된 결과사슬 DAG(`from_*` 인과 참조). 모든 렌더의 원본.
+- `out/details/toc.json` — 단일 진실원본. ID로 연결된 결과사슬 DAG(`from_*` 인과 참조). 모든 렌더의 원본.
 - `out/details/monitoring.md` — 모니터링 매트릭스(지표정의·기초치·목표치·근거·출처·시기·수집주체·분리).
 - 메인 뷰를 **마지막에 써서** 데스크톱/IDE 앱이 그 파일을 띄우게 한다(원본 json이 뜨지 않도록).
 
@@ -70,9 +70,9 @@ Claude Code·Claude 데스크톱 샌드박스 어디서나 동작. 선택: `jq`(
 
 ```bash
 # 구조 Critical 검증 (결정적)
-bash rules/validate-critical.sh out/pdm.json            # GATE: 실패 시 exit 1
-bash rules/validate-critical.sh --audit out/pdm.json    # AUDIT: 보고 전용
-bash rules/validate-critical.sh --json out/pdm.json     # {"C01":"pass",...}
+bash rules/validate-critical.sh out/toc.json            # GATE: 실패 시 exit 1
+bash rules/validate-critical.sh --audit out/toc.json    # AUDIT: 보고 전용
+bash rules/validate-critical.sh --json out/toc.json     # {"C01":"pass",...}
 
 # 벤치마크: 실제 PDM 3건에 대한 탐지정확도 (목표 100%)
 bash benchmark/run-benchmark.sh

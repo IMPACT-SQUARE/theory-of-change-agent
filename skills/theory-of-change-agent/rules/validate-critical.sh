@@ -9,11 +9,11 @@
 # (C06 = noun-form is LLM-judged; C07 was removed 2026-06-05 — see rules/koica-rules.md §10.)
 #
 # Usage:
-#   bash validate-critical.sh <pdm.json>            # GATE: exit 1 if any rule fails
-#   bash validate-critical.sh --audit <pdm.json>    # AUDIT: report only, always exit 0
-#   bash validate-critical.sh --json <pdm.json>     # emit {"C01":"pass",...}, exit 0
-#   bash validate-critical.sh --shape <pdm.json>    # shape pre-check, exit 1 if malformed
-#   bash validate-critical.sh --connectivity <pdm.json>  # broken-link lists (Phase 4 edit nudges)
+#   bash validate-critical.sh <toc.json>            # GATE: exit 1 if any rule fails
+#   bash validate-critical.sh --audit <toc.json>    # AUDIT: report only, always exit 0
+#   bash validate-critical.sh --json <toc.json>     # emit {"C01":"pass",...}, exit 0
+#   bash validate-critical.sh --shape <toc.json>    # shape pre-check, exit 1 if malformed
+#   bash validate-critical.sh --connectivity <toc.json>  # broken-link lists (Phase 4 edit nudges)
 HERE="$(cd "$(dirname "$0")" && pwd)"
 if command -v python3 >/dev/null 2>&1; then
   exec python3 "$HERE/validate-critical.py" "$@"

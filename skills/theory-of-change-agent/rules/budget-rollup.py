@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""budget-rollup.py — deterministic rollup + validation for the pdm.json `budget` block.
+"""budget-rollup.py — deterministic rollup + validation for the toc.json `budget` block.
 
 Pure Python (stdlib only), same philosophy as validate-critical.py: the LLM never does
 budget arithmetic — every sum, ratio, and derived amount comes from THIS script, and the
 render prompt embeds the emitted numbers verbatim.
 
 Usage:
-  python3 rules/budget-rollup.py OUT/details/pdm.json          # human report (errors/warnings/totals)
-  python3 rules/budget-rollup.py OUT/details/pdm.json --json   # computed rollup as JSON (for rendering)
+  python3 rules/budget-rollup.py OUT/details/toc.json          # human report (errors/warnings/totals)
+  python3 rules/budget-rollup.py OUT/details/toc.json --json   # computed rollup as JSON (for rendering)
 
 Exit codes:
   0 = OK (warnings allowed)   1 = validation errors   2 = bad input   3 = no `budget` block
@@ -49,7 +49,7 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     as_json = "--json" in sys.argv
     if not args:
-        print("usage: budget-rollup.py <pdm.json> [--json]", file=sys.stderr)
+        print("usage: budget-rollup.py <toc.json> [--json]", file=sys.stderr)
         return 2
     try:
         pdm = json.load(open(args[0], encoding="utf-8"))
@@ -59,7 +59,7 @@ def main():
 
     budget = pdm.get("budget")
     if not budget:
-        print("no `budget` block in pdm.json — 예산 미작성 (run prompts/budget-build.md first)")
+        print("no `budget` block in toc.json — 예산 미작성 (run prompts/budget-build.md first)")
         return 3
 
     errors, warnings = [], []

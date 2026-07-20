@@ -76,7 +76,7 @@ vào một dự án cụ thể.
 | `toc.md` | Sơ đồ Theory of Change kèm phiên bản văn bản cho nơi không hỗ trợ Mermaid |
 | `details/monitoring.md` | Kế hoạch đo lường: định nghĩa, công thức, cơ sở, mục tiêu, nguồn, thời điểm và người thu thập |
 | `budget.md` | Ngân sách theo hoạt động, căn cứ tính, phân bổ vốn và tổng theo năm. Tùy chọn |
-| `details/pdm.json` | Dữ liệu gốc dùng để tạo các tệp trên |
+| `details/toc.json` | Dữ liệu gốc dùng để tạo các tệp trên |
 
 Bạn có thể bắt đầu bằng hội thoại, PDF hoặc tệp HWP tiếng Hàn (`.hwp`, `.hwpx`). Bộ trích xuất HWP
 không cần thư viện ngoài nên dùng được trong môi trường thực thi mã của ứng dụng.

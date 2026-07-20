@@ -1,6 +1,6 @@
 # Prompt: Render toc.md (Theory-of-Change view + node diagram)
 
-ROLE: Render `OUT/details/pdm.json` into `OUT/toc.md` — the **Theory-of-Change (변화이론) view** used for the
+ROLE: Render `OUT/details/toc.json` into `OUT/toc.md` — the **Theory-of-Change (변화이론) view** used for the
 ToC-view use-cases (`biz-dev`/`csr-esg`/`nonprofit`; and optionally alongside the PDM for `intl-dev`). Same underlying data
 as the PDM; this view emphasizes the **causal flow and node connections** rather than the KOICA 4×4 form.
 Render only what is in the JSON. Keep structural labels bilingual; write content in `meta.lang`.
@@ -46,7 +46,7 @@ nodes (class `lvl`) so the 대목록 reads across the top: `사회문제 → 활
   PNG/SVG로 다운로드할 수 있습니다.` / en: `> 🔍 **Zoom & export:** paste the diagram code into
   https://mermaid.live to zoom and download PNG/SVG.`
 
-Node id: each `pdm.json` id → Mermaid-safe (replace non-alphanumerics with `_`: `op-1`→`op_1`,
+Node id: each `toc.json` id → Mermaid-safe (replace non-alphanumerics with `_`: `op-1`→`op_1`,
 `ind-oc-1.1`→`ind_oc_1_1`). Label = the narrative (display-number prefix optional). Escape `"` in labels.
 **Class assignment: inline `:::className` ONLY.** Never emit separate `class node1,node2 className`
 statement lines — some renderers (Antigravity/Gemini markdown preview) mis-parse them into a stray
@@ -158,7 +158,7 @@ important to track).
 ## Fidelity checks (must hold)
 - **DRAFT (`gate_mode=DRAFT`): §1 is the "확정 후 출력" placeholder, NOT a Mermaid diagram.** The full
   diagram appears only once finalized (`gate_mode` GATE/AUDIT).
-- When drawn: every activity/output/outcome/impact in `pdm.json` appears as a node; every `from_*` link
+- When drawn: every activity/output/outcome/impact in `toc.json` appears as a node; every `from_*` link
   appears as an edge (no silent drops, no invented edges).
 - **When drawn, the §1b text fallback is ALSO emitted** (plain fenced block) with the same nodes/edges — so
   the flow is visible in viewers without Mermaid (Antigravity).

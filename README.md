@@ -98,7 +98,7 @@ mission to its projects, or focus on **one project**.
 | `toc.md` | Theory of Change diagram, with a text version for viewers that do not support Mermaid, plus data needed for future impact measurement |
 | `details/monitoring.md` | Per-indicator measurement plan: definition, formula, baseline, target, source, timing, collector, disaggregation |
 | `budget.md` *(optional)* | A PDM-linked budget: line items per activity, calculation basis (unit price × qty × frequency), funder split, per-year totals |
-| `details/pdm.json` | Source data used to render every view above |
+| `details/toc.json` | Source data used to render every view above |
 
 You can start with a conversation, a PDF, or a **Korean HWP file (.hwp/.hwpx)**. The bundled extractor
 has no external dependencies, so it can run in app sandboxes.
@@ -173,7 +173,7 @@ theory-of-change-agent/
 │   ├── SKILL.md             the full procedure
 │   ├── prompts/             interview & rendering prompts
 │   ├── rules/               writing rules + deterministic validators (gate, budget, HWP)
-│   ├── schema/              pdm.json schema and reference example
+│   ├── schema/              toc.json schema and reference example
 │   └── benchmark/           seeded-violation fixtures (18/18)
 ├── docs/                    public references
 └── README.md                this document

@@ -2,7 +2,7 @@
 
 > **Purpose.** This file is the authoritative, machine-and-human-readable encoding of the KOICA PDM
 > guideline rules that the 변화이론 에이전트 (Theory of Change Agent) skill follows when it (1) interviews a user, (2) generates
-> `pdm.json`, and (3) self-checks the result. Every rule below is traceable to a page in the source
+> `toc.json`, and (3) self-checks the result. Every rule below is traceable to a page in the source
 > guideline so it can be audited against the original.
 >
 > **Source of truth:** `docs/KOICA PDM 가이드라인(최종).pdf` (한국국제협력단 평가심사실, 2018-03, 36p).
@@ -417,7 +417,7 @@ while a target is deferred.
 7. **Draft-first mode ADDED (Mode C, gate_mode DRAFT) — runs alongside the existing guided interview for
    A/B feedback.** Rationale: pilot users prefer a "표 먼저 → 그 위에서 수정" flow over a long up-front
    interview. Mode C asks **one** question (project one-liner + outcome scope), immediately generates a
-   full **draft** `pdm.json` (all nodes `stale: true`, unknowns `추후 확정`), renders the tables, and runs
+   full **draft** `toc.json` (all nodes `stale: true`, unknowns `추후 확정`), renders the tables, and runs
    checks **non-blocking** (gate_mode `DRAFT`, report-only like AUDIT). The user edits on top of the table
    (Phase 4 propagation); a later **Finalize** step flips gate_mode to `GATE` and enforces the hard
    Critical gate. The existing guided interview (Mode A/B + GATE) is **unchanged** so the two interaction
@@ -496,7 +496,7 @@ working notes), so the **definition** parts are now implemented in `rules/value-
 ## 12. 예산 (PDM ↔ 사업예산서) — MVP 2026-07-09
 
 Grounded in two real KOICA-style budget sheets (private, `budget/` git-ignored). Both share one skeleton,
-which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_line`):
+which the `budget` block of `toc.json` mirrors (schema `budget` / `$defs.budget_line`):
 
 ```
 관(대분류)         항(=PDM Output)      목(=PDM Activity)     세목(line + 산출근거)
@@ -524,6 +524,6 @@ which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_
   예산 라인이 없다 (성과는 비용이 아니다).
 
 **Flow:** gate pass 후 offer (SKILL Phase 3 step 11) → `prompts/budget-build.md` interview (단가·수량은
-사용자에게서만; never invent prices) → `budget` block in `pdm.json` → `budget-rollup.py` verify →
+사용자에게서만; never invent prices) → `budget` block in `toc.json` → `budget-rollup.py` verify →
 `prompts/render-budget-md.md` → `out/budget.md` (숫자는 스크립트 출력 그대로). intl-dev only (MVP);
 연차 정교화·xlsx 내보내기·양방향 자동 동기화는 후속.

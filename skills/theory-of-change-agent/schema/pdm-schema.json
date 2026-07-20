@@ -148,9 +148,9 @@
           "type": "array",
           "description": "직접사업비 — the ONLY 관 linked to the PDM results chain. One entry per PDM Output(항), each with its Activities(목) carrying 세목 lines.",
           "items": { "type": "object", "required": ["output_id", "activities"], "properties": {
-            "output_id": { "type": "string", "pattern": "^op-\\d+$", "description": "must exist in pdm.json outputs" },
+            "output_id": { "type": "string", "pattern": "^op-\\d+$", "description": "must exist in toc.json outputs" },
             "activities": { "type": "array", "items": { "type": "object", "required": ["activity_id", "lines"], "properties": {
-              "activity_id": { "type": "string", "pattern": "^act-\\d+(\\.\\d+)?$", "description": "must exist in pdm.json activities (or sub)" },
+              "activity_id": { "type": "string", "pattern": "^act-\\d+(\\.\\d+)?$", "description": "must exist in toc.json activities (or sub)" },
               "lines": { "type": "array", "items": { "$ref": "#/$defs/budget_line" } } } } } } }
         },
         "indirect": {

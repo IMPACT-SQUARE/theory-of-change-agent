@@ -36,7 +36,7 @@ Call `prompts/generate-pdm.md` in **draft mode**:
   ("📊 변화이론 도식은 확정 후 그려집니다", render-toc §1). The diagram is generated at Finalize (Step 6).
   Tell the user this in plain language so they know the picture comes after "확정".
 - Compute the report-only checks for the nudges: `bash rules/validate-critical.sh --audit
-  OUT/details/pdm.json` and `--connectivity OUT/details/pdm.json`. Block nothing.
+  OUT/details/toc.json` and `--connectivity OUT/details/toc.json`. Block nothing.
 
 ## Step 4 — Guide the next action (DON'T just stop) ★
 The draft is a **starting point, not the answer.** After showing it, immediately make the next step clear

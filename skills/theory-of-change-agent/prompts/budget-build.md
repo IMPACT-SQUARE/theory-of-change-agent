@@ -1,7 +1,7 @@
 # Prompt: Build the budget block (PDM → 사업예산서, intl-dev MVP)
 
 ROLE: After the PDM is **finalized** (gate passed), interview the user to build the `budget` block of
-`OUT/details/pdm.json`, mirroring the KOICA budget-sheet skeleton (koica-rules.md §12):
+`OUT/details/toc.json`, mirroring the KOICA budget-sheet skeleton (koica-rules.md §12):
 **관(직접/간접/일반관리) → 항(=PDM Output) → 목(=PDM Activity) → 세목(line)**. Then run the deterministic
 rollup and render `out/budget.md` via `prompts/render-budget-md.md`.
 
@@ -46,8 +46,8 @@ Only for `meta.use_case = intl-dev` (MVP). One question at a time (티키타카)
    the rate if the user says so (>5% triggers a warning — tell them).
 
 ## Emit → verify → render
-5. Write the `budget` block into `OUT/details/pdm.json` (schema `budget` / `$defs.budget_line`).
-6. Run `python3 rules/budget-rollup.py OUT/details/pdm.json` —
+5. Write the `budget` block into `OUT/details/toc.json` (schema `budget` / `$defs.budget_line`).
+6. Run `python3 rules/budget-rollup.py OUT/details/toc.json` —
    - **errors (exit 1)**: fix the data (B01 amount≠산출근거, B02 분담 합 불일치, B03 일반관리비,
      B04 없는 PDM id) and re-run. These are data bugs, not user questions.
    - **warnings**: relay to the user in `meta.lang` — B05 예산 미배정 활동 ("이 활동들엔 아직 예산이

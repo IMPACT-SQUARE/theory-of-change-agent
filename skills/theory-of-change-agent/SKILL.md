@@ -37,12 +37,12 @@ out/
 ├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For ToC-view use-cases (biz-dev/csr-esg/nonprofit) this is toc.md instead.
 ├── budget.md       # OPTIONAL (intl-dev, on request after gate pass): 사업 예산서 — Phase 3 step 11
 └── details/
-    ├── pdm.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
+    ├── toc.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
     └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
 ```
 - **Primary end-view at `out/` root** (written LAST): `pdm.md` for `intl-dev`, `toc.md` for
   `biz-dev`/`csr-esg`/`nonprofit`. A non-primary view (e.g. `toc.md` on an intl-dev run) also goes in `out/details/`.
-- **`out/details/pdm.json`** conforms to `schema/pdm-schema.json`; all views are RENDERED from it.
+- **`out/details/toc.json`** conforms to `schema/pdm-schema.json`; all views are RENDERED from it.
 - Create `out/details/` as needed. Which files are written depends on `meta.use_case` (Phase 3 steps 8-9).
 
 Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx`, any web UI.
@@ -61,7 +61,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
   LLM never does budget arithmetic.
 - `rules/hwp-extract.py` — pure-stdlib `.hwp`/`.hwpx` → text extractor for mode-B inputs (no npm needed;
   routing in `prompts/interview-b-inputs.md` step 1; exit 3 = encrypted/배포용 → ask for a PDF).
-- `schema/pdm-schema.json` — JSON Schema for `pdm.json`.
+- `schema/pdm-schema.json` — JSON Schema for `toc.json`.
 - `schema/pdm-example.json` — a complete, guideline-compliant reference instance (Nicaragua).
 - `prompts/*.md` — prompt templates for each phase (see each phase below).
 </Reference_Files>
@@ -213,12 +213,12 @@ Hard interview rules (mirror `koica-rules.md`):
   현장답사; koica-rules.md §4.8). Record a value only if the user volunteers one.
 
 ## Phase 3 — Generation pipeline
-1. **Assemble `pdm.json`** using `prompts/generate-pdm.md`: build the full document from state, assign
+1. **Assemble `toc.json`** using `prompts/generate-pdm.md`: build the full document from state, assign
    stable IDs (`imp-1`, `oc-1`, `op-1`, `act-1`, `act-1.1`, `ind-op-1.1`, …), wire all `from_*` causal
    references, and write narrative fields in the output language.
 2. **Shape-validate + recover (lightweight, pure-Python — no jq, no heavy schema engine at runtime):**
-   confirm `pdm.json` is well-formed JSON and has the required shape:
-   `Bash: bash rules/validate-critical.sh --shape OUT/details/pdm.json` (exit 0 = OK; exit 1 = malformed/missing
+   confirm `toc.json` is well-formed JSON and has the required shape:
+   `Bash: bash rules/validate-critical.sh --shape OUT/details/toc.json` (exit 0 = OK; exit 1 = malformed/missing
    keys; exit 2 = invalid JSON). If it fails, **regenerate ONCE** with the error appended to the prompt;
    if it still fails, surface to the user and stop. (`schema/pdm-schema.json` remains the written data
    contract that `generate-pdm.md` follows; full JSON-Schema validation is a build-time check, not a
@@ -229,7 +229,7 @@ Hard interview rules (mirror `koica-rules.md`):
      **draft checklist** and offer **Finalize** (Phase 3b). Do not block.
    - **GATE** → steps 4-6.
 4. **Deterministic Critical check (C01-C05, C08):**
-   `Bash: bash rules/validate-critical.sh OUT/details/pdm.json`. If exit ≠ 0: show the FAIL lines, return to a
+   `Bash: bash rules/validate-critical.sh OUT/details/toc.json`. If exit ≠ 0: show the FAIL lines, return to a
    **targeted** interview to fix exactly those rules, regenerate, and re-run. Loop until it passes.
 5. **LLM Critical check (C06 noun-form):** judge each output narrative against the C06 rubric. If any
    fails, return to interview to fix; do not proceed until 100% Critical pass.
@@ -240,7 +240,7 @@ Hard interview rules (mirror `koica-rules.md`):
    regressions), **max 3 rounds** (`--max-advisory-rounds`). Exit on: threshold met, max rounds reached,
    or user says "accept as-is". Report the final score + remaining failures.
 7. **Report-only check (AUDIT or DRAFT mode):** run ALL Critical + Advisory checks via
-   `bash rules/validate-critical.sh --audit OUT/details/pdm.json` plus the LLM checks, and present every finding
+   `bash rules/validate-critical.sh --audit OUT/details/toc.json` plus the LLM checks, and present every finding
    as a list — block nothing. AUDIT → "deviation list" (already-approved PDMs that predate/deviate from
    the 2017 guideline). DRAFT → "draft gap checklist" (what to confirm/fill before finalizing). For DRAFT,
    skip A05 wherever `target` is `추후 확정` (koica-rules.md §4.8).
@@ -260,11 +260,11 @@ Hard interview rules (mirror `koica-rules.md`):
    - ToC-view use-cases (`biz-dev`/`csr-esg`/`nonprofit`) → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
      diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). For `intl-dev`
      you MAY also write `toc.md`, but write `pdm.md` **last**.
-   > **Write order matters — end on the human-readable view.** Sequence: `out/details/pdm.json` (written
+   > **Write order matters — end on the human-readable view.** Sequence: `out/details/toc.json` (written
    > in step 1, the source of truth) → `out/details/monitoring.md` → the primary view (`out/pdm.md` or
    > `out/toc.md`) **last**. Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written /
    > last-touched file**, so keeping the JSON in `out/details/` AND writing the primary view last lands the
-   > user on the readable view, not the raw JSON. Do **not** re-save `out/details/pdm.json` after renders.
+   > user on the readable view, not the raw JSON. Do **not** re-save `out/details/toc.json` after renders.
 10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
     closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. In app
@@ -279,7 +279,7 @@ Hard interview rules (mirror `koica-rules.md`):
     / say "확정" to run the gate). Never just dump the table and go silent.
 11. **예산 offer (intl-dev only, after the gate has passed — not for DRAFT).** Ask once:
     "PDM에 맞춘 **사업 예산서**도 잡아드릴까요? (활동별 세목 · 산출근거 · 분담 · 일반관리비)". If yes, run
-    `prompts/budget-build.md` → it writes the `budget` block into `out/details/pdm.json`, verifies with
+    `prompts/budget-build.md` → it writes the `budget` block into `out/details/toc.json`, verifies with
     `python3 rules/budget-rollup.py` (deterministic — the LLM never sums), and renders **`out/budget.md`**
     via `prompts/render-budget-md.md`. If no, move on — the offer is never repeated unprompted.
 
@@ -287,11 +287,11 @@ Hard interview rules (mirror `koica-rules.md`):
 Triggered only when a **DRAFT** PDM's author (Mode C = concept+draft, or inputs+draft) says "확정"/"finalize":
 1. Set `meta.gate_mode = "GATE"`.
 2. Confirm or clear remaining `stale` flags with the user (regenerate any they still want changed).
-3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/details/pdm.json` (NO `--audit` → blocking), then
+3. Run the **hard gate**: `bash rules/validate-critical.sh OUT/details/toc.json` (NO `--audit` → blocking), then
    the C06 LLM check, then the Advisory refinement loop (steps 4-6 above). Loop until Critical passes.
 4. Baseline/target may legitimately remain `추후 확정` at finalize — that does NOT block (A05 is N/A while
    deferred; C04/MoV still enforced).
-5. **Re-render ALL views from the finalized `pdm.json`, per Phase 3 steps 8-9** — do not skip this. The
+5. **Re-render ALL views from the finalized `toc.json`, per Phase 3 steps 8-9** — do not skip this. The
    finalize (clearing `stale`, the Advisory refinement) changed nodes, so the rendered views are stale:
    rewrite `out/details/monitoring.md`, then the **primary view LAST** — **`out/toc.md`** for
    `biz-dev`/`csr-esg`/`nonprofit` (the 변화이론 도식 MUST be regenerated so its nodes/edges match the finalized chain)
@@ -307,7 +307,7 @@ nodes and nudge the fix BEFORE applying anything** — never silently accept a s
 single most important interaction in the skill.
 
 **If a `budget` block exists**, every structural edit must also re-run
-`python3 rules/budget-rollup.py OUT/details/pdm.json`: a removed/renumbered activity turns its budget
+`python3 rules/budget-rollup.py OUT/details/toc.json`: a removed/renumbered activity turns its budget
 lines into **B04 고아 예산 라인** errors (ask where the cost moves), and a newly added activity surfaces
 in **B05 예산 미배정** (nudge: "새 활동에 예산을 배정할까요?"). See prompts/budget-build.md §connectivity.
 
@@ -331,7 +331,7 @@ On any edit to node X:
 4. Regenerate ONLY the nodes the user consents to; set their `stale: false`. Declined nodes stay
    `stale: true` and are listed in the self-check report.
 5. Re-run the Critical (deterministic C05/C08/C06) + Advisory checks on modified nodes, then **re-render
-   ALL views from the updated `pdm.json` per Phase 3 steps 8-9** (monitoring.md, then the primary view
+   ALL views from the updated `toc.json` per Phase 3 steps 8-9** (monitoring.md, then the primary view
    LAST — `toc.md` for ToC-view use-cases so the 변화이론 도식 reflects the edit, or `pdm.md` for
    `intl-dev`). An edit that isn't re-rendered leaves a stale diagram.
 
@@ -358,7 +358,7 @@ On any edit to node X:
 - **Connectivity is proactive, never silent.** Treat the `from_*` graph as the product's core. On any
   structural edit/add/remove, state the impact on connected nodes and nudge the fix BEFORE applying
   (Phase 4). You can compute the breakage deterministically: `bash rules/validate-critical.sh --json
-  OUT/details/pdm.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
+  OUT/details/toc.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
 - **Interactive questions — use the environment's choice tool, whatever its name.** A tab/click
   single-select question tool exists in every supported environment, but under **different names**:
   **`AskUserQuestion`** in Claude Code, **`ask_user_input_v0`** in the Claude web/desktop apps (other

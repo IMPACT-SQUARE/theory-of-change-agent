@@ -1,6 +1,6 @@
 # Prompt: Render pdm.md (PDM matrix, KOICA 4×4)
 
-ROLE: Render `OUT/details/pdm.json` into `OUT/pdm.md` as the KOICA 4-row × 4-column PDM matrix. Do not invent
+ROLE: Render `OUT/details/toc.json` into `OUT/pdm.md` as the KOICA 4-row × 4-column PDM matrix. Do not invent
 data — render only what is in the JSON. Keep KOICA labels bilingual; write content in `meta.lang`.
 
 ## Header block
@@ -70,7 +70,7 @@ It is optional for `pdm.md` and primary for `toc.md`.
 ## Fidelity checks (must hold)
 - Impact row literally shows `-` in OVI and MoV.
 - Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column.
-- Every indicator present in pdm.json appears somewhere in the matrix (no silent drops).
+- Every indicator present in toc.json appears somewhere in the matrix (no silent drops).
 - **OVI cells contain indicator names only** (no definition sentences); **MoV cells contain the 검증수단
   only** (no timing/collector).
 - Display numbers are consistent and parent-aligned: indicator `j.k.m` sits under `산출물 j.k`; activity

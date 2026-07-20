@@ -1,7 +1,7 @@
 # Prompt: Advisory self-check + conversational refinement loop
 
 ROLE: After the Critical gate passes, evaluate the Advisory rules (A01-A08 in `rules/checklist.json`) on
-`OUT/details/pdm.json` and, if below threshold, refine conversationally with the user. LLM judgment; work in the
+`OUT/details/toc.json` and, if below threshold, refine conversationally with the user. LLM judgment; work in the
 user's language.
 
 ## Scoring (per-rule-type)
@@ -20,7 +20,7 @@ Produce a short report: per rule → pass/fail + (if fail) the specific node(s) 
 ## Refinement loop (only if pass_rate < threshold)
 1. Present the failing rules and concrete suggestions.
 2. For each, ask the user a targeted question OR propose a concrete edit to approve.
-3. Apply approved edits to `pdm.json` (and mark dependents stale per SKILL Phase 4 if structure changes).
+3. Apply approved edits to `toc.json` (and mark dependents stale per SKILL Phase 4 if structure changes).
 4. **Re-run ALL Advisory checks** (not just the previously-failing ones — catch regressions).
 5. Repeat. **Max 3 rounds** (`--max-advisory-rounds`). Exit when: threshold met, max rounds reached, or
    the user says "accept as-is".
