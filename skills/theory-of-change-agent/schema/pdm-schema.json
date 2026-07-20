@@ -160,6 +160,14 @@
             "id": { "type": "string" }, "name": { "type": "string" },
             "lines": { "type": "array", "items": { "$ref": "#/$defs/budget_line" } } } }
         },
+        "caps": {
+          "type": ["object", "null"],
+          "description": "규정상 비율 한도 — 인터뷰 초반에 고정하는 예산 프레임 (임팩톨로지 feedback 2026-07-21). 프로그램 규정마다 다르므로 사용자 확인값을 기록; null이면 기본값 적용.",
+          "properties": {
+            "gm_rate": { "type": "number", "default": 0.05, "description": "일반관리비 상한 (총사업비 대비). 실측 KOICA형 시트 기준 기본 5%; 규정이 다르면(예: 10%) 사용자 값으로." },
+            "personnel_rate": { "type": ["number", "null"], "description": "인건비 상한 (총사업비 대비, 예: 0.3 = 30%). category=\"인건비\" 세목 합으로 검사(B07). null = 검사 안 함." },
+            "note": { "type": ["string", "null"], "description": "한도의 규정 출처 (예: 공고문 조항)." } }
+        },
         "general_mgmt": {
           "type": ["object", "null"],
           "description": "일반관리비 — rate × (직접 + 간접). KOICA 통상 5% 상한. amount는 null로 두면 스크립트가 계산.",
@@ -186,6 +194,7 @@
           "months": { "type": ["number", "null"], "description": "개월 (인건비·임차료 등 월단가일 때만)" },
           "note": { "type": ["string", "null"], "description": "근거 설명, e.g. \"월 인건비 x 13개월\"" } } },
         "amount": { "type": ["number", "null"], "description": "금액(원). null이면 스크립트가 basis로 계산." },
+        "category": { "type": ["string", "null"], "description": "규정 비율 검사용 분류 (예: \"인건비\") — caps와 연동(B07). 해당 없으면 null." },
         "shares": { "type": ["object", "null"], "additionalProperties": { "type": "number" }, "description": "funder id → 분담액. 합이 amount와 일치해야 함 (스크립트 검증). null이면 미배분(경고)." },
         "year": { "type": ["string", "null"], "description": "연차 label (budget.years 중 하나). null = 미배분." },
         "note": { "type": ["string", "null"] }

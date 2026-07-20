@@ -19,6 +19,17 @@ Only for `meta.use_case = intl-dev` (MVP). One question at a time (티키타카)
 1. **재원 봉투 (funders).** Ask who funds the project and (if known) each pledge:
    e.g. KOICA 사업예산 + 파트너/수원기관 분담. → `budget.funders` (`pledged` optional).
    Derive `budget.years` from `inputs.koica.duration` (confirm: "3년 사업이면 1~3차년으로 잡을게요").
+1b. **비율 프레임 — 규정 한도를 초반에 고정 (임팩톨로지 feedback 2026-07-21).** BEFORE collecting any
+   line items, ask ONE question about the program's regulatory ratio limits and record them in
+   `budget.caps`:
+   - "이 사업 공고/규정에 비율 한도가 있나요? 예: **일반관리비 총사업비의 N% 이내**, **인건비 총사업비의
+     N% 이내**." → `caps.gm_rate` (default **0.05** — 실측 KOICA형 시트 기준; 규정이 10% 등으로 다르면
+     사용자 값), `caps.personnel_rate` (예: 0.3; 규정에 없으면 null = 검사 안 함), `caps.note` (규정 출처).
+   - **Never invent a limit** — defaults only where stated; the numbers vary by program/공고.
+   - From here on, tag every 인건비-type 세목 with `"category": "인건비"` so the deterministic check (B07)
+     can total them. Relay the frame back: "일반관리비 {N}% · 인건비 {N}% 한도 안에서 잡겠습니다."
+   The rollup enforces the frame: B03 checks 일반관리비 vs `caps.gm_rate`, B07 checks 인건비 vs
+   `caps.personnel_rate` — breaches surface as warnings while you build, not at the end.
 2. **직접사업비 — PDM Activity를 하나씩.** Iterate outputs (항) → their activities (목, via
    `from_activities`). For each activity ask: "이 활동에 어떤 비용이 드나요?" and capture 세목 lines.
    Offer the **산출근거 template** matching the cost type (user fills the numbers):

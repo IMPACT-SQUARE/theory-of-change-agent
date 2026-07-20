@@ -14,10 +14,11 @@ Exit codes:
 Checks (koica-rules.md §12):
   B01 line amount == unit_price × qty × freq × (months||1) when both basis & amount given
   B02 Σ(shares) == line amount (per line, when shares given)
-  B03 general_mgmt.amount == rate × (direct + indirect) when given
+  B03 (warning) 일반관리비 실효율 > caps.gm_rate (default 5%), base = 총사업비
   B04 every direct output_id / activity_id exists in the PDM results chain
   B05 (warning) PDM activities with NO budget line — 예산 미배정 활동
   B06 (warning) funder `pledged` vs rolled-up funder total mismatch
+  B07 (warning) category cap breach — e.g. Σ(category="인건비") / 총사업비 > caps.personnel_rate
 """
 import json, sys
 
@@ -94,13 +95,17 @@ def main():
             else:
                 warnings.append(f"[{ctx}] '{ln.get('name','?')}': 분담(shares) 미배분")
             total += amt
+            if ln.get("category"):
+                category_totals[ln["category"]] = category_totals.get(ln["category"], 0) + amt
             computed.append({"name": ln.get("name"), "amount": amt, "basis_str": basis_str(ln),
                              "basis_note": (ln.get("basis") or {}).get("note"),
+                             "category": ln.get("category"),
                              "shares": sh or {}, "year": ln.get("year"), "note": ln.get("note")})
         return total, computed
 
     rollup = {"currency": budget.get("currency", "KRW"), "direct": [], "indirect": [],
               "funder_totals": {f: 0.0 for f in funder_ids}}
+    category_totals = {}
     budgeted_acts = set()
 
     # ---- direct (관: 직접사업비) ----
@@ -138,14 +143,16 @@ def main():
     # Explicit amount wins; `rate` only COMPUTES when amount is null (gm = rate×base/(1-rate)
     # so that gm/총사업비 = rate). B03 checks the 5% cap, never equality.
     gm = budget.get("general_mgmt") or {}
-    rate = gm.get("rate", 0.05)
+    caps = budget.get("caps") or {}
+    gm_cap = caps.get("gm_rate", 0.05)  # 규정 상한 — 프로그램별로 다름 (인터뷰 초반에 고정; 기본 5%)
+    rate = gm.get("rate", gm_cap)
     gm_amount = gm.get("amount")
     base = direct_total + indirect_total
     gm_final = gm_amount if gm_amount is not None else (rate * base / (1 - rate) if rate < 1 else 0.0)
     grand_pre = base + gm_final
     eff_rate = gm_final / grand_pre if grand_pre else 0.0
-    if eff_rate > 0.05 + 1e-9:  # B03: KOICA 통상 상한 (총사업비 대비)
-        warnings.append(f"[B03] 일반관리비 실효율 {eff_rate:.2%} > KOICA 통상 상한 5% "
+    if eff_rate > gm_cap + 1e-9:  # B03: 일반관리비 상한 (총사업비 대비)
+        warnings.append(f"[B03] 일반관리비 실효율 {eff_rate:.2%} > 상한 {gm_cap:.0%} "
                         f"({gm_final:,.0f} / 총사업비 {grand_pre:,.0f})")
     rate = eff_rate  # report the effective rate (of 총사업비), not the nominal default
 
@@ -187,7 +194,17 @@ def main():
             warnings.append(f"세목 연차 '{y}'가 budget.years {declared_years}에 없음")
 
     grand = direct_total + indirect_total + gm_final
+    # B07: 규정상 카테고리 비율 한도 (예: 인건비 ≤ 총사업비의 30%) — caps는 인터뷰 초반에 고정
+    pr = (budget.get("caps") or {}).get("personnel_rate")
+    if pr is not None and grand:
+        got = category_totals.get("인건비", 0.0) / grand
+        if got > pr + 1e-9:
+            warnings.append(f"[B07] 인건비 비율 {got:.1%} > 한도 {pr:.0%} "
+                            f"({category_totals.get('인건비',0):,.0f} / 총사업비 {grand:,.0f})")
     rollup.update({
+        "category_totals": category_totals,
+        "category_ratios": {k: v / grand for k, v in category_totals.items()} if grand else {},
+        "caps": budget.get("caps") or {},
         "year_totals": year_totals,
         "direct_total": direct_total, "indirect_total": indirect_total,
         "general_mgmt": {"rate": rate, "amount": gm_final},
@@ -212,6 +229,8 @@ def main():
         for y in (budget.get("years") or sorted(year_totals)):
             if y in year_totals:
                 print(f"  연차 {y}: {year_totals[y]:,.0f} (일반관리비 제외)")
+        for c, v in category_totals.items():
+            print(f"  카테고리 {c}: {v:,.0f} ({v / grand:.1%})" if grand else "")
         for w in warnings:
             print(f"WARN  {w}")
         for e in errors:

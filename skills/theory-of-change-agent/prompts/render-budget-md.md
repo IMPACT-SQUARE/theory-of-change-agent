@@ -32,6 +32,11 @@ don't render this file.
 When `budget.years` has 2+ years, add a **연차별 (By year)** row set from `year_totals`
 (one row per year, verbatim; note "일반관리비 제외" — GM is a single project-level amount).
 
+**비율 프레임 준수 (when `caps` is set):** add a line set under the summary from the `--json` output —
+e.g. `일반관리비 {ratios.general_mgmt} / 한도 {caps.gm_rate} ✓` and, when `caps.personnel_rate` is set,
+`인건비 {category_ratios.인건비} / 한도 {caps.personnel_rate} ✓` (✓ within / ⚠ over, mirroring the B03/B07
+warnings verbatim).
+
 ### 2. 직접사업비 상세 (항=Output → 목=Activity → 세목)
 One section per `direct[]` group, headed by the PDM output's display number + narrative
 (`항 1. {output.narrative} — 소계 {subtotal}`). Under it, one table per activity

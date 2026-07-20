@@ -267,7 +267,11 @@ Hard interview rules (mirror `koica-rules.md`):
    > user on the readable view, not the raw JSON. Do **not** re-save `out/details/pdm.json` after renders.
 10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
-    closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. **For DRAFT
+    closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. In app
+    sandboxes (Claude desktop / claude.ai) the files arrive as **download links in the chat** — say so.
+    If the user asks for a **PDF or 다운로드**, offer to render a print-ready **`out/pdm.html`**
+    (self-contained, inline CSS, the same tables) and tell them: 브라우저에서 열어 인쇄 → "PDF로 저장".
+    Never claim a hosted link exists — there is no server (web front-end is a separate 8월 workstream). **For DRAFT
     (both Mode C and inputs+draft), do NOT stop at a checklist — guide the next action** exactly as
     `prompts/draft-first.md` Step 4: a one-line summary, the top 1-3 things to firm up (use `--connectivity`
     for broken links; everything is `stale`/`추후 확정`), then **ask ONE specific leading question to start

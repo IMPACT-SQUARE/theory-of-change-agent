@@ -515,6 +515,10 @@ which the `budget` block of `pdm.json` mirrors (schema `budget` / `$defs.budget_
 - **B05** (warning) 예산 미배정 활동 — every PDM activity should carry ≥1 budget line; missing ones are
   listed, never silently ignored (and never invented).
 - **연차별 합계**: `year_totals` (직접+간접, 일반관리비 제외) — 총괄시트의 연차 컬럼; 세목의 `year`가 `budget.years`에 없으면 warning. (2026-07-16 5개년 총괄시트 검증에서 추가.)
+- **비율 프레임 (`budget.caps`, 2026-07-21 피드백):** 규정상 한도를 **인터뷰 초반에 고정**하고 세우는
+  방식 — `caps.gm_rate` (일반관리비 상한; 기본 5%, 프로그램 규정이 다르면 사용자 값), `caps.personnel_rate`
+  (인건비 상한, 예 30%; 규정에 없으면 검사 안 함), `caps.note` (규정 출처). 한도를 지어내지 않는다.
+- **B07** (warning) 인건비 비율 한도 — `category:"인건비"` 세목 합 ÷ 총사업비 > `caps.personnel_rate`.
 - **B06** (warning) funder 약정(pledged) vs 배분 합계 mismatch — 약정액은 **일반관리비 포함** 표기가 실무 표준이므로, 차이가 일반관리비와 정확히 일치하면 정상 처리 (헛경고 방지).
 - **간접사업비·일반관리비는 결과사슬 밖** — PDM 노드에 연결하지 않는다 (Inputs/관리 성격). Outcome/Impact에는
   예산 라인이 없다 (성과는 비용이 아니다).

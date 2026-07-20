@@ -39,13 +39,17 @@ Row-by-row:
 - **Impacts (영향):** narrative (incl. SDGs + national strategy). **OVI column = `-`. MoV column = `-`.**
   Assumptions column = `impact.assumptions_from_outcome`.
 - **Outcomes (성과):** one sub-row per outcome: `성과 j` + keyword narrative · its indicators numbered
-  `j-m` (DASH: `1-1, 1-2`) (**name + definition only — NO target/baseline numbers**) · `outcome.mov` ·
+  `j-m` (DASH: `1-1, 1-2`) (**indicator NAME only — no definition/설명글 under it, NO target/baseline
+  numbers**; the definition lives in monitoring.md — 임팩톨로지 feedback 2026-07-21) · `outcome.mov` ·
   `outcome.assumptions`.
 - **Outputs (산출물) — render as ONE consolidated table** (matches the submission form): one sub-row per
   output indicator so the numbering aligns. Columns = `산출물 j.k` (narrative, shown once per output) ·
-  OVI `j.k.m` (indicator name/definition, **no target numbers**) · that indicator's MoV · the output's
-  assumptions. Outputs with multiple indicators span consecutive `j.k.1, j.k.2…` rows under the same
+  OVI `j.k.m` (**indicator NAME only — no definition text, no target numbers**) · that indicator's MoV ·
+  the output's assumptions. Outputs with multiple indicators span consecutive `j.k.1, j.k.2…` rows under the same
   `산출물 j.k`.
+
+> **The MoV column shows the 검증수단 ONLY** — never append 측정 시기(timing)/수집 주체(collector)/빈도
+> to it (임팩톨로지 feedback 2026-07-21); those live in monitoring.md.
 
 > **Target/baseline are NOT shown in the PDM matrix** (the "end image"): the guideline keeps them out of
 > the PDM [p.29] and the harness defers them to `"추후 확정"` (koica-rules.md §4.8). They appear only in
@@ -67,5 +71,7 @@ It is optional for `pdm.md` and primary for `toc.md`.
 - Impact row literally shows `-` in OVI and MoV.
 - Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column.
 - Every indicator present in pdm.json appears somewhere in the matrix (no silent drops).
+- **OVI cells contain indicator names only** (no definition sentences); **MoV cells contain the 검증수단
+  only** (no timing/collector).
 - Display numbers are consistent and parent-aligned: indicator `j.k.m` sits under `산출물 j.k`; activity
   `j.k.m` is listed under output `j.k`; no number is skipped or duplicated.
