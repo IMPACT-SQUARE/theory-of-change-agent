@@ -19,7 +19,7 @@ Claude Code가 `SKILL.md`를 자동 인식한다. 호출:
 /theory-of-change-agent                          # 모드 선택부터
 /theory-of-change-agent --concept "한 줄 컨셉"     # Mode A (컨셉부터, 가이드 인터뷰)
 /theory-of-change-agent --inputs @brief.md        # Mode B (자료 보유)
-/theory-of-change-agent --draft                   # Mode C (표 먼저 — 질문 1개 후 바로 초안 표)
+/theory-of-change-agent --draft                   # Mode C (결과물 먼저 — 질문 1개 후 바로 초안 결과물)
 /theory-of-change-agent --inputs @existing-pdm.md --audit   # 기존/승인 PDM 감사
 ```
 
@@ -38,16 +38,16 @@ Claude Code·Claude 데스크톱 샌드박스 어디서나 동작. 선택: `jq`(
 진입 시 ① **지금 어떤 상태인가**(input_source) ② **어떻게 진행할까**(interaction)를 차례로 묻고, 그 조합으로
 내부 흐름을 정한다:
 - **상태**: `아이디어만 있어요`(concept) / `문서가 있어요`(inputs — 사업계획서·초안·기존 PDM; 승인 PDM은 `--audit` 점검만).
-- **방식**: `차근차근 인터뷰`(interview · 가장 꼼꼼, 아이디어 10–20분/문서 5–10분) / `표 먼저`(draft · 가장 빠름 2–5분).
+- **방식**: `차근차근 인터뷰`(interview · 가장 꼼꼼, 아이디어 10–20분/문서 5–10분) / `결과물 먼저`(draft · 가장 빠름 2–5분).
 
 | 상태 × 방식 | 내부 모드 | 동작 |
 |---|---|---|
 | 아이디어 + 인터뷰 | A | 문제·목표부터 한 번에 하나씩 결과사슬 구성 |
 | 문서 + 인터뷰 | B | 문서 추출 후 빈칸만 질문 |
-| 아이디어 + 표 먼저 | C | 질문 1개 → 바로 초안 표 → 그 위에서 수정 |
-| 문서 + 표 먼저 | B→draft | 문서 추출 → 바로 초안 표 → 수정 |
+| 아이디어 + 결과물 먼저 | C | 질문 1개 → 바로 초안 결과물 → 그 위에서 수정 |
+| 문서 + 결과물 먼저 | B→draft | 문서 추출 → 바로 초안 결과물 → 수정 |
 
-표 먼저(draft)는 비차단 게이트(`DRAFT`)로 시작하고 **"확정/finalize"** 시 하드 게이트(`GATE`)로 전환된다.
+결과물 먼저(draft)는 비차단 게이트(`DRAFT`)로 시작하고 **"확정/finalize"** 시 하드 게이트(`GATE`)로 전환된다.
 > **기초치/목표치(baseline·target)는 기본 "추후 확정"** — 현장답사·리서치 후 채운다. 인터뷰에서 묻지
 > 않고 PDM 본표엔 표시하지 않으며, 모니터링 매트릭스에 `추후 확정`으로 남는다(koica-rules.md §4.8, §10 #6).
 
