@@ -41,10 +41,8 @@ nodes (class `lvl`) so the 대목록 reads across the top: `사회문제 → 활
   `%%{init: {"themeVariables": {"fontSize": "16px"}}}%%`
 - **Every `classDef` includes `color:#000`** (black text). The fills are light, so without an explicit
   color, dark-theme apps (Antigravity) render white-on-light = unreadable.
-- Directly under the §1b text fallback, ALWAYS emit this tip line (in `meta.lang`), since markdown cannot
-  zoom or export: ko: `> 🔍 **확대·이미지 저장:** 위 도식 코드를 https://mermaid.live 에 붙여넣으면 확대해 보고
-  PNG/SVG로 다운로드할 수 있습니다.` / en: `> 🔍 **Zoom & export:** paste the diagram code into
-  https://mermaid.live to zoom and download PNG/SVG.`
+- Zoom / image-export buttons are NOT possible inside a markdown file — do NOT emit any external-tool
+  workaround tip (user decision 2026-07-21: interactive zoom/download is deferred to the web version).
 
 Node id: each `toc.json` id → Mermaid-safe (replace non-alphanumerics with `_`: `op-1`→`op_1`,
 `ind-oc-1.1`→`ind_oc_1_1`). Label = the narrative (display-number prefix optional). Escape `"` in labels.
@@ -166,8 +164,8 @@ important to track).
   §3 사회공헌 table also carries `측정 대상` (`-` when null / for intl-dev).
 - **No `subgraph` LEVEL containers** — levels are shown by LR flow + class color + the `lvl` header row.
   (Per-outcome TB groups are the one allowed subgraph use.)
-- **Level header row (`lvl` chain) is the first line of the graph**; every `classDef` carries `color:#000`;
-  the mermaid.live zoom/export tip follows the text fallback.
+- **Level header row (`lvl` chain) is the first line of the graph**; every `classDef` carries `color:#000`.
+- **No external-tool tip lines** (mermaid.live etc.) in the output.
 - Each **outcome's indicators sit BELOW it inside its TB group** (`-.->`); no baseline/target numbers in
   the diagram.
 - **`toc.md` contains no "KOICA" mention** (labels, notes, citations — none).
