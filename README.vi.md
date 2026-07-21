@@ -88,11 +88,13 @@ không cần thư viện ngoài nên dùng được trong môi trường thực 
 
 **Cần có:** Claude Code, Claude desktop hoặc claude.ai cùng với `python3`. Môi trường thực thi mã trên desktop và web đã có Python.
 
-### Cách dễ nhất: dán đoạn sau vào Claude Code
+### Cách dễ nhất: dán đoạn sau vào AI agent (Claude Code · Antigravity, v.v.)
 
-Mở Claude Code và dán nguyên đoạn dưới đây. Claude sẽ tự làm phần còn lại.
+Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code, Antigravity, Gemini CLI, …) và dán nguyên đoạn dưới đây. Agent sẽ tự làm phần còn lại.
 
-> Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent`, xác nhận tệp `~/.claude/skills/theory-of-change-agent/SKILL.md` tồn tại, sau đó cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" và cập nhật sau này bằng `git -C ~/.claude/theory-of-change-agent pull`.
+> Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, sau đó symlink (hoặc sao chép) thư mục `skills/theory-of-change-agent` bên trong vào thư mục skills toàn cục của môi trường bạn — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`. Xác nhận tệp `SKILL.md` tồn tại trong thư mục skill, rồi cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" (với Antigravity cần khởi động lại phiên) và cập nhật sau này bằng `git -C ~/theory-of-change-agent pull`.
+
+*(Chat thường trên Claude web/desktop không truy cập được tệp cục bộ — hãy dùng cách plugin/zip bên dưới.)*
 
 ### Claude Code
 

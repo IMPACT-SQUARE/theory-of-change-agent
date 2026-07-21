@@ -116,11 +116,13 @@ The checks are implemented in code and documented in this repository:
 You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
 code-execution sandboxes include Python.
 
-### Easiest: paste this into Claude Code
+### Easiest: paste this into Claude Code, Antigravity, or any local AI agent
 
-Open Claude Code and paste this. Claude does the rest.
+Open your AI agent (Claude Code, Antigravity, Gemini CLI, …) and paste this. The agent does the rest.
 
-> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent`, confirm that `~/.claude/skills/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" and that I can update later with `git -C ~/.claude/theory-of-change-agent pull`.
+> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
+
+*(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
 
 ### Claude Code (auto-update, recommended)
 

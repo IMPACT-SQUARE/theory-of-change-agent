@@ -88,11 +88,13 @@ Agent:    ✔ 重要ルール 8 件を通過しました。
 
 **必要なもの:** Claude Code、Claude デスクトップ、または claude.ai と `python3` です。デスクトップと Web のコード実行環境には Python が含まれます。
 
-### いちばん簡単な方法: Claude Code に貼り付ける
+### いちばん簡単な方法: AI エージェントに貼り付ける (Claude Code · Antigravity など)
 
-Claude Code を開いて、以下の段落をそのまま貼り付けてください。あとは Claude が実行します。
+Claude Code、Antigravity、Gemini CLI のようにローカルでコマンドを実行できる AI エージェントを開き、以下の段落をそのまま貼り付けてください。あとはエージェントが実行します。
 
-> Theory of Change Agent をインストール: `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent` を実行し、`~/.claude/skills/theory-of-change-agent/SKILL.md` が存在することを確認してから、「Theory of Change Agent で PDM を作って」と言えば開始できること、更新は `git -C ~/.claude/theory-of-change-agent pull` で行えることを教えて。
+> Theory of Change Agent をインストール: `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent` を実行し、その中の `skills/theory-of-change-agent` フォルダをあなたの環境のグローバルスキルフォルダにシンボリックリンク（またはコピー）して — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`。スキルフォルダに `SKILL.md` があることを確認してから、「Theory of Change Agent で PDM を作って」と言えば開始できること（Antigravity はセッション再起動後）、更新は `git -C ~/theory-of-change-agent pull` で行えることを教えて。
+
+*(Claude ウェブ/デスクトップの通常チャットはローカルファイルにアクセスできないため、この方法は使えません — その場合は下のプラグイン/zip の方法を使ってください。)*
 
 ### Claude Code
 
