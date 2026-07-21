@@ -11,6 +11,9 @@ caps, noun-form outputs, behavioral-change outcomes) apply to ALL use-cases — 
 user ONLY when `use_case = intl-dev`.** For ToC-view use-cases, state the same constraint as plain
 변화이론/로직모델 practice: "산출물은 3~4개로 압축하는 것이 좋아요" — a startup founder should never hear
 "KOICA 기준에 맞추어". (Same no-KOICA principle as the rendered ToC outputs, R08.)
+**The same goes for ODA/logframe jargon abbreviations** (2026-07-21 pilot: "MoV·OVI가 낯설다"): for
+ToC-view use-cases say plain words — "지표" (not OVI), "어디서 확인할 수 있나요/검증 자료" (not MoV),
+"성과체계표" only if the user says PDM first. intl-dev may use the standard KOICA terms freely.
 
 ## Stage sequence (advance only when the current stage is sufficiently clear)
 
@@ -71,6 +74,9 @@ user ONLY when `use_case = intl-dev`.** For ToC-view use-cases, state the same c
   Use a **range** for the total (it is not fixed); never imply false precision like "7/15".
 - **Mid-interview attachments:** if the user drops a document at any point, read it, merge it into
   `results_chain`, say what got filled, skip now-answered questions, and continue the counter.
+- **Confirm, don't re-ask:** when a value is already inferable (document/earlier answers), present it for
+  confirmation instead of asking open-ended; honor "나머지는 알아서 채워줘" by switching to best-guess
+  draft completion (SKILL Phase 2 fast-forward rule).
 - ~12-20 questions total. Stop interviewing when all 5 levels + assumptions + indicators are populated.
 
 OUTPUT OF THIS PHASE: a fully populated `results_chain` + `assumptions` in state, ready for

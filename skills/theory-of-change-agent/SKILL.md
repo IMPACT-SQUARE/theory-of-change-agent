@@ -36,6 +36,7 @@ primary view sits at the top of `out/`; the source JSON and the monitoring detai
 out/
 ├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For ToC-view use-cases (biz-dev/csr-esg/nonprofit) this is toc.md instead.
 ├── budget.md       # OPTIONAL (intl-dev, on request after gate pass): 사업 예산서 — Phase 3 step 11
+├── org.md          # org-unit runs (meta.unit=org, 비영리 중심): 조직 임팩트 맵 — Phase 1 step 0b
 └── details/
     ├── toc.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
     └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
@@ -130,37 +131,36 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    (`biz-dev`/`csr-esg`/`nonprofit`) → ToC view; `invest-screen` → planned. The PDM gate/rules below apply
    in full to `intl-dev`; for ToC-view use-cases the same results-chain is built but PDM-form-specific
    requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
-0b. **Unit branching — 다수 프로젝트 감지 (CONDITIONAL — not a sequential step).** This rule fires
-   **LATER, and ONLY IF step 1's Q1 answer is `inputs`** (the user said they HAVE documents), at document-
-   ingestion time (`interview-b-inputs.md` step 1). **Do NOT ask for a document here, and never because of
-   the use-case alone** — choosing 임팩트 스타트업/비영리 does NOT mean the user has documents (2026-07-21
-   pilot bug: Gemini read this step positionally and demanded an upload after the user picked
-   interview-mode). If Q1 = `concept` (아이디어만), this step NEVER applies — set `meta.unit = "project"`
-   and run the normal concept interview. `intl-dev`/`csr-esg` are project-unit by nature — same:
-   `meta.unit = "project"`, skip.
-   When it DOES fire (`biz-dev`/`nonprofit` + Q1 = `inputs`): READ the provided documents first and judge
-   whether they describe **one project or multiple projects** (예: 조직 사업계획서, 비영리 연차보고서 —
-   당해년도 전체 사업이 들어 있음).
-   - **Single project detected** → `meta.unit = "project"`, proceed normally.
-   - **다수 프로젝트 detected** → `meta.unit = "org"`, record `meta.org_context` (org_name, mission if stated,
-     projects[] with one-line summaries), then ASK the user with the interactive choice tool — **exactly 2
-     options** (never offer a "여러 프로젝트를 하나씩 전부 돌리기" option):
-       1. **전체 프로젝트** — 조직 전체 구조도: 미션 → 프로젝트들이 어떻게 연결되는지 한눈에. Full ToC를 프로젝트마다
-          만들지 않는다. **This is a STRUCTURE-MAP path, NOT the results-chain pipeline** (2026-07-21 pilot
-          bug: projects were forced into 산출물 slots and hit the 3-4 output cap):
-          - Do NOT run the Phase 2 interview, do NOT map projects to outputs/activities, and do NOT apply
-            the C-gate / output-count rules or the render R-gate — none of them fit an org overview.
-          - Render a compact **조직 구조도** directly: mission at the root, each project as a node with its
-            핵심 성과 한 줄 (Mermaid + text fallback + black-text classDef style of render-toc §1; no 5-level
-            header — levels do not apply here).
-          - Below it, offer: "특정 프로젝트 하나를 골라 full 변화이론으로 들어갈 수도 있어요." Drilling into a
-            project runs the NORMAL single-project flow (gates and all).
-       2. **특정 프로젝트** — 감지된 프로젝트 목록에서 하나를 고르게 한 뒤(`meta.org_context.selected_project`),
-          그 프로젝트를 대상으로 normal single-project flow를 진행한다 (project_name = 선택 프로젝트).
-          **ALWAYS extract the organization mission/vision sentence from the document into
-          `meta.org_context.mission`** — render-toc shows it as a reference linkage line under the header
-          (2026-07-21 pilot: drill-down lost the 상위 미션 connection).
-   Wording rule: say **"프로젝트"**, not "프로그램" (다수 프로젝트, 전체 프로젝트, 특정 프로젝트).
+0b. **Unit branching (단위 분기) — 조직 전체 vs 특정 프로젝트.** Two triggers; never demand a document
+   because of the use-case alone (2026-07-21 bug note stands).
+   - **(a) Explicit ask — `nonprofit` ONLY, right after the use-case pick (before Q1):** foundations
+     legitimately come with either intent, so ASK with the interactive choice tool — exactly 2 options:
+       1. **조직 전체** — "조직 전체의 임팩트 맵을 볼래요 (미션과 프로젝트들의 연결)" → `meta.unit = "org"`,
+          go to the **org-map path** below.
+       2. **특정 사업(프로젝트) 하나** — → `meta.unit = "project"`, normal flow (Q1/Q2부터 그대로).
+     `biz-dev` is NOT asked upfront (a startup usually means its one venture) — detection (b) covers the
+     rare multi-project plan. `intl-dev`/`csr-esg`: `meta.unit = "project"`, skip silently.
+   - **(b) Document detection (fallback)** — `biz-dev`/`nonprofit` + Q1 = `inputs`, at ingestion time
+     (`interview-b-inputs.md` step 1): if the document describes **multiple projects** (조직 사업계획서,
+     연차보고서) and `meta.unit` isn't already set, ask the same 2 options (전체 / 특정). Single project
+     detected → `meta.unit = "project"`, proceed. Never offer a "하나씩 전부 돌리기" option.
+
+   **Org-map path (`meta.unit = "org"`) — NOT the results-chain pipeline** (2026-07-21 pilot: forcing
+   프로그램 into 산출물 slots hit the 3-4 cap and read as 억지):
+   - Do NOT run the Phase 2 chain interview, do NOT map projects to outputs/activities, and do NOT apply
+     the C-gate / output-count rules or the render R-gate.
+   - Gather just enough for the map: `meta.org_context` (org_name, **mission — always extract or ask
+     once**, projects[] with one-line summaries). With a document, read it; concept-only, ask 3-5 light
+     questions (조직명·미션·프로젝트 목록·프로젝트별 한 줄). Never invent projects or outcomes.
+   - Render via **`prompts/render-org-md.md` → `OUT/org.md`** (the primary end-view for this run:
+     미션 → 프로젝트 포트폴리오 → 프로젝트별 핵심 성과 + 미션과의 연결).
+   - Then offer the drill-down: "특정 프로젝트를 골라 full 변화이론으로 들어갈 수 있어요" — drilling in runs
+     the NORMAL single-project flow (gates and all, → `toc.md`).
+
+   **특정 프로젝트 (from either trigger):** run the normal single-project flow with `project_name` = the
+   chosen project and **ALWAYS extract the organization mission into `meta.org_context.mission`** —
+   render-toc shows the 🧭 mission-linkage line under the header (drill-down must not lose the 상위 미션).
+   Wording rule: say **"프로젝트"**, not "프로그램" (조직 전체, 특정 프로젝트).
 1. Determine the **approach via TWO friendly, user-facing questions** — ALWAYS ask both before doing
    anything else; never pick unilaterally. Use the environment's interactive choice tool (plain text only
    if none exists). A `--concept`/`--inputs` flag pre-answers Q1 and `--draft` pre-answers Q2 (skip what is
@@ -213,6 +213,14 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 > (state in one line what got filled), SKIP questions it already answers, and continue the same question
 > counter — never restart the interview. Early on (once), let the user know: "진행 중 언제든 관련 문서를
 > 붙여주시면 반영합니다."
+
+> **Confirm, don't re-ask + fast-forward (2026-07-21 pilot: "인터뷰가 길다") — ALL modes:**
+> - **Never ask for something you can already infer with confidence** (document, earlier answers, obvious
+>   context). State the inferred value and ask for a quick confirm: "문서상 대상은 ○○로 보입니다 — 맞나요?"
+>   Batch trivial confirmations into one turn.
+> - **Fast-forward escape:** at ANY point the user may say "나머지는 알아서 채워줘" (or similar) — STOP
+>   asking, fill the remaining fields as a best-guess draft (`stale: true`), show the result, refine from
+>   there. Mention this escape once early on, together with the attachment tip.
 Follow the KOICA procedure (koica-rules.md §1.3): problem/goal analysis → build the results chain with
 assumptions → add indicators. **Ask ONE question per turn** (deep-interview style); after each answer,
 update `results_chain` in state. Enforce the per-level rules from `koica-rules.md` §3 AS YOU GO (don't

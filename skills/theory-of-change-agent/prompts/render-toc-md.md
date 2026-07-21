@@ -6,7 +6,9 @@ as the PDM; this view emphasizes the **causal flow and node connections** rather
 Render only what is in the JSON. Keep structural labels bilingual; write content in `meta.lang`.
 **No KOICA mentions in the rendered ToC output** (임팩톨로지 feedback 2026-07-21): this view serves non-ODA
 use-cases — never emit "KOICA 가이드라인" / rule ids / internal source names in `toc.md`; ground any advice
-in 변화이론·로직모델 wording. (KOICA references belong to the intl-dev PDM/monitoring surfaces only.)
+in 변화이론·로직모델 wording. **Also avoid ODA/logframe abbreviations (OVI, MoV) in ToC-view output** —
+use plain 지표 / 확인 방법·자료 출처 (2026-07-21 pilot feedback). (KOICA references and standard
+abbreviations belong to the intl-dev PDM/monitoring surfaces only.)
 
 ## Header block
 ```
