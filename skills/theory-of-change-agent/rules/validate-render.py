@@ -17,7 +17,7 @@ Rules:
   R01 pdm.md   OVI cells carry indicator NAMES only — no indicator `definition` text anywhere
   R02 pdm.md   no indicator `timing` value anywhere (측정 시기 lives in monitoring.md)
   R03 pdm.md   no "추후 확정" placeholder (the matrix omits deferred values entirely)
-  R04 toc.md   diagram starts with the level-header row (`:::lvl` nodes)
+  R04 toc.md   level header: bold markdown line above the block AND `:::lvl` chain in the graph
   R05 toc.md   no `class …` statement lines in the Mermaid block (stray-"CLASS"-node bug)
   R06 toc.md   every `classDef` carries color:#000 (dark-theme readability)
   R07 toc.md   renderer-independent text fallback block (with →) follows the Mermaid block
@@ -124,7 +124,10 @@ def main():
             for r in ("R04", "R05", "R06", "R07", "R11"):
                 R[r] = "n/a"
         else:
-            set_rule("R04", mm.count(":::lvl") >= 2, "레벨 헤더 행(:::lvl 체인)이 도식에 없음")
+            pre = toc_md.split("```mermaid")[0]
+            md_line = bool(re.search(r"\*\*[^\n]*사회문제[^\n]*→[^\n]*영향[^\n]*\*\*", pre))
+            set_rule("R04", mm.count(":::lvl") >= 2 and md_line,
+                     "레벨 헤더 누락 — 도식 내 :::lvl 체인과 블록 위 굵은 대목록 줄이 모두 필요")
             stray = re.findall(r"^\s*class\s+\S+", mm, re.MULTILINE)
             set_rule("R05", not stray, f"`class` 문장 라인 발견(유령 CLASS 노드 유발): {stray[:2]}")
             bad_defs = [ln.strip() for ln in mm.splitlines()

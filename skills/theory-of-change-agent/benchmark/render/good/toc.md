@@ -2,6 +2,8 @@
 
 ## 1. 변화이론 도식
 
+**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**
+
 ```mermaid
 %%{init: {"themeVariables": {"fontSize": "16px"}}}%%
 flowchart LR

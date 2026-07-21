@@ -31,10 +31,14 @@ nodes prominent.
 per-node `classDef` color for the level cue. *(A small per-**outcome** group IS allowed — see 성과지표 below;
 the ban is on level-wide containers only.)*
 
-**Level header row (임팩톨로지 feedback 2026-07-21):** the FIRST line of the graph is a chain of level-label
-nodes (class `lvl`) so the 대목록 reads across the top: `사회문제 → 활동 → 산출물 → 성과(+지표) → 영향`
-(insert `투입물` after 사회문제 only when the 투입물 node is shown, i.e. intl-dev). Labels bilingual
-(e.g. `활동 (Activities)`).
+**Level header row (임팩톨로지 feedback 2026-07-21):** TWO places, both mandatory:
+1. **A bold markdown line DIRECTLY ABOVE the ```mermaid block** — guarantees the 대목록 is visible in
+   every viewer regardless of Mermaid version:
+   `**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**`
+2. **The FIRST line of the graph** is a chain of level-label nodes (class `lvl`) with the same labels.
+   *(Older Mermaid versions treat this disconnected chain unpredictably — bottom/detached — which is why
+   the markdown line above is required too; verified 2026-07-21.)*
+Insert `투입물` after 사회문제 in both only when the 투입물 node is shown (intl-dev). Labels bilingual.
 
 **Readability (임팩톨로지 feedback 2026-07-21 — small/invisible text in Antigravity dark theme):**
 - Start the block with an init directive that raises the font size:
@@ -166,7 +170,8 @@ important to track).
   §3 사회공헌 table also carries `측정 대상` (`-` when null / for intl-dev).
 - **No `subgraph` LEVEL containers** — levels are shown by LR flow + class color + the `lvl` header row.
   (Per-outcome TB groups are the one allowed subgraph use.)
-- **Level header row (`lvl` chain) is the first line of the graph**; every `classDef` carries `color:#000`.
+- **Level header appears BOTH as a bold markdown line above the block AND as the `lvl` chain first line
+  of the graph**; every `classDef` carries `color:#000`.
 - **No external-tool tip lines** (mermaid.live etc.) in the output.
 - Each **outcome's indicators sit BELOW it inside its TB group** (`-.->`); no baseline/target numbers in
   the diagram.
