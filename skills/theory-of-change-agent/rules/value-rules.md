@@ -72,5 +72,7 @@ Type axes — choose deliberately: 전후(A vs B) vs 변화분(A−B); 단위당
   > **Catalog build:** `rules/iris-metrics.json` (593 impact metrics: ID + name + definition + theme/SDG) is
   > produced by `build-iris-metrics.py` from the GIIN IRIS+ Excel, filtered by ID prefix **PI/OI/II**
   > (Product/Operational/Investment Impact — IRIS+ has no explicit outcome label; Description/Financial rows
-  > dropped). The JSON is **git-ignored** (GIIN-copyrighted) and shipped only in the local team zip; public
-  > plugin users build it from their own IRIS+ download, else the section shows "매칭 준비 중".
+  > dropped). The JSON is **committed to the public repo with an embedded GIIN attribution/copyright
+  > block** (2026-07-21 — the IRIS+ ToU permits free redistribution with attribution; sale prohibited; raw
+  > Excel stays out). All install paths get matching out of the box; "매칭 준비 중" now only means a truly
+  > missing/deleted catalog.
