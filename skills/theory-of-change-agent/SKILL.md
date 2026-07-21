@@ -130,11 +130,17 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    (`biz-dev`/`csr-esg`/`nonprofit`) → ToC view; `invest-screen` → planned. The PDM gate/rules below apply
    in full to `intl-dev`; for ToC-view use-cases the same results-chain is built but PDM-form-specific
    requirements are relaxed (see Phase 3 + koica-rules §4.1, §11).
-0b. **Unit branching — 다수 프로젝트 감지 (org-unit inputs).** 변화이론은 **프로젝트 단위**로 만들어진다.
-   `intl-dev`/`csr-esg` are project-unit by nature — set `meta.unit = "project"` and skip this step.
-   For **`biz-dev`/`nonprofit`**, when the user provides documents (Phase 1 Q1 = `inputs`), READ them first
-   and judge whether they describe **one project or multiple projects** (예: 조직 사업계획서, 비영리 연차보고서
-   — 당해년도 전체 사업이 들어 있음).
+0b. **Unit branching — 다수 프로젝트 감지 (CONDITIONAL — not a sequential step).** This rule fires
+   **LATER, and ONLY IF step 1's Q1 answer is `inputs`** (the user said they HAVE documents), at document-
+   ingestion time (`interview-b-inputs.md` step 1). **Do NOT ask for a document here, and never because of
+   the use-case alone** — choosing 임팩트 스타트업/비영리 does NOT mean the user has documents (2026-07-21
+   pilot bug: Gemini read this step positionally and demanded an upload after the user picked
+   interview-mode). If Q1 = `concept` (아이디어만), this step NEVER applies — set `meta.unit = "project"`
+   and run the normal concept interview. `intl-dev`/`csr-esg` are project-unit by nature — same:
+   `meta.unit = "project"`, skip.
+   When it DOES fire (`biz-dev`/`nonprofit` + Q1 = `inputs`): READ the provided documents first and judge
+   whether they describe **one project or multiple projects** (예: 조직 사업계획서, 비영리 연차보고서 —
+   당해년도 전체 사업이 들어 있음).
    - **Single project detected** → `meta.unit = "project"`, proceed normally.
    - **다수 프로젝트 detected** → `meta.unit = "org"`, record `meta.org_context` (org_name, mission if stated,
      projects[] with one-line summaries), then ASK the user with the interactive choice tool — **exactly 2
@@ -164,7 +170,9 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
        e.g. intl-dev → "결과물(PDM 표)을 먼저 만들고 그 위에서 고칠래요" / nonprofit → "결과물(변화이론
        도식)을 먼저 만들고 그 위에서 고칠래요".
    **Resolve to the internal flow** and set `meta.input_source`, `meta.interaction`, and `meta.mode`:
-     - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`.
+     - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`. The user said
+       **아이디어만** — start stage-1 questions directly; **NEVER ask them to upload or point to a document**
+       (mentioning "있으면 붙여줘도 좋아요" in passing is fine; requiring one is not).
      - inputs  + interview → **Mode B** (`prompts/interview-b-inputs.md`); `mode:"B"`.
      - concept + draft     → **Mode C** (`prompts/draft-first.md`); `mode:"C"`.
      - inputs  + draft     → **Mode B → draft:** run `interview-b-inputs.md` steps 1-2 to read/extract the
@@ -393,6 +401,9 @@ On any edit to node X:
   user can answer with one keystroke, e.g.:
   `1️⃣ 직접 수정할 내용을 알려주기 · 2️⃣ 약한 고리부터 하나씩 짚기 · 3️⃣ "확정"으로 게이트 진행 — 번호로
   답해 주세요.` Never bury the options in a paragraph, and never skip the question.
+- **Document requests:** ask the user to upload/provide a file **only when Q1 = `inputs`**. The use-case
+  choice (임팩트 스타트업/비영리 등) never implies documents exist — idea-only users get the concept
+  interview with zero upload prompts.
 - **Files:** all file ops run in whatever sandbox/filesystem is available; in the Claude apps the three
   output files are written to the sandbox for the user to download.
 </Guardrails>
