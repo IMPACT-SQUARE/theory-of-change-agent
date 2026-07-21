@@ -50,6 +50,17 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 
 ---
 
+## 2b. 업데이트 (2026-07 기준)
+
+- **Desktop 플러그인 설치**(Customize → Plugins → Browse에서 설치): 자동 업데이트 없음 —
+  **Customize → Plugins → 해당 마켓플레이스의 "Update" 버튼**으로 수동 갱신.
+- **zip 업로드**: 자동 업데이트 없음 — 새 zip 재업로드.
+- **자동 업데이트가 필요하면**: ① Claude Code 플러그인(마켓플레이스 autoUpdate 지원), 또는
+  ② **Team/Enterprise 조직 관리형 마켓플레이스** — 관리자가 GitHub 레포를 등록하면 main 머지마다
+  팀 전원에게 자동 동기화(≤30분).
+
+---
+
 ## 3. 사용법
 
 채팅에서 자연스럽게 호출하면 됩니다(스킬 설명의 트리거 키워드로 자동 활성화):
