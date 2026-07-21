@@ -11,11 +11,6 @@ impact. For international-development projects, it produces a **PDM (Project Des
 impact startups, CSR, and nonprofits, it produces a **Theory of Change diagram**.
 It works with AI assistants such as Claude and responds in the language you use.
 
-It does more than fill out a template. It flags weak logic, such as an output that has been written
-as an outcome. Its checks are traceable: the deterministic quality gate scores **18/18 on the
-detection benchmark**, the rule documentation explains each check, and the budget module reproduced
-two representative budget sheets **to the won**.
-
 **Who this is for:**
 
 - **First-time PDM writers** who need a structured process
