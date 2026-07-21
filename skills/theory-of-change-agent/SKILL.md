@@ -156,8 +156,13 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
      - **사업계획서·초안·기존 PDM 같은 문서가 있어요** (`inputs`) — 그 파일을 읽어 활용. (이미 *승인된* PDM을
        점검만 하려는 거면 감사 모드로: AUDIT.)
    **Q2 — 어떻게 진행할까요?** (`interaction`)
+   The use-case is already known (step 0), so **name the concrete deliverable in parentheses** in the
+   draft option — `{결과물}` = **PDM 표** for `intl-dev`, **변화이론 도식** for `biz-dev`/`csr-esg`/
+   `nonprofit` (en: *PDM matrix* / *Theory-of-Change diagram*):
      - **질문에 하나씩 답하며 차근차근 만들래요** (`interview`) — 가장 꼼꼼. 대략 아이디어 10–20분 / 문서 5–10분.
-     - **결과물을 먼저 만들고 그 위에서 고칠래요** (`draft`) — 가장 빠름, 대략 2–5분.
+     - **결과물({결과물})을 먼저 만들고 그 위에서 고칠래요** (`draft`) — 가장 빠름, 대략 2–5분.
+       e.g. intl-dev → "결과물(PDM 표)을 먼저 만들고 그 위에서 고칠래요" / nonprofit → "결과물(변화이론
+       도식)을 먼저 만들고 그 위에서 고칠래요".
    **Resolve to the internal flow** and set `meta.input_source`, `meta.interaction`, and `meta.mode`:
      - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`.
      - inputs  + interview → **Mode B** (`prompts/interview-b-inputs.md`); `mode:"B"`.
