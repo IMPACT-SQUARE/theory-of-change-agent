@@ -78,7 +78,7 @@ KOICA PDM 초안 하나 만들어줘.
 |---|---|---|
 | 실행 위치 | 로컬 셸·파일시스템 | 코드 실행 **샌드박스** |
 | 결과 파일 | 작업 폴더에 저장 | 샌드박스 생성 → **다운로드** |
-| 선택지 질문 | `AskUserQuestion` | `ask_user_input_v0` (이름만 다르고 동일 역할 — 탭 선택 UI) |
+| 선택지 질문 | `AskUserQuestion` | `ask_user_input_v0` (이름만 다르고 동일 역할 — 탭 선택 UI). Antigravity/Gemini는 `ask_user`; 없으면 번호 메뉴 텍스트로 폴백 |
 | 검증기 | `python3`(jq 불필요) | `python3`(샌드박스 기본 제공) |
 
 ---

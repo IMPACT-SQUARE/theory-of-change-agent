@@ -382,13 +382,17 @@ On any edit to node X:
   (Phase 4). You can compute the breakage deterministically: `bash rules/validate-critical.sh --json
   OUT/details/toc.json` (C05 = disconnected outputs, C08 = orphan activities) gives the exact lists to nudge with.
 - **Interactive questions — use the environment's choice tool, whatever its name.** A tab/click
-  single-select question tool exists in every supported environment, but under **different names**:
-  **`AskUserQuestion`** in Claude Code, **`ask_user_input_v0`** in the Claude web/desktop apps (other
-  surfaces may expose yet another name with the same role). For any bounded choice (e.g. the Phase 1 mode
-  pick, or 2-4 concrete options), you **MUST** use whichever such tool is actually available to you —
-  check your real tool list, don't assume it's missing because the name differs. Fall back to a plain-text
-  question **only** after verifying that no interactive choice tool exists; never default to plain text out
-  of convenience, and never skip the question.
+  single-select question tool exists in most supported environments, but under **different names**:
+  **`AskUserQuestion`** in Claude Code, **`ask_user_input_v0`** in the Claude web/desktop apps,
+  **`ask_user`** in Gemini CLI / Antigravity (type "choice" = multiple-choice) — other surfaces may
+  expose yet another name with the same role. For any bounded choice (e.g. the Phase 1 mode pick, or 2-4
+  concrete options), you **MUST** use whichever such tool is actually available to you — **check your
+  real tool list first**; don't assume it's missing because the name differs (2026-07-21 pilot: Gemini in
+  Antigravity fell back to prose because its `ask_user` wasn't named here). Fall back to plain text
+  **only** after verifying no such tool exists — and then format the fallback as a **numbered menu** the
+  user can answer with one keystroke, e.g.:
+  `1️⃣ 직접 수정할 내용을 알려주기 · 2️⃣ 약한 고리부터 하나씩 짚기 · 3️⃣ "확정"으로 게이트 진행 — 번호로
+  답해 주세요.` Never bury the options in a paragraph, and never skip the question.
 - **Files:** all file ops run in whatever sandbox/filesystem is available; in the Claude apps the three
   output files are written to the sandbox for the user to download.
 </Guardrails>
