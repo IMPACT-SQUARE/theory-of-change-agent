@@ -35,9 +35,6 @@ Open your AI agent (Claude Code, Antigravity, Gemini CLI, ChatGPT desktop, …) 
 
 > Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
 
-*(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
-
-
 *(In Claude Code you can also install as a plugin — `/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent` then `/plugin install theory-of-change-agent@impact-square` — which supports auto-update.)*
 
 ### Claude desktop (plugin)

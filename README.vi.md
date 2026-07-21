@@ -33,9 +33,6 @@ Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code,
 
 > Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, sau đó symlink (hoặc sao chép) thư mục `skills/theory-of-change-agent` bên trong vào thư mục skills toàn cục của môi trường bạn — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/`. Xác nhận tệp `SKILL.md` tồn tại trong thư mục skill, rồi cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" (với Antigravity cần khởi động lại phiên) và cập nhật sau này bằng `git -C ~/theory-of-change-agent pull`.
 
-*(Chat thường trên Claude web/desktop không truy cập được tệp cục bộ — hãy dùng cách plugin/zip bên dưới.)*
-
-
 *(Trong Claude Code, bạn cũng có thể cài dưới dạng plugin — `/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent` rồi `/plugin install theory-of-change-agent@impact-square` — hỗ trợ tự động cập nhật.)*
 
 ### Claude desktop (plugin)
