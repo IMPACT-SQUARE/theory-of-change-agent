@@ -59,6 +59,8 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 - `rules/validate-critical.sh` — deterministic validator for the structural Critical rules.
 - `rules/budget-rollup.py` — deterministic budget rollup/validation (B01-B06, koica-rules.md §12); the
   LLM never does budget arithmetic.
+- `rules/validate-render.py` — deterministic RENDER fidelity gate (R01-R11) over the emitted md files
+  (OVI name-only, no timing in MoV, level header, no stray `class`, text fallback, no-KOICA in ToC, …).
 - `rules/hwp-extract.py` — pure-stdlib `.hwp`/`.hwpx` → text extractor for mode-B inputs (no npm needed;
   routing in `prompts/interview-b-inputs.md` step 1; exit 3 = encrypted/배포용 → ask for a PDF).
 - `schema/pdm-schema.json` — JSON Schema for `toc.json`.
@@ -272,6 +274,14 @@ Hard interview rules (mirror `koica-rules.md`):
    > `out/toc.md`) **last**. Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written /
    > last-touched file**, so keeping the JSON in `out/details/` AND writing the primary view last lands the
    > user on the readable view, not the raw JSON. Do **not** re-save `out/details/toc.json` after renders.
+9b. **Render fidelity gate (deterministic).** After the views are written, run
+   `python3 <SKILL_ROOT>/rules/validate-render.py OUT` — it checks the RENDERED files against the
+   R01-R11 rules (indicator definitions must not leak into pdm.md OVI cells, no 측정 시기 in MoV, no
+   `추후 확정` in the matrix, diagram has the level header/black text/text fallback/no `class` lines,
+   no KOICA mention in ToC outputs, monitoring columns match the use-case, DRAFT placeholder rule).
+   **Any `fail` = a render bug you introduced — fix the md and re-run until exit 0.** This is the same
+   class of check as the C-gate, but on your OUTPUT instead of the data. Re-run it after EVERY re-render
+   (Phase 3b finalize, Phase 4 edits).
 10. **Display a self-check summary** (Critical: all pass / audit findings · Advisory: % score · any nodes
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
     closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. In app

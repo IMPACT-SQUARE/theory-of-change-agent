@@ -527,3 +527,29 @@ which the `budget` block of `toc.json` mirrors (schema `budget` / `$defs.budget_
 사용자에게서만; never invent prices) → `budget` block in `toc.json` → `budget-rollup.py` verify →
 `prompts/render-budget-md.md` → `out/budget.md` (숫자는 스크립트 출력 그대로). intl-dev only (MVP);
 연차 정교화·xlsx 내보내기·양방향 자동 동기화는 후속.
+
+## 13. Render fidelity gate (R01-R11) — 2026-07-21
+
+The 2026-07 pilot bugs (definitions leaking into OVI cells, 측정 시기 in MoV, stray CLASS nodes, missing
+level header, "매칭 준비 중" false negatives, KOICA mentions in ToC outputs) all lived in the RENDER layer
+— prompt-instructed but machine-unchecked. `rules/validate-render.py` closes that: a pure-Python gate over
+the emitted md files, run after every render (SKILL Phase 3 step 9b) and benchmarked like the C-rules.
+
+| Rule | File | Checks |
+|---|---|---|
+| R01 | pdm.md | indicator `definition` text must NOT appear (OVI cells = names only) |
+| R02 | pdm.md | indicator `timing` values must NOT appear (MoV = 검증수단 only) |
+| R03 | pdm.md | no `추후 확정` placeholder (matrix omits deferred values) |
+| R04 | toc.md | level-header row (`:::lvl` chain) present in the diagram |
+| R05 | toc.md | no `class …` statement lines (stray-"CLASS"-node bug) |
+| R06 | toc.md | every `classDef` carries `color:#000` |
+| R07 | toc.md | text causal-flow fallback (→) follows the Mermaid block |
+| R08 | toc.md (+monitoring for ToC-view) | no "KOICA" mention |
+| R09 | monitoring.md | 성과 table columns match the use-case (intl-dev: 기초치 있음 / ToC-view: 없음) |
+| R10 | toc.md | DRAFT → placeholder only; GATE/AUDIT → diagram present |
+| R11 | toc.md | every outcome indicator appears in the diagram (no silent drops) |
+
+Benchmark now scores three deterministic layers (2026-07-21): **DATA C-rules 18 + BUDGET B-rules 14 +
+RENDER R-rules 22 = 54/54** (`benchmark/run-benchmark.sh`; fixtures in `benchmark/{expected,budget,render}/`).
+LLM-judged rules (C06, A01-A08, outcome verification, IRIS grounding) stay advisory/prompt-enforced — they
+are not deterministically checkable and are intentionally NOT in this benchmark.

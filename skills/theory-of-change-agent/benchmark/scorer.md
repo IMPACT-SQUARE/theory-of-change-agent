@@ -27,7 +27,7 @@ guideline — that's what AUDIT mode is for).
 ## Component 1 — Qualitative: brief reverse-engineering (manual / LLM)
 1. Feed `benchmark/sample-brief.md` (a synthetic concept brief) to the agent in Mode A
    (`/theory-of-change-agent --concept @benchmark/sample-brief.md`).
-2. Run the interview (a tester answers as the brief implies) → produces `out/toc.json`.
+2. (Layers: the deterministic benchmark now covers DATA C-rules + BUDGET B-rules + RENDER R-rules = 54 checks — see run-benchmark.sh header.) Run the interview (a tester answers as the brief implies) → produces `out/toc.json`.
 3. Sanity-check `out/toc.json` on **"structurally comparable"** criteria:
    - a full results chain (impact → outcome(s) → 3-4 outputs → activities → inputs);
    - behavioral-change outcomes (facility-based delivery / care practices), impact tied to SDG 3 with
