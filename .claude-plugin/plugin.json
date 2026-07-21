@@ -1,6 +1,6 @@
 {
   "name": "theory-of-change-agent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "변화이론 에이전트 (Theory of Change Agent) — KOICA PDM (Project Design Matrix) generator for Claude Code. Three modes (concept-first / inputs-held / draft-first) → PDM matrix + monitoring matrix, gated by deterministic (pure-Python, no jq) + LLM self-checks. Output language mirrors input.",
   "author": {
     "name": "IMPACT SQUARE"
