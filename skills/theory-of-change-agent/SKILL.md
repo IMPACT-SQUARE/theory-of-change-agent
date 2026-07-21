@@ -405,6 +405,13 @@ On any edit to node X:
 - **Document requests:** REQUIRING a file (blocking progress on an upload) is allowed **only when Q1 =
   `inputs`**. The use-case choice (임팩트 스타트업/비영리 등) never implies documents exist. For idea-only
   users a single optional "있으면 붙여주셔도 좋아요" invite is fine — then proceed with questions either way.
+- **File writes = the environment's FILE-EDITING tool, never shell redirection.** Write/update every
+  output file (`toc.json`, `pdm.md`, `toc.md`, `monitoring.md`, `budget.md`) with the editor file tool
+  (Claude Code `Write`/`Edit`; the equivalent write-file tool in Antigravity/Gemini) — NOT via
+  `echo`/heredoc/`python` file writes. IDE surfaces (Antigravity) only render clickable "file changed"
+  cards with diff/preview for editor-tool writes; shell-written files show as dead text paths
+  (2026-07-21 pilot report). This includes gate-fix re-renders (Phase 3 step 9b) — fix the md via the
+  editor tool too. Shell is for RUNNING validators/scripts only.
 - **Files:** all file ops run in whatever sandbox/filesystem is available; in the Claude apps the three
   output files are written to the sandbox for the user to download.
 </Guardrails>

@@ -46,6 +46,10 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 
 업로드 후 **Code execution이 켜져 있는지** 확인하세요(품질 점검이 python3로 돕니다). 메뉴 이름은 앱/버전에 따라 조금 다를 수 있으니, 설정 안에서 *Skills* 항목을 찾으면 됩니다.
 
+> **Antigravity 팁 — 결과 파일이 클릭·미리보기로 뜨게 하려면:** 채팅만 열지 말고 **프로젝트 폴더를 연
+> 상태(워크스페이스)에서 실행**하세요. 폴더 없이 실행하면 산출물이 Antigravity 스크래치 경로
+> (`~/.gemini/antigravity/scratch/…`)에 생성되어 미리보기 카드가 뜨지 않고 경로 텍스트만 남습니다.
+>
 > **변화이론 도식(Mermaid)이 Antigravity에서 코드처럼 보이면:** Open VSX에서 **`Markdown Preview Mermaid Support`**(`bierner.markdown-mermaid`) 확장을 설치하면 `toc.md`가 그림으로 렌더됩니다. 설치 없이도 스킬이 도식 아래에 **텍스트 인과 흐름**을 함께 출력하므로 논리 흐름은 그대로 읽을 수 있습니다. (루트 `README.md` 방법 3 참고.)
 
 ---
