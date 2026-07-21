@@ -146,12 +146,20 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
      projects[] with one-line summaries), then ASK the user with the interactive choice tool — **exactly 2
      options** (never offer a "여러 프로젝트를 하나씩 전부 돌리기" option):
        1. **전체 프로젝트** — 조직 전체 구조도: 미션 → 프로젝트들이 어떻게 연결되는지 한눈에. Full ToC를 프로젝트마다
-          만들지 않는다. Render a compact **조직 구조도** (mission at the root, each project as a node with its
-          핵심 성과 한 줄; Mermaid + text fallback, same style rules as render-toc §1/1b) and, below it, offer:
-          "특정 프로젝트 하나를 골라 full 변화이론으로 들어갈 수도 있어요."
+          만들지 않는다. **This is a STRUCTURE-MAP path, NOT the results-chain pipeline** (2026-07-21 pilot
+          bug: projects were forced into 산출물 slots and hit the 3-4 output cap):
+          - Do NOT run the Phase 2 interview, do NOT map projects to outputs/activities, and do NOT apply
+            the C-gate / output-count rules or the render R-gate — none of them fit an org overview.
+          - Render a compact **조직 구조도** directly: mission at the root, each project as a node with its
+            핵심 성과 한 줄 (Mermaid + text fallback + black-text classDef style of render-toc §1; no 5-level
+            header — levels do not apply here).
+          - Below it, offer: "특정 프로젝트 하나를 골라 full 변화이론으로 들어갈 수도 있어요." Drilling into a
+            project runs the NORMAL single-project flow (gates and all).
        2. **특정 프로젝트** — 감지된 프로젝트 목록에서 하나를 고르게 한 뒤(`meta.org_context.selected_project`),
-          그 프로젝트를 대상으로 normal single-project flow를 진행한다 (project_name = 선택 프로젝트; org/mission
-          은 org_context에 보존 — the ToC view may note the mission linkage).
+          그 프로젝트를 대상으로 normal single-project flow를 진행한다 (project_name = 선택 프로젝트).
+          **ALWAYS extract the organization mission/vision sentence from the document into
+          `meta.org_context.mission`** — render-toc shows it as a reference linkage line under the header
+          (2026-07-21 pilot: drill-down lost the 상위 미션 connection).
    Wording rule: say **"프로젝트"**, not "프로그램" (다수 프로젝트, 전체 프로젝트, 특정 프로젝트).
 1. Determine the **approach via TWO friendly, user-facing questions** — ALWAYS ask both before doing
    anything else; never pick unilaterally. Use the environment's interactive choice tool (plain text only
@@ -199,6 +207,12 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    ```
 
 ## Phase 2 — Interview (one question at a time)
+
+> **Mid-interview attachments (2026-07-21):** the user may drop a document at ANY question — this is
+> supported, so treat it as normal. Read it immediately, merge what it answers into `results_chain`
+> (state in one line what got filled), SKIP questions it already answers, and continue the same question
+> counter — never restart the interview. Early on (once), let the user know: "진행 중 언제든 관련 문서를
+> 붙여주시면 반영합니다."
 Follow the KOICA procedure (koica-rules.md §1.3): problem/goal analysis → build the results chain with
 assumptions → add indicators. **Ask ONE question per turn** (deep-interview style); after each answer,
 update `results_chain` in state. Enforce the per-level rules from `koica-rules.md` §3 AS YOU GO (don't

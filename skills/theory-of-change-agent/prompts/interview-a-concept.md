@@ -69,6 +69,8 @@ user ONLY when `use_case = intl-dev`.** For ToC-view use-cases, state the same c
   (in the output language), e.g.:
   `[질문 7 · 예상 12–20문항 중 · 단계 5/9 산출물]` then the question.
   Use a **range** for the total (it is not fixed); never imply false precision like "7/15".
+- **Mid-interview attachments:** if the user drops a document at any point, read it, merge it into
+  `results_chain`, say what got filled, skip now-answered questions, and continue the counter.
 - ~12-20 questions total. Stop interviewing when all 5 levels + assumptions + indicators are populated.
 
 OUTPUT OF THIS PHASE: a fully populated `results_chain` + `assumptions` in state, ready for

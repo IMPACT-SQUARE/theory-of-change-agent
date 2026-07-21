@@ -13,6 +13,9 @@ in 변화이론·로직모델 wording. (KOICA references belong to the intl-dev 
 # 변화이론 (Theory of Change) — {meta.project_name}
 ```
 If `meta.use_case` is present, note it (e.g. `임팩트 스타트업/신규사업개발 (biz-dev)` / `사회공헌 (csr-esg)` / `비영리 (nonprofit)`).
+**Mission linkage (org drill-down):** when `meta.org_context.mission` is non-null, add directly under the
+header: `> 🧭 조직 미션: "{mission}" — 본 프로젝트는 이 미션에 기여합니다 (문서에서 추출, 참고용).`
+(2026-07-21 pilot: 특정 프로젝트로 내려가면 상위 미션 연결이 사라진다는 피드백.)
 
 ## 1. Node diagram (Mermaid) — the heart of the view
 **Draft gate (important):** if `meta.gate_mode = "DRAFT"` (a draft-first draft not yet finalized), do
