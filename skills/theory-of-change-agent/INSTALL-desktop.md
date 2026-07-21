@@ -30,10 +30,8 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 
 - `theory-of-change-agent.zip` 안에 `theory-of-change-agent/SKILL.md`가 들어가야 합니다(폴더째 압축).
 - `out/`(예전 샘플 산출물)은 제외 — 스킬이 실행 시 새로 생성합니다.
-- **IRIS+ 매칭 데이터(`rules/iris-metrics.json`)는 이 zip에 포함됩니다** — 팀 배포용으로 넣어 아웃컴↔IRIS+
-  유사 지표 매칭이 바로 동작합니다. (GIIN 저작권 자료라 공개 git 레포에는 올리지 않고 zip에만 담습니다. 이
-  파일이 없으면 검증 섹션은 "IRIS+ 매칭 준비 중"으로만 표시됩니다 — `rules/build-iris-metrics.py`로 IRIS+
-  다운로드에서 직접 생성 가능.)
+- **IRIS+ 매칭 데이터(`rules/iris-metrics.json`)** 는 이제 레포에 포함되어(출처: IRIS+ © GIIN, 무료
+  재배포·출처 표기 조건) zip·플러그인 어느 경로로 설치해도 IRIS+ 유사 지표 매칭이 바로 동작합니다.
 - 이미 만들어진 zip을 받았다면 이 단계는 건너뜁니다.
 
 ---

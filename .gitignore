@@ -29,9 +29,8 @@ meetings/
 /New note*.txt
 /*회의록*.md
 
-# IRIS+ catalog (GIIN copyrighted — do not redistribute the raw file) + build artifacts
+# IRIS+ raw Excel stays out (distilled iris-metrics.json IS committed, with GIIN attribution per IRIS+ ToU)
 *.xlsx
-skills/theory-of-change-agent/rules/iris-metrics.json
 /Theory*.pdf
 /image.png
 

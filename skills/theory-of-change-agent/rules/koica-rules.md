@@ -485,7 +485,10 @@ working notes), so the **definition** parts are now implemented in `rules/value-
     `rules/iris-search.py` (deterministic keyword search) suggest the nearest metric for each outcome
     indicator from the real IRIS+ catalog (`rules/iris-metrics.json`, 593 PI/OI/II impact metrics;
     `build-iris-metrics.py`, GIIN-attributed). Shortlist-only, "참고용 · 공식 매핑 아님"; never invent a
-    code; catalog absent → "매칭 준비 중". JSON git-ignored (GIIN-copyright), shipped in local zip only.
+    code; catalog absent → "매칭 준비 중". **2026-07-21: the distilled JSON is now COMMITTED to the public
+    repo** with an embedded GIIN attribution/copyright block — the IRIS+ Terms of Use permit free
+    redistribution with attribution (no sale). The raw Excel stays out of the repo. Plugin/marketplace
+    installs therefore get IRIS matching out of the box. (Commercial/paid-product use = separate review.)
     (value-rules §V5b.)
 4. **Case-based verification** against real measured cases — still pending.
 

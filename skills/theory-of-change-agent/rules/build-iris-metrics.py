@@ -69,7 +69,9 @@ def main(argv):
         })
 
     doc = {
-        "source": "IRIS+ Catalog of Metrics 5.3c (2026) © GIIN, iris.thegiin.org",
+        "source": "IRIS+ Catalog of Metrics 5.3c (2026) © Global Impact Investing Network (GIIN), iris.thegiin.org",
+        "copyright": "IRIS+ content © GIIN. IRIS+ is a trademark of the GIIN. Redistributed free of charge with attribution per the IRIS+ Terms of Use (https://iris.thegiin.org/terms/) — this data may not be sold or distributed for a fee; do not remove this notice.",
+        "attribution": "IRIS+ © GIIN (iris.thegiin.org)",
         "note": "Impact-section metrics only (Product/Operational/Investment/Financial Impact). "
                 "IRIS+ does not label outcome vs output. For grounded 'nearest IRIS+ metric' suggestions — "
                 "never invent a code; suggestions are 참고용, not an official mapping.",
