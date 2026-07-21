@@ -35,14 +35,8 @@ Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code,
 
 *(Chat thường trên Claude web/desktop không truy cập được tệp cục bộ — hãy dùng cách plugin/zip bên dưới.)*
 
-### Claude Code
 
-```
-/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
-/plugin install theory-of-change-agent@impact-square
-```
-
-Cập nhật bằng `/plugin update theory-of-change-agent`.
+*(Trong Claude Code, bạn cũng có thể cài dưới dạng plugin — `/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent` rồi `/plugin install theory-of-change-agent@impact-square` — hỗ trợ tự động cập nhật.)*
 
 ### Claude desktop (plugin)
 

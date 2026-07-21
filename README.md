@@ -37,14 +37,8 @@ Open your AI agent (Claude Code, Antigravity, Gemini CLI, ChatGPT desktop, …) 
 
 *(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
 
-### Claude Code (auto-update, recommended)
 
-```
-/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
-/plugin install theory-of-change-agent@impact-square
-```
-
-Update later with `/plugin update theory-of-change-agent`.
+*(In Claude Code you can also install as a plugin — `/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent` then `/plugin install theory-of-change-agent@impact-square` — which supports auto-update.)*
 
 ### Claude desktop (plugin)
 
