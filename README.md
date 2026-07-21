@@ -24,6 +24,52 @@ It works with AI assistants such as Claude and responds in the language you use.
 3. Answer the questions. When the result is right, enter `finalize`.
 4. Open `out/`. International-development projects are saved as `pdm.md`; other use cases are saved as `toc.md`.
 
+## Install
+
+You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
+code-execution sandboxes include Python.
+
+### Easiest: paste this into Claude Code, Antigravity, or any local AI agent
+
+Open your AI agent (Claude Code, Antigravity, Gemini CLI, …) and paste this. The agent does the rest.
+
+> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
+
+*(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
+
+### Claude Code (auto-update, recommended)
+
+```
+/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
+/plugin install theory-of-change-agent@impact-square
+```
+
+Update later with `/plugin update theory-of-change-agent`.
+
+### Claude desktop · Antigravity · claude.ai (zip upload)
+
+1. Zip the skill (or use the pre-built `theory-of-change-agent.zip`):
+   ```bash
+   cd skills && zip -r theory-of-change-agent.zip theory-of-change-agent \
+     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
+   ```
+2. Upload the archive in Claude desktop at `Settings → Skills → Add → Upload`, in Antigravity's
+   Skills screen, or in claude.ai at `Settings → Capabilities → Skills → Upload`. A paid plan
+   with code execution enabled is required.
+3. Enter `Create a PDM with the Theory of Change Agent` in the chat.
+
+> Skills uploaded to an app do not update automatically. Upload a new archive after each change. For
+> Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.
+> You can also use the built-in text version. See:
+> [`INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
+
+### Git (direct link)
+
+```bash
+git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
+ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
+```
+
 ## Choose what you need
 
 Start with the problem, identify its causes, and define a measurable change.
@@ -110,52 +156,6 @@ The checks are implemented in code and documented in this repository:
   and general-management cap, verified against real budget sheets.
 - Advisory rules: SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
   You decide whether to act on the findings.
-
-## Install
-
-You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
-code-execution sandboxes include Python.
-
-### Easiest: paste this into Claude Code, Antigravity, or any local AI agent
-
-Open your AI agent (Claude Code, Antigravity, Gemini CLI, …) and paste this. The agent does the rest.
-
-> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
-
-*(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
-
-### Claude Code (auto-update, recommended)
-
-```
-/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent
-/plugin install theory-of-change-agent@impact-square
-```
-
-Update later with `/plugin update theory-of-change-agent`.
-
-### Claude desktop · Antigravity · claude.ai (zip upload)
-
-1. Zip the skill (or use the pre-built `theory-of-change-agent.zip`):
-   ```bash
-   cd skills && zip -r theory-of-change-agent.zip theory-of-change-agent \
-     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
-   ```
-2. Upload the archive in Claude desktop at `Settings → Skills → Add → Upload`, in Antigravity's
-   Skills screen, or in claude.ai at `Settings → Capabilities → Skills → Upload`. A paid plan
-   with code execution enabled is required.
-3. Enter `Create a PDM with the Theory of Change Agent` in the chat.
-
-> Skills uploaded to an app do not update automatically. Upload a new archive after each change. For
-> Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.
-> You can also use the built-in text version. See:
-> [`INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
-
-### Git (direct link)
-
-```bash
-git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
-ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
-```
 
 ## Data policy
 
