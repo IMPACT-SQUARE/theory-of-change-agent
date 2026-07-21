@@ -43,7 +43,15 @@ Claude Code, Antigravity, Gemini CLI처럼 로컬에서 명령을 실행할 수 
 
 업데이트는 `/plugin update theory-of-change-agent`로 합니다.
 
-### Claude 데스크톱, Antigravity, claude.ai
+### Claude 데스크톱 (플러그인)
+
+1. `Settings → Plugins → Add → Add marketplace → **Add from a repository**`
+2. URL 칸에 `https://github.com/IMPACT-SQUARE/theory-of-change-agent` 을 붙여넣어 마켓플레이스를 추가합니다.
+3. 목록에서 **theory-of-change-agent**를 설치하고, 채팅에 `변화이론 에이전트로 PDM 만들어줘`라고 입력합니다.
+
+> 업데이트는 자동이 아닙니다 — `Settings → Plugins`에서 해당 마켓플레이스의 **Update** 버튼을 누르세요.
+
+### zip 업로드 (Antigravity · claude.ai 등)
 
 1. 스킬을 압축하거나 제공된 `theory-of-change-agent.zip`을 사용합니다.
    ```bash

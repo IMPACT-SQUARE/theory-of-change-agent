@@ -44,7 +44,15 @@ Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code,
 
 Cập nhật bằng `/plugin update theory-of-change-agent`.
 
-### Claude desktop, Antigravity, claude.ai
+### Claude desktop (plugin)
+
+1. `Settings → Plugins → Add → Add marketplace → **Add from a repository**`
+2. Dán `https://github.com/IMPACT-SQUARE/theory-of-change-agent` vào ô URL để thêm marketplace.
+3. Cài **theory-of-change-agent** từ danh sách, rồi nhập *"Tạo PDM bằng Theory of Change Agent"* vào chat.
+
+> Cập nhật không tự động — bấm nút **Update** của marketplace trong `Settings → Plugins`.
+
+### Tải lên zip (Antigravity · claude.ai, v.v.)
 
 1. Nén skill thành zip hoặc dùng `theory-of-change-agent.zip` có sẵn.
    ```bash

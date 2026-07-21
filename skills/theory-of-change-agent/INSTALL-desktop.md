@@ -36,7 +36,14 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 
 ---
 
-## 2. 앱에 업로드 (zip)
+## 2. 설치
+
+> **Claude 데스크톱은 플러그인 설치가 가장 간단합니다:** `Settings → Plugins → Add → Add marketplace →
+> **Add from a repository**` 에 `https://github.com/IMPACT-SQUARE/theory-of-change-agent` 을 붙여넣어 마켓플레이스를 추가하고, 목록에서
+> **theory-of-change-agent** 를 설치하세요 (IRIS+ 카탈로그 포함). 업데이트는 같은 화면의 **Update** 버튼.
+> 이 경우 아래 zip 단계는 건너뜁니다.
+
+### zip 업로드 (Antigravity · claude.ai 등)
 
 쓰는 앱에 맞춰 `theory-of-change-agent.zip`을 업로드합니다.
 

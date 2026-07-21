@@ -46,7 +46,15 @@ Open your AI agent (Claude Code, Antigravity, Gemini CLI, …) and paste this. T
 
 Update later with `/plugin update theory-of-change-agent`.
 
-### Claude desktop · Antigravity · claude.ai (zip upload)
+### Claude desktop (plugin)
+
+1. `Settings → Plugins → Add → Add marketplace → **Add from a repository**`
+2. Paste `https://github.com/IMPACT-SQUARE/theory-of-change-agent` as the URL to add the marketplace.
+3. Install **theory-of-change-agent** from the list, then say *"Create a PDM with the Theory of Change Agent"* in the chat.
+
+> Updates are not automatic — click the marketplace's **Update** button in `Settings → Plugins`.
+
+### zip upload (Antigravity · claude.ai · desktop fallback)
 
 1. Zip the skill (or use the pre-built `theory-of-change-agent.zip`):
    ```bash
