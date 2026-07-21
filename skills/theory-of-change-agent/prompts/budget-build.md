@@ -22,10 +22,11 @@ Only for `meta.use_case = intl-dev` (MVP). One question at a time (티키타카)
 1b. **비율 프레임 — 규정 한도를 초반에 고정 (임팩톨로지 feedback 2026-07-21).** BEFORE collecting any
    line items, ask ONE question about the program's regulatory ratio limits and record them in
    `budget.caps`:
-   - "이 사업 공고/규정에 비율 한도가 있나요? 예: **일반관리비 총사업비의 N% 이내**, **인건비 총사업비의
-     N% 이내**." → `caps.gm_rate` (default **0.05** — 실측 KOICA형 시트 기준; 규정이 10% 등으로 다르면
-     사용자 값), `caps.personnel_rate` (예: 0.3; 규정에 없으면 null = 검사 안 함), `caps.note` (규정 출처).
-   - **Never invent a limit** — defaults only where stated; the numbers vary by program/공고.
+   - "비율 한도가 있나요? 예: **일반관리비 총사업비의 N% 이내**, **인건비 총사업비의 N% 이내**." →
+     `caps.gm_rate` (default **0.05**; 사용자가 다른 값을 말하면 그 값), `caps.personnel_rate`
+     (예: 0.3; 안 말하면 null = 검사 안 함). **Do NOT ask where the limit comes from** (규정 출처를
+     되묻지 않는다 — user decision 2026-07-21); just take the numbers as stated.
+   - **Never invent a limit** — defaults only where stated; the numbers vary by program.
    - From here on, tag every 인건비-type 세목 with `"category": "인건비"` so the deterministic check (B07)
      can total them. Relay the frame back: "일반관리비 {N}% · 인건비 {N}% 한도 안에서 잡겠습니다."
    The rollup enforces the frame: B03 checks 일반관리비 vs `caps.gm_rate`, B07 checks 인건비 vs
