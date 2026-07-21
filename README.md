@@ -29,11 +29,11 @@ It works with AI assistants such as Claude and responds in the language you use.
 You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
 code-execution sandboxes include Python.
 
-### Easiest: paste this into Claude Code, Antigravity, or any local AI agent
+### Easiest: paste this into Claude Code, Antigravity, ChatGPT, or any local AI agent
 
-Open your AI agent (Claude Code, Antigravity, Gemini CLI, …) and paste this. The agent does the rest.
+Open your AI agent (Claude Code, Antigravity, Gemini CLI, ChatGPT desktop, …) and paste this. The agent does the rest.
 
-> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
+> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
 
 *(The Claude web/desktop chat sandbox has no access to your local files — use the plugin or zip methods below there.)*
 
@@ -70,13 +70,6 @@ Update later with `/plugin update theory-of-change-agent`.
 > Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.
 > You can also use the built-in text version. See:
 > [`INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
-
-### Git (direct link)
-
-```bash
-git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
-ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
-```
 
 ## Choose what you need
 

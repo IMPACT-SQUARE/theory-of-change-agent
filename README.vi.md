@@ -27,11 +27,11 @@ hoạt động trên các môi trường AI như Claude và trả lời bằng n
 
 **Cần có:** Claude Code, Claude desktop hoặc claude.ai cùng với `python3`. Môi trường thực thi mã trên desktop và web đã có Python.
 
-### Cách dễ nhất: dán đoạn sau vào AI agent (Claude Code · Antigravity, v.v.)
+### Cách dễ nhất: dán đoạn sau vào AI agent (Claude Code · Antigravity · ChatGPT, v.v.)
 
-Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code, Antigravity, Gemini CLI, …) và dán nguyên đoạn dưới đây. Agent sẽ tự làm phần còn lại.
+Mở một AI agent có thể chạy lệnh trên máy của bạn (Claude Code, Antigravity, Gemini CLI, ChatGPT desktop, …) và dán nguyên đoạn dưới đây. Agent sẽ tự làm phần còn lại.
 
-> Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, sau đó symlink (hoặc sao chép) thư mục `skills/theory-of-change-agent` bên trong vào thư mục skills toàn cục của môi trường bạn — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`. Xác nhận tệp `SKILL.md` tồn tại trong thư mục skill, rồi cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" (với Antigravity cần khởi động lại phiên) và cập nhật sau này bằng `git -C ~/theory-of-change-agent pull`.
+> Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, sau đó symlink (hoặc sao chép) thư mục `skills/theory-of-change-agent` bên trong vào thư mục skills toàn cục của môi trường bạn — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/`. Xác nhận tệp `SKILL.md` tồn tại trong thư mục skill, rồi cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" (với Antigravity cần khởi động lại phiên) và cập nhật sau này bằng `git -C ~/theory-of-change-agent pull`.
 
 *(Chat thường trên Claude web/desktop không truy cập được tệp cục bộ — hãy dùng cách plugin/zip bên dưới.)*
 
@@ -63,13 +63,6 @@ Cập nhật bằng `/plugin update theory-of-change-agent`.
 3. Nhập *"Tạo PDM bằng Theory of Change Agent"* vào chat.
 
 > Skill tải lên ứng dụng không tự cập nhật. Hãy tải lại zip sau khi thay đổi. Nếu Mermaid hiện thành mã trong Antigravity, cài `bierner.markdown-mermaid` từ Open VSX hoặc đọc phiên bản văn bản. Xem [INSTALL-desktop.md](./skills/theory-of-change-agent/INSTALL-desktop.md).
-
-### Git
-
-```bash
-git clone git@github.com:IMPACT-SQUARE/theory-of-change-agent.git
-ln -s "$(pwd)/theory-of-change-agent/skills/theory-of-change-agent" ~/.claude/skills/theory-of-change-agent
-```
 
 ## Chọn đúng đầu ra
 
