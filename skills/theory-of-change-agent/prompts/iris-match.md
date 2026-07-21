@@ -16,11 +16,18 @@ gates. Work in `meta.lang`.
    narrative, extract 3–6 English content words (translate Korean → English; drop 수/율/총 etc.). Example:
    "청정 취사도구 이용 가구 비율" → `clean cookstove adoption household`.
 2. **Run the deterministic search** (returns a shortlist from the 593-metric catalog; never scan the JSON
-   inline):
+   inline). **Path: the script lives at `<SKILL_ROOT>/rules/iris-search.py`** where SKILL_ROOT is the
+   directory containing SKILL.md (this prompt lives in `<SKILL_ROOT>/prompts/`). In app sandboxes the
+   working directory is usually NOT the skill root — use the full path (or locate it once, e.g.
+   `find / -name iris-search.py 2>/dev/null | head -1`):
    ```
-   python3 rules/iris-search.py --json --top 6 "clean cookstove adoption household"
+   python3 <SKILL_ROOT>/rules/iris-search.py --json --top 6 "clean cookstove adoption household"
    ```
-   - **Exit code 3** (catalog missing) → emit "IRIS+ 유사 지표 매칭 준비 중" for the whole section and stop.
+   - **Exit code 3 from a run that EXECUTED** (script printed "catalog not found") → emit
+     "IRIS+ 유사 지표 매칭 준비 중" for the whole section and stop.
+   - **"No such file or directory" / command failed → that is a PATH problem, NOT a missing catalog.**
+     Find the script and retry — NEVER print "매칭 준비 중" for a path failure (2026-07-21 bug: sandbox
+     CWD ≠ skill root made the relative call fail and the section wrongly showed 준비 중).
    - Empty `results` / all low scores → say "적합한 IRIS+ 유사 지표를 찾지 못했습니다" for that indicator.
 3. **Pick from the shortlist only.** Choose the 1–2 candidates whose `name`+`definition` truly match the
    indicator's *change-of-state* (prefer a rate/level/change metric over a raw count when both appear).

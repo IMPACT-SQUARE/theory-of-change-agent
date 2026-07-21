@@ -87,6 +87,12 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 
 <Steps>
 
+> **Path convention:** every `rules/...` and `prompts/...` reference in this skill is relative to the
+> **SKILL ROOT** (the directory containing this SKILL.md). In app sandboxes (Claude desktop / claude.ai /
+> Antigravity) the working directory is usually the OUTPUT workspace, not the skill root — prefix commands
+> with the skill root (locate it once if needed). A "No such file or directory" on a `rules/` script means
+> the path is wrong, **not** that a feature is unavailable.
+
 ## Phase 0 — Load context
 1. Read `rules/koica-rules.md`, `rules/checklist.json`, and `schema/pdm-schema.json` into context.
 2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg|nonprofit>`, `--concept <brief>`, `--inputs <file>`,
@@ -247,7 +253,8 @@ Hard interview rules (mirror `koica-rules.md`):
 7b. **Outcome verification — ALL use-cases, not only when toc.md is rendered** (advisory, non-blocking):
    run `prompts/outcome-verify.md` for **each outcome** (논리 검증: change-of-state / 원인 회복 / 지표=변화분)
    and `prompts/iris-match.md` for **each outcome indicator** (IRIS+ 근접 지표 — outcome indicators ONLY;
-   `python3 rules/iris-search.py --json --top 6 "…"`, shortlist에서만 제시, exit 3 → "매칭 준비 중", never
+   `python3 <SKILL_ROOT>/rules/iris-search.py --json --top 6 "…"`, shortlist에서만 제시; "매칭 준비 중" is
+   ONLY for a genuine exit 3 — command-not-found means wrong path, find the script and retry; never
    invent a code). Include the per-outcome `✅ 부합`/`⚠️ 교정 필요` verdicts + IRIS+ suggestions in the
    **step 10 self-check summary** (chat). When `toc.md` is rendered, its §4 embeds the same results — do
    not run them twice; reuse.

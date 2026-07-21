@@ -148,10 +148,12 @@ important to track).
   change-of-state recovering the problem's cause), or output-at-scale / general utility? Emit the per-outcome
   `✅ 부합` / `⚠️ 교정 필요` verdicts here, in `meta.lang`, grounded in 변화이론·로직모델. Advisory (non-blocking).
 - **IRIS+ 유사 지표 (implemented):** run `prompts/iris-match.md` for each **outcome** indicator — it distills
-  English keywords, calls `python3 rules/iris-search.py --json --top 6 "…"` (deterministic search over the
-  593-metric IRIS+ catalog), and suggests the nearest metric(s) **from the returned shortlist only**, tagged
-  "참고용 · 공식 매핑 아님 · IRIS+ © GIIN". If `iris-search.py` exits 3 (catalog `rules/iris-metrics.json`
-  absent), show "IRIS+ 유사 지표 매칭 준비 중" and **NEVER invent an IRIS+ code**.
+  English keywords, calls `python3 <SKILL_ROOT>/rules/iris-search.py --json --top 6 "…"` (deterministic
+  search over the 593-metric IRIS+ catalog; use the skill root, NOT a CWD-relative path — see
+  iris-match.md step 2), and suggests the nearest metric(s) **from the returned shortlist only**, tagged
+  "참고용 · 공식 매핑 아님 · IRIS+ © GIIN". Show "IRIS+ 유사 지표 매칭 준비 중" ONLY on a genuine exit 3
+  (catalog absent); a command-not-found is a path problem — retry with the right path. **NEVER invent an
+  IRIS+ code**.
 
 ## Fidelity checks (must hold)
 - **DRAFT (`gate_mode=DRAFT`): §1 is the "확정 후 출력" placeholder, NOT a Mermaid diagram.** The full
