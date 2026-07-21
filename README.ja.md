@@ -88,6 +88,12 @@ Agent:    ✔ 重要ルール 8 件を通過しました。
 
 **必要なもの:** Claude Code、Claude デスクトップ、または claude.ai と `python3` です。デスクトップと Web のコード実行環境には Python が含まれます。
 
+### いちばん簡単な方法: Claude Code に貼り付ける
+
+Claude Code を開いて、以下の段落をそのまま貼り付けてください。あとは Claude が実行します。
+
+> Theory of Change Agent をインストール: `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent` を実行し、`~/.claude/skills/theory-of-change-agent/SKILL.md` が存在することを確認してから、「Theory of Change Agent で PDM を作って」と言えば開始できること、更新は `git -C ~/.claude/theory-of-change-agent pull` で行えることを教えて。
+
 ### Claude Code
 
 ```

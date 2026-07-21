@@ -1,33 +1,32 @@
 # Theory of Change Agent
 
-**English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
+English · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
 
 You know the problem, the activities, and the intended results, but turning them into a coherent
 PDM can be difficult.
 
-**Theory of Change Agent guides you through that work in conversation.** It asks one question at a
+Theory of Change Agent guides you through that work in conversation. It asks one question at a
 time and turns your answers into a results chain: social problem → activities → outputs → outcomes →
-impact. For international-development projects, it produces a **PDM (Project Design Matrix)**. For
-impact startups, CSR, and nonprofits, it produces a **Theory of Change diagram**.
+impact. For international-development projects, it produces a PDM (Project Design Matrix). For
+impact startups, CSR, and nonprofits, it produces a Theory of Change diagram.
 It works with AI assistants such as Claude and responds in the language you use.
 
-**Who this is for:**
+## This helps when you need to
 
-- **First-time PDM writers** who need a structured process
-- **Practitioners with a draft** who want to check it against the guideline before review
-- **Founders and CSR or nonprofit teams** who need to clarify an early impact model
+- Create a PDM for the first time
+- Review a draft before submitting it
+- Clarify the impact model for a new project
 
 ## Quick start
 
-1. Install the skill (see below).
-2. Say: *"Create a PDM with the Theory of Change Agent"*. You can also attach a business plan or annual report.
-3. Answer the questions. Say **"finalize"** when it looks right.
-4. Open the result in `out/`: `pdm.md` for international development or `toc.md` for other use cases.
+1. Install the skill below.
+2. Enter `Create a PDM with the Theory of Change Agent`. You can also attach a business plan or annual report.
+3. Answer the questions. When the result is right, enter `finalize`.
+4. Open `out/`. International-development projects are saved as `pdm.md`; other use cases are saved as `toc.md`.
 
-## Use cases and deliverables
+## Choose what you need
 
-The process begins with the problem, identifies its causes, and defines a measurable change. The
-final document depends on the use case.
+Start with the problem, identify its causes, and define a measurable change.
 
 | Your situation | What the agent creates | Good starting material |
 |---|---|---|
@@ -36,8 +35,7 @@ final document depends on the use case.
 | CSR or ESG project | Theory-of-Change diagram | A program brief or proposal |
 | Nonprofit program or annual report | Theory-of-Change diagram | An annual report; choose the organization or one project |
 
-New PDMs pass the quality gate before finalization. Audit mode checks an approved PDM and reports
-deviations without changing it.
+New PDMs are checked before finalization. You can also revise a completed PDM through conversation.
 
 ## See it work
 
@@ -75,16 +73,16 @@ The interview separates activities and outputs from the change the project inten
 
 ## How it works
 
-**Interview → Build the chain → Verify → Validate → Render.** Each stage uses the work from the previous one.
+The process is simple: interview, build the chain, verify, validate, and render.
 
-The interview follows Theory of Change practice. It starts with a clearly defined **social problem**:
+The interview follows Theory of Change practice. It starts with a clearly defined social problem:
 one that is structural, affects many people, and causes real harm. It then links the observed problem
 to its causes and defines outcomes as changes that address those causes. Outputs and broad statements
 of benefit are not treated as outcomes.
 
 For organization-level documents, such as an annual report or business plan, the agent first checks
-whether the material covers one project or several. You can map the **whole organization** from its
-mission to its projects, or focus on **one project**.
+whether the material covers one project or several. You can map the whole organization from its
+mission to its projects, or focus on one project.
 
 | Deliverable | What it is |
 |---|---|
@@ -94,29 +92,35 @@ mission to its projects, or focus on **one project**.
 | `budget.md` *(optional)* | A PDM-linked budget: line items per activity, calculation basis (unit price × qty × frequency), funder split, per-year totals |
 | `details/toc.json` | Source data used to render every view above |
 
-You can start with a conversation, a PDF, or a **Korean HWP file (.hwp/.hwpx)**. The bundled extractor
+You can start with a conversation, a PDF, or a Korean HWP file (`.hwp` or `.hwpx`). The bundled extractor
 has no external dependencies, so it can run in app sandboxes.
 
 ## Verification you can check
 
 The checks are implemented in code and documented in this repository:
 
-- **Deterministic quality gate:** Pure Python enforces eight critical structural rules, including no
+- Deterministic quality gate: Pure Python enforces eight critical structural rules, including no
   impact indicators, three to four outputs, indicator limits, required means of verification, no
-  orphan nodes, and noun-form outputs. It reached **18/18 detection accuracy** on the
+  orphan nodes, and noun-form outputs. It reached 18/18 detection accuracy on the
   [seeded-violation benchmark](./skills/theory-of-change-agent/benchmark/).
-- **Outcome review:** A logic check asks whether the intended change addresses its underlying cause.
-  Outcome indicators are also matched to the closest of the **593 IRIS+ impact metrics** for
+- Outcome review: A logic check asks whether the intended change addresses its underlying cause.
+  Outcome indicators are also matched to the closest of the 593 IRIS+ impact metrics for
   reference only. This is not an official IRIS+ mapping.
-- **Scripted budget arithmetic:** A script calculates and validates every total, ratio, funder split,
+- Scripted budget arithmetic: A script calculates and validates every total, ratio, funder split,
   and general-management cap, verified against real budget sheets.
-- **Advisory rules:** SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
+- Advisory rules: SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
   You decide whether to act on the findings.
 
 ## Install
 
-**Requirements:** Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
+You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
 code-execution sandboxes include Python.
+
+### Easiest: paste this into Claude Code
+
+Open Claude Code and paste this. Claude does the rest.
+
+> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent`, confirm that `~/.claude/skills/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" and that I can update later with `git -C ~/.claude/theory-of-change-agent pull`.
 
 ### Claude Code (auto-update, recommended)
 
@@ -134,10 +138,10 @@ Update later with `/plugin update theory-of-change-agent`.
    cd skills && zip -r theory-of-change-agent.zip theory-of-change-agent \
      -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
    ```
-2. Upload the archive in **Claude desktop** at `Settings → Skills → Add → Upload`, in Antigravity's
-   Skills screen, or in **claude.ai** at `Settings → Capabilities → Skills → Upload`. A paid plan
+2. Upload the archive in Claude desktop at `Settings → Skills → Add → Upload`, in Antigravity's
+   Skills screen, or in claude.ai at `Settings → Capabilities → Skills → Upload`. A paid plan
    with code execution enabled is required.
-3. Say *"Create a PDM with the Theory of Change Agent"* in the chat.
+3. Enter `Create a PDM with the Theory of Change Agent` in the chat.
 
 > Skills uploaded to an app do not update automatically. Upload a new archive after each change. For
 > Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.

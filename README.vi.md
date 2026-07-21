@@ -88,6 +88,12 @@ không cần thư viện ngoài nên dùng được trong môi trường thực 
 
 **Cần có:** Claude Code, Claude desktop hoặc claude.ai cùng với `python3`. Môi trường thực thi mã trên desktop và web đã có Python.
 
+### Cách dễ nhất: dán đoạn sau vào Claude Code
+
+Mở Claude Code và dán nguyên đoạn dưới đây. Claude sẽ tự làm phần còn lại.
+
+> Cài Theory of Change Agent: chạy `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/.claude/theory-of-change-agent && ln -snf ~/.claude/theory-of-change-agent/skills/theory-of-change-agent ~/.claude/skills/theory-of-change-agent`, xác nhận tệp `~/.claude/skills/theory-of-change-agent/SKILL.md` tồn tại, sau đó cho tôi biết rằng tôi có thể bắt đầu bằng câu "Tạo PDM bằng Theory of Change Agent" và cập nhật sau này bằng `git -C ~/.claude/theory-of-change-agent pull`.
+
 ### Claude Code
 
 ```
