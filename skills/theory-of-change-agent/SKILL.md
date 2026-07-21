@@ -171,8 +171,9 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
        도식)을 먼저 만들고 그 위에서 고칠래요".
    **Resolve to the internal flow** and set `meta.input_source`, `meta.interaction`, and `meta.mode`:
      - concept + interview → **Mode A** (`prompts/interview-a-concept.md`); `mode:"A"`. The user said
-       **아이디어만** — start stage-1 questions directly; **NEVER ask them to upload or point to a document**
-       (mentioning "있으면 붙여줘도 좋아요" in passing is fine; requiring one is not).
+       **아이디어만** — start stage-1 questions directly. You MAY add one light, optional invite:
+       "관련 자료가 있으면 붙여주셔도 좋아요." — but never REQUIRE a document or block on one; if none
+       comes, just keep interviewing.
      - inputs  + interview → **Mode B** (`prompts/interview-b-inputs.md`); `mode:"B"`.
      - concept + draft     → **Mode C** (`prompts/draft-first.md`); `mode:"C"`.
      - inputs  + draft     → **Mode B → draft:** run `interview-b-inputs.md` steps 1-2 to read/extract the
@@ -401,9 +402,9 @@ On any edit to node X:
   user can answer with one keystroke, e.g.:
   `1️⃣ 직접 수정할 내용을 알려주기 · 2️⃣ 약한 고리부터 하나씩 짚기 · 3️⃣ "확정"으로 게이트 진행 — 번호로
   답해 주세요.` Never bury the options in a paragraph, and never skip the question.
-- **Document requests:** ask the user to upload/provide a file **only when Q1 = `inputs`**. The use-case
-  choice (임팩트 스타트업/비영리 등) never implies documents exist — idea-only users get the concept
-  interview with zero upload prompts.
+- **Document requests:** REQUIRING a file (blocking progress on an upload) is allowed **only when Q1 =
+  `inputs`**. The use-case choice (임팩트 스타트업/비영리 등) never implies documents exist. For idea-only
+  users a single optional "있으면 붙여주셔도 좋아요" invite is fine — then proceed with questions either way.
 - **Files:** all file ops run in whatever sandbox/filesystem is available; in the Claude apps the three
   output files are written to the sandbox for the user to download.
 </Guardrails>
