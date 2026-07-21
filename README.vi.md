@@ -81,10 +81,10 @@ không cần thư viện ngoài nên dùng được trong môi trường thực 
 
 - **Cổng chất lượng xác định:** Python thuần kiểm tra 8 quy tắc cấu trúc quan trọng, gồm chỉ số tác động, số đầu ra, phương tiện kiểm chứng và nút mồ côi. [Benchmark](./skills/theory-of-change-agent/benchmark/) phát hiện đủ 18 vi phạm.
 - **Rà soát kết quả:** Công cụ kiểm tra kết quả có xử lý nguyên nhân hay không và gợi ý chỉ số gần với 593 chỉ số IRIS+ để tham khảo. Đây không phải ánh xạ chính thức.
-- **Tính ngân sách:** Script tính và kiểm tra tổng, tỷ lệ, phân bổ vốn và trần chi phí quản lý. Ba vòng kiểm tra trên hai bảng ngân sách đã tái hiện tổng đến từng won và sửa ba lỗi quy tắc.
+- **Tính ngân sách:** Script tính và kiểm tra tổng, tỷ lệ, phân bổ vốn và trần chi phí quản lý, đã được kiểm chứng với các bảng ngân sách thực tế.
 - **Quy tắc khuyến nghị:** SMART, CREAM và chỉ số phân tách giới tính chỉ được chấm điểm. Bạn tự quyết định có dùng hay không.
 
-## Cài đặt: 30 giây
+## Cài đặt
 
 **Cần có:** Claude Code, Claude desktop hoặc claude.ai cùng với `python3`. Môi trường thực thi mã trên desktop và web đã có Python.
 

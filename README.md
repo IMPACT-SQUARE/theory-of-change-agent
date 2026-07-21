@@ -2,8 +2,8 @@
 
 **English** · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
 
-Writing a results matrix is often harder than designing the project itself. You know the problem,
-the activities, and the intended results, but turning them into a coherent PDM can be difficult.
+You know the problem, the activities, and the intended results, but turning them into a coherent
+PDM can be difficult.
 
 **Theory of Change Agent guides you through that work in conversation.** It asks one question at a
 time and turns your answers into a results chain: social problem → activities → outputs → outcomes →
@@ -19,12 +19,12 @@ It works with AI assistants such as Claude and responds in the language you use.
 
 ## Quick start
 
-1. Install the skill. It takes about 30 seconds.
+1. Install the skill (see below).
 2. Say: *"Create a PDM with the Theory of Change Agent"*. You can also attach a business plan or annual report.
 3. Answer the questions. Say **"finalize"** when it looks right.
 4. Open the result in `out/`: `pdm.md` for international development or `toc.md` for other use cases.
 
-## Choose your path
+## Use cases and deliverables
 
 The process begins with the problem, identifies its causes, and defines a measurable change. The
 final document depends on the use case.
@@ -71,8 +71,7 @@ Agent:  ✔ Quality gate passed (8/8 critical rules).
         Result: out/pdm.md
 ```
 
-The interview separates activities and outputs from the change the project intends to achieve. It
-helps surface the issues that reviewers commonly raise before the document is submitted.
+The interview separates activities and outputs from the change the project intends to achieve.
 
 ## How it works
 
@@ -110,12 +109,11 @@ The checks are implemented in code and documented in this repository:
   Outcome indicators are also matched to the closest of the **593 IRIS+ impact metrics** for
   reference only. This is not an official IRIS+ mapping.
 - **Scripted budget arithmetic:** A script calculates and validates every total, ratio, funder split,
-  and general-management cap. In three verification cycles using two budget sheets, it
-  reproduced totals **to the won** and exposed three rule defects that were then fixed.
+  and general-management cap, verified against real budget sheets.
 - **Advisory rules:** SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
   You decide whether to act on the findings.
 
-## Install: 30 seconds
+## Install
 
 **Requirements:** Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
 code-execution sandboxes include Python.
@@ -169,7 +167,7 @@ theory-of-change-agent/
 │   ├── prompts/             interview & rendering prompts
 │   ├── rules/               writing rules + deterministic validators (gate, budget, HWP)
 │   ├── schema/              toc.json schema and reference example
-│   └── benchmark/           seeded-violation fixtures (18/18)
+│   └── benchmark/           seeded-violation fixtures
 ├── docs/                    public references
 └── README.md                this document
 ```
