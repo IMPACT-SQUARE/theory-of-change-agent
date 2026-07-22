@@ -41,7 +41,7 @@ Kết quả thay đổi theo tính chất của dự án.
 
 ## 🖼 Ví dụ kết quả
 
-Kết quả thực tế, tạo từ một ví dụ hư cấu (dự án nâng cao năng lực ICT cho giáo viên trung học ở Nicaragua).
+Kết quả thực tế, tạo từ một ví dụ hư cấu (dự án nâng cao năng lực ICT cho giáo viên trung học ở quốc gia A).
 
 **Sơ đồ Theory of Change (`toc.md` / `toc.html`)**
 

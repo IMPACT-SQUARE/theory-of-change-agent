@@ -41,7 +41,7 @@ The output depends on the nature of your project.
 
 ## 🖼 Output examples
 
-Real output, generated from a fictional example (secondary-teacher ICT capacity project in Nicaragua).
+Real output, generated from a fictional example (a secondary-teacher ICT capacity project in Country A).
 
 **Theory of Change diagram (`toc.md` / `toc.html`)**
 
