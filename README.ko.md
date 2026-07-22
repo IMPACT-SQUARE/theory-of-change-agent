@@ -45,11 +45,11 @@
 
 **변화이론 도식 (`toc.md` / `toc.html`)**
 
-![변화이론 도식 예시](docs/images/sample-toc-diagram.png)
+![변화이론 도식 예시](docs/images/sample-toc-diagram-ko.png)
 
 **PDM 매트릭스 (`pdm.md`)**
 
-![PDM 매트릭스 예시](docs/images/sample-pdm-matrix.png)
+![PDM 매트릭스 예시](docs/images/sample-pdm-matrix-ko.png)
 
 ---
 

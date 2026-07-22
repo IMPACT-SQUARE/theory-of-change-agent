@@ -45,11 +45,11 @@ Kết quả thực tế, tạo từ một ví dụ hư cấu (dự án nâng cao
 
 **Sơ đồ Theory of Change (`toc.md` / `toc.html`)**
 
-![Ví dụ sơ đồ Theory of Change](docs/images/sample-toc-diagram.png)
+![Ví dụ sơ đồ Theory of Change](docs/images/sample-toc-diagram-vi.png)
 
 **Ma trận PDM (`pdm.md`)**
 
-![Ví dụ ma trận PDM](docs/images/sample-pdm-matrix.png)
+![Ví dụ ma trận PDM](docs/images/sample-pdm-matrix-vi.png)
 
 ---
 

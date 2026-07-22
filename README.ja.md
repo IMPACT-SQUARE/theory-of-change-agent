@@ -45,11 +45,11 @@
 
 **セオリー・オブ・チェンジ図（`toc.md` / `toc.html`）**
 
-![セオリー・オブ・チェンジ図の例](docs/images/sample-toc-diagram.png)
+![セオリー・オブ・チェンジ図の例](docs/images/sample-toc-diagram-ja.png)
 
 **PDM マトリックス（`pdm.md`）**
 
-![PDM マトリックスの例](docs/images/sample-pdm-matrix.png)
+![PDM マトリックスの例](docs/images/sample-pdm-matrix-ja.png)
 
 ---
 

@@ -45,11 +45,11 @@ Real output, generated from a fictional example (secondary-teacher ICT capacity 
 
 **Theory of Change diagram (`toc.md` / `toc.html`)**
 
-![Theory of Change diagram example](docs/images/sample-toc-diagram.png)
+![Theory of Change diagram example](docs/images/sample-toc-diagram-en.png)
 
 **PDM matrix (`pdm.md`)**
 
-![PDM matrix example](docs/images/sample-pdm-matrix.png)
+![PDM matrix example](docs/images/sample-pdm-matrix-en.png)
 
 ---
 
