@@ -149,59 +149,128 @@ multiple outcomes. Example:
 ```
 Keep it compact; every node and edge in the Mermaid diagram must also appear here.
 
-### 1c. toc.html — guaranteed-rendering diagram viewer (ALWAYS write alongside, 2026-07-22)
-Markdown viewers render the diagram with whatever Mermaid version/extension they bundle — old ones lack
-ELK (order scrambles) or mis-theme it. So ALSO write **`OUT/toc.html`**: a self-viewer that pins the
-renderer INSIDE the file (Mermaid 11 + ELK from CDN), plus the zoom/save features markdown can't have.
-Verified working (headless-render test). Template — fill `{PROJECT}` and paste the **identical** Mermaid
-code from §1 (init line included) at `{MERMAID}`:
+### 1c. toc.html — the designed document view (ALWAYS write alongside, 2026-07-22 v2)
+Markdown previews render with whatever Mermaid the viewer bundles (old = scrambled order / bad theming),
+and md can't be styled. So ALSO write **`OUT/toc.html`** — a **full, designed document** mirroring ALL of
+toc.md's content (not just the diagram; pilot feedback: "도식만 있으니 이상하다"), with the renderer pinned
+inside the file (Mermaid 11 + ELK from CDN). No toolbar/buttons (removed by user decision — browser zoom
+and Cmd/Ctrl+P cover it). `toc.md` stays the plain-text source view; internet is needed on first open.
+
+Fill the placeholders; the Mermaid at `{MERMAID}` MUST be byte-identical to §1's block (init included).
+Convert the §2/§3/§4 content into the markup patterns shown — keep the CSS exactly as given:
 
 ```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>변화이론 도식 — {PROJECT}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>변화이론 — {PROJECT}</title>
 <style>
- body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; margin: 24px; background: #fff; color: #111; }
- .lvl { font-weight: bold; margin: 8px 0 16px; }
- .toolbar { position: sticky; top: 0; background: #fff; padding: 8px 0; border-bottom: 1px solid #eee; }
- .toolbar button { margin-right: 8px; padding: 6px 14px; cursor: pointer; }
- #wrap { overflow: auto; }
- #dia { transform-origin: 0 0; }
+  :root { --ink:#1c1917; --muted:#78716c; --line:#e7e5e4; --soft:#fafaf9;
+          --blue:#2f6fb3; --green:#2e7d5b; --amber:#b45309; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+         margin:0; color:var(--ink); background:#fff; line-height:1.65; }
+  .page { max-width:1080px; margin:0 auto; padding:48px 32px 80px; }
+  header.doc { border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:8px; }
+  .kicker { font-size:13px; letter-spacing:.12em; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+  h1 { font-size:30px; line-height:1.3; margin:0 0 10px; font-weight:700; }
+  .meta { font-size:13.5px; color:var(--muted); display:flex; gap:14px; flex-wrap:wrap; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:2px 12px; background:var(--soft); }
+  .mission { margin:22px 0 0; padding:14px 18px; background:var(--soft); border-left:3px solid var(--blue);
+             border-radius:0 8px 8px 0; font-size:15px; }
+  .mission b { color:var(--blue); }
+  section { margin-top:44px; }
+  h2 { font-size:20px; margin:0 0 4px; display:flex; align-items:baseline; gap:10px; }
+  h2 .no { color:var(--muted); font-size:15px; font-weight:600; }
+  .h2sub { color:var(--muted); font-size:13.5px; margin:0 0 16px; }
+  .flowline { font-size:13.5px; font-weight:600; color:var(--muted); margin:0 0 10px; letter-spacing:.01em; }
+  .diagram { border:1px solid var(--line); border-radius:12px; padding:18px 14px; overflow-x:auto; background:#fff; }
+  .levels { display:grid; gap:14px; }
+  .level { display:grid; grid-template-columns:130px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .level:last-child { border-bottom:none; }
+  .lvname { font-weight:700; font-size:14px; }
+  .lvname .en { display:block; font-weight:500; color:var(--muted); font-size:12px; }
+  .lvbody { font-size:14.5px; }
+  .lvbody ul { margin:0; padding-left:18px; }
+  .lvbody li { margin:3px 0; }
+  .ind { color:var(--muted); font-size:13px; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px; }
+  th { text-align:left; background:var(--soft); border-bottom:1.5px solid var(--line); padding:9px 10px;
+       font-size:12.5px; color:var(--muted); white-space:nowrap; }
+  td { border-bottom:1px solid var(--line); padding:9px 10px; vertical-align:top; }
+  .badge { display:inline-block; border-radius:6px; padding:1px 8px; font-size:12px; font-weight:600; white-space:nowrap; }
+  .b-track { background:#fef3c7; color:var(--amber); }
+  .b-auto  { background:#d1fae5; color:var(--green); }
+  .verify { display:grid; gap:10px; }
+  .v-item { display:grid; grid-template-columns:26px 1fr; gap:10px; padding:12px 14px; border:1px solid var(--line);
+            border-radius:10px; font-size:14px; background:#fff; }
+  .v-ok { border-left:3px solid var(--green); } .v-warn { border-left:3px solid var(--amber); }
+  .note { font-size:13px; color:var(--muted); margin-top:14px; }
+  footer { margin-top:64px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); }
+  @media print { .page { padding:0 } .diagram { border:none } section { break-inside:avoid } }
 </style>
 </head>
 <body>
-<h1>변화이론 (Theory of Change) — {PROJECT}</h1>
-<p class="lvl">사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)</p>
-<div class="toolbar">
- <button onclick="zoomBy(1.25)">확대 +</button>
- <button onclick="zoomBy(0.8)">축소 −</button>
- <button onclick="zoomBy(0)">원래대로</button>
- <button onclick="saveSvg()">SVG 저장</button>
- <span style="color:#888">PDF가 필요하면: 브라우저 인쇄(Cmd/Ctrl+P) → PDF로 저장</span>
-</div>
-<div id="wrap"><div id="dia"><pre class="mermaid">
+<div class="page">
+<header class="doc">
+  <div class="kicker">Theory of Change</div>
+  <h1>{PROJECT}</h1>
+  <div class="meta"><span class="chip">{USE_CASE_LABEL}</span><span>{CREATED} · v{VERSION} · {GATE_LABEL}</span></div>
+  {MISSION_BLOCK: only when meta.org_context.mission →
+  <div class="mission"><b>🧭 미션</b> — {mission} <span style="color:var(--muted)">(문서에서 추출, 참고용)</span></div>}
+</header>
+<section>
+  <h2><span class="no">1</span>변화이론 도식</h2>
+  <p class="h2sub">활동에서 영향까지의 인과 연결 — 화살표가 곧 이 사업의 논리입니다.</p>
+  <p class="flowline">사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)</p>
+  <div class="diagram"><pre class="mermaid">
 {MERMAID}
-</pre></div></div>
+  </pre></div>
+</section>
+<section>
+  <h2><span class="no">2</span>서사형 변화이론</h2>
+  <p class="h2sub">각 층위의 내용과 지표</p>
+  <div class="levels">
+    {LEVEL_ROWS: one per level (사회문제/활동/산출물/성과/영향), pattern →
+    <div class="level"><div class="lvname">성과<span class="en">Outcomes</span></div>
+      <div class="lvbody"><ul><li><b>성과 1</b> {narrative} <span class="ind">지표 {j-m} {이름}</span></li></ul></div></div>}
+  </div>
+</section>
+<section>
+  <h2><span class="no">3</span>측정 준비 — 직접 수집해야 할 데이터</h2>
+  <p class="h2sub">임팩트를 나중에 입증하려면 지금부터 모아야 하는 데이터입니다.</p>
+  <table>
+    <thead><tr><th>지표</th><th>지표 정의</th><th>측정 대상</th><th>측정방법·산출식</th><th>언제</th><th>수집</th></tr></thead>
+    <tbody>{MEASUREMENT_ROWS: outcome indicators first; 수집 cell =
+      <span class="badge b-track">직접 트래킹</span> or <span class="badge b-auto">운영데이터</span>}</tbody>
+  </table>
+  <p class="note">착수 전(또는 초기)에 성과 지표의 기초선을 반드시 측정해 두어야 종료 시점에 변화를 입증할 수 있습니다.</p>
+</section>
+<section>
+  <h2><span class="no">4</span>검증</h2>
+  <p class="h2sub">논리 검증(원인 회복 여부) · IRIS+ 유사 지표(참고용)</p>
+  <div class="verify">{VERIFY_ITEMS: per §4 verdict, pattern →
+    <div class="v-item v-ok"><div>✅</div><div><b>성과 1</b> {요지}</div></div>
+    <div class="v-item v-warn"><div>⚠️</div><div>{교정 필요/판단 사항}</div></div>
+    IRIS+ row uses v-warn with ◇ and the "참고용 · 공식 매핑 아님 · IRIS+ © GIIN" tag}</div>
+</section>
+<footer>변화이론 에이전트(Theory of Change Agent)로 생성 · 원본 데이터: details/toc.json · 이 문서의 도식은 내장 렌더러로 항상 동일하게 표시됩니다</footer>
+</div>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0/dist/mermaid-layout-elk.esm.min.mjs";
 mermaid.registerLayoutLoaders(elkLayouts);
 mermaid.initialize({ startOnLoad: true });
-let s = 1;
-window.zoomBy = (f) => { s = f === 0 ? 1 : s * f; document.getElementById("dia").style.transform = `scale(${s})`; };
-window.saveSvg = () => { const svg = document.querySelector("#dia svg"); if (!svg) return;
-  const b = new Blob([new XMLSerializer().serializeToString(svg)], {type: "image/svg+xml"});
-  const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "toc-diagram.svg"; a.click(); };
 </script>
 </body>
 </html>
 ```
-Rules: the Mermaid code MUST be byte-identical to §1's block (one source of truth is `toc.json` — render
-once, paste twice). Do not add libraries beyond the two pinned CDN imports. Note to the user in the
-closing summary: `toc.html`은 브라우저에서 열면 순서·색이 항상 정확하고 확대/SVG 저장 가능 (첫 로드에
-인터넷 필요); `toc.md`는 원본. DRAFT gate: like §1, no diagram → no toc.html until finalized.
+Rules: no extra libraries beyond the two pinned CDN imports; no toolbar/buttons; keep the CSS verbatim
+(it is the design system); DRAFT gate applies (no diagram/doc until finalized); ToC-view language rules
+apply (no KOICA/OVI/MoV). Closing summary tells the user: `toc.html`을 브라우저로 열면 항상 같은 모습
+(순서·색 보장)이며, `toc.md`는 텍스트 원본.
 
 ## 2. Narrative ToC (level by level)
 Top→bottom: **사회문제 → 투입물(있을 때) → 활동 → 산출물 → 성과 → 영향**. For each level list the items with
