@@ -31,26 +31,31 @@ When you DO draw it, emit a Mermaid `flowchart LR` built from the `from_*` causa
 *theory* is the connections: **사회문제 → 활동 → 산출물 → 성과(+지표) → 영향**. Show every edge; keep the
 nodes prominent.
 
-**No LEVEL boxes.** Do **NOT** wrap whole levels in `subgraph` containers — the big boxes hide the nodes
-(임팩트스퀘어 feedback 2026-07-01). The `flowchart LR` flow already gives the left→right level ordering; use a
-per-node `classDef` color for the level cue. *(A small per-**outcome** group IS allowed — see 성과지표 below;
-the ban is on level-wide containers only.)*
+**Levels = INVISIBLE subgraphs whose titles are the column headers (2026-07-22, render-verified).**
+Wrap each level's nodes in a `subgraph` carrying the bilingual level title, then make the BOX invisible:
+`style SGn fill:none,stroke:none,color:#000,font-weight:bold`. The title sits above its own column and is
+ATTACHED to it — it can never detach or drop to another row (the failure mode of the old disconnected
+label chain). **VISIBLE level boxes remain banned** (2026-07-01 feedback: boxes hide the nodes) — style
+the box away; only the title shows. Per-**outcome** groups nest INSIDE the 성과 level subgraph.
 
-**Level header (대목록) — the bold markdown line ONLY (2026-07-22 final):**
-`**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**`
-DIRECTLY ABOVE the ```mermaid block — the one placement every viewer renders on top, deterministically.
-**Do NOT put a level-label node chain INSIDE the diagram**: a disconnected chain's position is
-renderer-dependent (drops to the 2nd row on larger graphs — 2026-07-22 pilot report), and anchoring it
-with invisible `~~~` edges scatters the labels into the graph body (both verified by render tests).
+**Level header (대목록) — two complementary carriers (2026-07-22 final):**
+1. **The bold markdown line DIRECTLY ABOVE the ```mermaid block** (always — gated by R04):
+   `**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**`
+2. **In-diagram: the invisible level-subgraph titles** (column-attached, cannot detach — see above).
+**Never a disconnected level-label node chain** (`:::lvl` — banned, R04): its position is
+renderer-dependent (drops to the 2nd row on larger graphs), and `~~~` anchoring scatters the labels into
+the graph body — both failure modes render-verified 2026-07-22.
 Insert `투입물` after 사회문제 only when the 투입물 node is shown (intl-dev). Labels bilingual.
 
-**Node ordering (best-effort):** declare nodes and edges in display-number order (1, 2, 3…) — the layout
-engine uses declaration order as its starting point. The final vertical order within a column is still
-crossing-minimized by the renderer and is NOT semantic; the display numbers carry the order.
+**Layout engine & ordering:** request **ELK** in the init directive (skeleton below). With ELK, columns
+keep declaration order (활동 1..n renders 1..n top-to-bottom — render-verified). Where a viewer lacks ELK,
+Mermaid falls back to dagre: the titles stay column-attached, but vertical order within a column may be
+crossing-minimized — it is NOT semantic; the display numbers carry the order. Declare nodes and edges in
+display-number order either way.
 
 **Readability (임팩톨로지 feedback 2026-07-21 — small/invisible text in Antigravity dark theme):**
-- Start the block with an init directive that raises the font size:
-  `%%{init: {"themeVariables": {"fontSize": "16px"}}}%%`
+- Start the block with an init directive selecting ELK and raising the font size:
+  `%%{init: {"flowchart": {"defaultRenderer": "elk"}, "themeVariables": {"fontSize": "16px"}}}%%`
 - **Every `classDef` includes `color:#000`** (black text). The fills are light, so without an explicit
   color, dark-theme apps (Antigravity) render white-on-light = unreadable.
 - Zoom / image-export buttons are NOT possible inside a markdown file — do NOT emit any external-tool
@@ -71,7 +76,9 @@ bottom node labeled "CLASS" (임팩톨로지 bug report 2026-07-21). `classDef` 
   `subgraph` with `direction TB`**, outcome node first, indicator nodes (class `ind`) linked `-.->` below
   it. This puts the 지표 **UNDER its outcome**, not in the impact column (임팩톨로지 feedback 2026-07-21 —
   previously the `-.->` link alone ranked indicators at the same depth as 영향). Give the subgraph an
-  empty title (`[" "]`) and a subtle style. Indicator label = name with its `j-m` number; **NO
+  empty title (`[" "]`), a subtle style, and NEST it inside the 성과 level subgraph. (Under ELK the
+  indicators may sit BESIDE the outcome within the dashed group — acceptable; the dagre fallback stacks
+  them below.) Indicator label = name with its `j-m` number; **NO
   baseline/target numbers**. (Output/activity indicators stay in §3 + monitoring; add only on request.)
 - **투입물(Inputs)** — a node only when `meta.use_case = intl-dev` and `inputs` is present (§11.1); class
   `input`. Omit for `biz-dev`/`csr-esg`/`nonprofit`.
@@ -84,9 +91,9 @@ bottom node labeled "CLASS" (임팩톨로지 bug report 2026-07-21). `classDef` 
 - outcome `c` → impact (every outcome).
 - outcome `c` **-.->** each of its indicator nodes (dashed = "measured by"), inside the group.
 
-Skeleton (light fills + black text; per-outcome TB group; level header first):
+Skeleton (ELK + invisible level subgraphs; light fills + black text):
 ```
-%%{init: {"themeVariables": {"fontSize": "16px"}}}%%
+%%{init: {"flowchart": {"defaultRenderer": "elk"}, "themeVariables": {"fontSize": "16px"}}}%%
 flowchart LR
   classDef problem fill:#fdecea,stroke:#e57373,color:#000;
   classDef act fill:#fff3e0,stroke:#ffb74d,color:#000;
@@ -94,21 +101,36 @@ flowchart LR
   classDef outcome fill:#e3f2fd,stroke:#64b5f6,color:#000;
   classDef ind fill:#f5f5f5,stroke:#bdbdbd,color:#000;
   classDef impact fill:#ede7f6,stroke:#9575cd,color:#000;
-  prob(["사회문제: …"]):::problem
-  act_1["1.1 …"]:::act
-  op_1["1.1 …"]:::out
-  subgraph oc_g1 [" "]
-    direction TB
-    oc_1["성과 1 …"]:::outcome
-    ind_oc_1_1("1-1 지표명"):::ind
-    oc_1 -.-> ind_oc_1_1
+  subgraph SG0 ["사회문제"]
+    prob(["사회문제: …"]):::problem
   end
-  style oc_g1 fill:transparent,stroke:#90caf9,stroke-dasharray:4
-  imp_1["영향 …"]:::impact
+  subgraph SG1 ["활동 (Activities)"]
+    act_1["1.1 …"]:::act
+  end
+  subgraph SG2 ["산출물 (Outputs)"]
+    op_1["1.1 …"]:::out
+  end
+  subgraph SG3 ["성과 (Outcomes) · 지표"]
+    subgraph oc_g1 [" "]
+      direction TB
+      oc_1["성과 1 …"]:::outcome
+      ind_oc_1_1("1-1 지표명"):::ind
+      oc_1 -.-> ind_oc_1_1
+    end
+  end
+  subgraph SG4 ["영향 (Impact)"]
+    imp_1["영향 …"]:::impact
+  end
   prob --> act_1
   act_1 --> op_1
   op_1 --> oc_1
   oc_1 --> imp_1
+  style SG0 fill:none,stroke:none,color:#000,font-weight:bold
+  style SG1 fill:none,stroke:none,color:#000,font-weight:bold
+  style SG2 fill:none,stroke:none,color:#000,font-weight:bold
+  style SG3 fill:none,stroke:none,color:#000,font-weight:bold
+  style SG4 fill:none,stroke:none,color:#000,font-weight:bold
+  style oc_g1 fill:transparent,stroke:#90caf9,stroke-dasharray:4
 ```
 
 ### 1b. Text fallback (ALWAYS emit right below the Mermaid block, when drawn)
@@ -176,8 +198,8 @@ important to track).
   the flow is visible in viewers without Mermaid (Antigravity).
 - **Measurement tables (§3, monitoring) carry `지표 정의` and `산출식`** (formula `-` when qualitative); the
   §3 사회공헌 table also carries `측정 대상` (`-` when null / for intl-dev).
-- **No `subgraph` LEVEL containers** — levels are shown by LR flow + class color + the bold 대목록 line
-  above the block. (Per-outcome TB groups are the one allowed subgraph use.)
+- **Level subgraphs present and INVISIBLE** (`fill:none,stroke:none` — titles show, boxes don't); no
+  VISIBLE level boxes; per-outcome groups nested inside the 성과 subgraph.
 - **The bold 대목록 line sits directly above the ```mermaid block; NO level-node chain inside the
   diagram**; every `classDef` carries `color:#000`.
 - **No external-tool tip lines** (mermaid.live etc.) in the output.
