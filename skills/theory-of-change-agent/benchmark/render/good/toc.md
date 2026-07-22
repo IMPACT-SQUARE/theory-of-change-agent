@@ -7,13 +7,11 @@
 ```mermaid
 %%{init: {"themeVariables": {"fontSize": "16px"}}}%%
 flowchart LR
-  classDef lvl fill:#eceff1,stroke:#90a4ae,color:#000,font-weight:bold;
   classDef act fill:#fff3e0,stroke:#ffb74d,color:#000;
   classDef out fill:#e8f5e9,stroke:#81c784,color:#000;
   classDef outcome fill:#e3f2fd,stroke:#64b5f6,color:#000;
   classDef ind fill:#f5f5f5,stroke:#bdbdbd,color:#000;
   classDef impact fill:#ede7f6,stroke:#9575cd,color:#000;
-  lv1["활동 (Activities)"]:::lvl --> lv2["산출물 (Outputs)"]:::lvl --> lv3["성과 (Outcomes) · 지표"]:::lvl --> lv4["영향 (Impact)"]:::lvl
   act_1["1.1 연수 프로그램 개발 지원"]:::act --> op_1["1.1 개발된 연수프로그램"]:::out
   subgraph oc_g1 [" "]
     direction TB
