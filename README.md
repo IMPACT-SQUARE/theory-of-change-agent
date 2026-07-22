@@ -1,182 +1,130 @@
-# Theory of Change Agent
+# 🌱 Theory of Change Agent
 
 English · [한국어](README.ko.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md)
 
-You know the problem, the activities, and the intended results, but turning them into a coherent
-PDM can be difficult.
+**[IMPACT SQUARE](https://www.impactsquare.com) built the Theory of Change Agent and uses it in its own practice — an AI tool that turns a conversation into a structured results chain for your social-impact project.** It renders a **Theory of Change diagram** for impact startups, nonprofits, and CSR, or a **PDM (Project Design Matrix)** for international-development projects.
 
-Theory of Change Agent guides you through that work in conversation. It asks one question at a
-time and turns your answers into a results chain: social problem → activities → outputs → outcomes →
-impact. For international-development projects, it produces a PDM (Project Design Matrix). For
-impact startups, CSR, and nonprofits, it produces a Theory of Change diagram.
-It works with AI assistants such as Claude and responds in the language you use.
+The agent connects the scattered pieces — the social problem you want to solve, your planned activities, the change you're aiming for — into a single logic. As you answer its questions, "what you did and how much (outputs)" and "what actually changed (outcomes)" come apart, and a chain takes shape: **social problem ➔ activities ➔ outputs ➔ outcomes ➔ impact**. You can design a results chain from scratch, or check an existing project plan for gaps in its logic.
 
-## This helps when you need to
+The finished diagram becomes a yardstick for how well your logic holds together, and a core argument when you refine a business plan or apply for funding. It is used across impact business, nonprofits, and development cooperation, and cuts down the time you used to spend on planning and documentation. It runs inside AI assistants such as Claude and replies in the language you use.
 
-- Create a PDM for the first time
-- Review a draft before submitting it
-- Clarify the impact model for a new project
+---
 
-## Quick start
+## 💡 When to use it
 
-1. Install the skill below.
-2. Enter `Create a PDM with the Theory of Change Agent`. You can also attach a business plan or annual report.
-3. Answer the questions. When the result is right, enter `finalize`.
-4. Open `out/`. International-development projects are saved as `pdm.md`; other use cases are saved as `toc.md`.
+* **Turning a business idea into impact logic:** organize the scattered ideas of an impact startup or new venture along Theory-of-Change lines.
+* **Writing a PDM for an international-development project:** give structure to an early-stage ODA design.
+* **Checking a draft before you submit:** see whether an existing proposal, business plan, or annual report holds up against the guideline, and refine it.
 
-## Install
+---
 
-You need Claude Code, Claude desktop, or claude.ai, plus `python3`. The desktop and web
-code-execution sandboxes include Python.
+## 🚀 Output by use case
 
-### Easiest: paste this into Claude Code, Antigravity, ChatGPT, or any local AI agent
+The output depends on the nature of your project.
 
-Open your AI agent (Claude Code, Antigravity, Gemini CLI, ChatGPT desktop, …) and paste this. The agent does the rest.
+| Your situation | Output | Good starting material |
+| --- | --- | --- |
+| **Impact startup / new venture** | Theory of Change diagram | A business plan or the problem you're solving |
+| **CSR / ESG project** | Theory of Change diagram | A program brief or proposal |
+| **Nonprofit program** | Theory of Change diagram | An annual report or program material |
+| **International-development project** | PDM | An idea, proposal, or existing PDM |
 
-> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into YOUR environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/` — confirm that `<skills folder>/theory-of-change-agent/SKILL.md` exists, then tell me that I can start by saying "Create a PDM with the Theory of Change Agent" (restart the session first in Antigravity) and that I can update later with `git -C ~/theory-of-change-agent pull`.
+> **Output files (saved under `out/`)**
+> * `toc.md`: Theory of Change diagram, with a text version for viewers that don't support Mermaid
+> * `toc.html`: the same content as a designed single-page document — open it in a browser for a pinned, always-correct diagram render
+> * `pdm.md`: 4×4 PDM matrix (international development)
+> * `details/monitoring.md`: per-indicator measurement plan — definition, formula, baseline/target, timing, and collector
+> * `budget.md`: budget with per-activity line items, calculation basis, and funder split (optional)
+> * `details/toc.json`: the source data behind every view above
 
-*(In Claude Code you can also install as a plugin — `/plugin marketplace add IMPACT-SQUARE/theory-of-change-agent` then `/plugin install theory-of-change-agent@impact-square` — which supports auto-update.)*
+---
 
-### Claude desktop (plugin)
+## 🖼 Output examples
 
-1. `Settings → Plugins → Add → Add marketplace → **Add from a repository**`
-2. Paste `https://github.com/IMPACT-SQUARE/theory-of-change-agent` as the URL to add the marketplace.
-3. Install **theory-of-change-agent** from the list, then say *"Create a PDM with the Theory of Change Agent"* in the chat.
+Real output, generated from a fictional example (secondary-teacher ICT capacity project in Nicaragua).
 
-> Updates are not automatic — click the marketplace's **Update** button in `Settings → Plugins`.
+**Theory of Change diagram (`toc.md` / `toc.html`)**
 
-### zip upload (Antigravity · claude.ai · desktop fallback)
+![Theory of Change diagram example](docs/images/sample-toc-diagram.png)
 
-1. Zip the skill (or use the pre-built `theory-of-change-agent.zip`):
-   ```bash
-   cd skills && zip -r theory-of-change-agent.zip theory-of-change-agent \
-     -x '*/.DS_Store' -x '*/out/*' -x '*/.omc/*' -x '*/__pycache__/*'
-   ```
-2. Upload the archive in Claude desktop at `Settings → Skills → Add → Upload`, in Antigravity's
-   Skills screen, or in claude.ai at `Settings → Capabilities → Skills → Upload`. A paid plan
-   with code execution enabled is required.
-3. Enter `Create a PDM with the Theory of Change Agent` in the chat.
+**PDM matrix (`pdm.md`)**
 
-> Skills uploaded to an app do not update automatically. Upload a new archive after each change. For
-> Antigravity, install `bierner.markdown-mermaid` from Open VSX if Mermaid diagrams appear as code.
-> You can also use the built-in text version. See:
-> [`INSTALL-desktop.md`](./skills/theory-of-change-agent/INSTALL-desktop.md).
+![PDM matrix example](docs/images/sample-pdm-matrix.png)
 
-## Choose what you need
+---
 
-Start with the problem, identify its causes, and define a measurable change.
+## ✨ How it works
 
-| Your situation | What the agent creates | Good starting material |
-|---|---|---|
-| International-development project | PDM | An idea, proposal, or PDM draft |
-| Impact startup or new venture | Theory-of-Change diagram | A business plan or a problem statement |
-| CSR or ESG project | Theory-of-Change diagram | A program brief or proposal |
-| Nonprofit program or annual report | Theory-of-Change diagram | An annual report; choose the organization or one project |
+* **Rigorous logic:** it defines a social problem that is structural, affects many people, and causes real harm; separates symptoms from causes; and frames outcomes as changes that address those causes. Scaling up activities or vague benefits are kept distinct from outcomes.
+* **Handles multi-project documents:** upload something like an annual report and it first asks whether to map the whole organization or focus on a single project.
+* **Flexible input:** start from a conversation, or upload a PDF or Korean HWP file (`.hwp`, `.hwpx`). The HWP extractor has no external dependencies, so it runs in app sandboxes.
 
-New PDMs are checked before finalization. You can also revise a completed PDM through conversation.
+---
 
-## See it work
+## ✅ Verification you can check
 
-```
-You:    Create a PDM with the Theory of Change Agent.
-Agent:  What are you working on?
+The finished logic goes through a verification pass. For an already-approved plan, an audit mode reports only where it diverges from the guideline, without changing the document.
+
+* **Deterministic quality gate:** pure Python checks eight critical structural rules — no impact indicators, three to four outputs, required means of verification, no orphan nodes, and more. It caught all 18 violations on the seeded benchmark.
+* **Outcome & indicator suggestions:** it checks whether an outcome addresses its underlying cause, and matches indicators to the closest of the 593 IRIS+ metrics for reference.
+* **Automatic budget checks:** a script computes and validates every total, ratio, funder split, and general-management cap.
+* **Advisory rules:** SMART, CREAM, and gender-disaggregated indicators are scored; you decide whether to act on them.
+
+---
+
+## 🛠 Quick start & install
+
+You need Claude Code, Claude desktop, or claude.ai, plus `python3`.
+
+### 1. Easiest: paste into your AI agent
+
+Open an AI agent that can run local commands (Claude Code, Antigravity, Gemini CLI, …) and paste the paragraph below. The agent installs and configures the rest.
+
+> Install the Theory of Change Agent: run `git clone --single-branch --depth 1 https://github.com/IMPACT-SQUARE/theory-of-change-agent.git ~/theory-of-change-agent`, then symlink (or copy) the `skills/theory-of-change-agent` folder inside it into your environment's global skills folder — Claude Code → `~/.claude/skills/`, Antigravity → `~/.gemini/config/skills/`, Gemini CLI → `~/.gemini/skills/`, ChatGPT/Codex → `~/.codex/skills/`. Confirm that `SKILL.md` exists in the skills folder, then tell me I can start by saying "Make a theory of change with the Theory of Change Agent" (restart the session first in Antigravity), and that I can update later with `git -C ~/theory-of-change-agent pull`.
+
+### 2. How to use
+
+1. Type "`Make a theory of change (or PDM) with the Theory of Change Agent`" in the chat. You can attach a business plan or annual report.
+2. Answer the agent's questions to build the results chain.
+3. When the result is right, type "`finalize`".
+4. Find the generated documents in the `out/` folder.
+
+*(You can also install via the Claude desktop plugin feature or by uploading a zip. See `INSTALL-desktop.md` for details.)*
+
+---
+
+## 💬 Example conversation
+
+```text
+You:    Make a plan with the Theory of Change Agent.
+Agent:  What kind of project is it?
         ① International development (PDM)  ② Impact startup
-        ③ CSR / ESG                        ④ Nonprofit
-You:    ①. A maternal health project in Laos.
-Agent:  [Q1 · social problem] What problem does this project tackle?
-        who is suffering, and what is the cause?
-You:    Mothers in rural districts deliver at home. Clinics are far,
-        and people don't trust them.
-Agent:  This is a social problem: it is structural, affects many people,
-        and causes real harm. The immediate issue is a high rate of home
-        deliveries. The causes are limited access to facilities and low
-        trust in them. An outcome could be "more women give birth in
-        health facilities," rather than "more training sessions delivered." Does
-        that reflect the change you want to achieve?
-        …
-        [The agent asks about activities, outputs, indicators, and
-         assumptions one at a time, and connects each answer to the results chain.]
+        ③ CSR / ESG                       ④ Nonprofit
+You:    ①. A maternal-health project in Laos. (choose the field you want — startup, CSR, nonprofit, etc.)
+Agent:  What problem does this project tackle? Who is struggling, and why?
+You:    Mothers in rural areas deliver at home. Clinics are far, and people don't trust them.
+Agent:  The core problem is a high rate of home deliveries, and the causes look like limited access
+        to facilities and low trust in them. An outcome could read "more women give birth in health
+        facilities." "Increase the number of training sessions" is closer to an activity or output.
+        Does that reflect what you want?
         …
 You:    finalize
-Agent:  ✔ Quality gate passed (8/8 critical rules).
-        ⚠ Outcome 2 describes delivery at a larger scale. "Expanded
-          education" counts sessions rather than a change in behavior.
-          Suggested revision: …
-        ◇ Suggested IRIS+ metrics for indicator 1-1. These are references,
-          not official mappings.
+Agent:  ✔ Passed all 8 critical rules.
+        ⚠ Outcome 2, "expanded education," counts sessions. Reword it to show a change in behavior.
         Result: out/pdm.md
 ```
 
-The interview separates activities and outputs from the change the project intends to achieve.
+---
 
-## How it works
+**🔒 Data policy**
 
-The process is simple: interview, build the chain, verify, validate, and render.
+* `docs/` contains public reference documents only, such as Theory of Change references.
+* The cases in `benchmark/` are fictional and contain no real names or amounts. Real project plans and budgets are never stored in this repository.
 
-The interview follows Theory of Change practice. It starts with a clearly defined social problem:
-one that is structural, affects many people, and causes real harm. It then links the observed problem
-to its causes and defines outcomes as changes that address those causes. Outputs and broad statements
-of benefit are not treated as outcomes.
+**📌 Status**
 
-For organization-level documents, such as an annual report or business plan, the agent first checks
-whether the material covers one project or several. You can map the whole organization from its
-mission to its projects, or focus on one project.
+* Version 1.0 supports impact startups, nonprofits, CSR/ESG, and international development. It includes the quality gate, budget support, HWP input, and plugin distribution; impact-investor screening is planned.
 
-| Deliverable | What it is |
-|---|---|
-| `pdm.md` | 4×4 PDM matrix: Impact / Outcome / Outputs / Activities × Summary / Indicators / MoV / Assumptions |
-| `toc.md` | Theory of Change diagram, with a text version for viewers that do not support Mermaid, plus data needed for future impact measurement |
-| `details/monitoring.md` | Per-indicator measurement plan: definition, formula, baseline, target, source, timing, collector, disaggregation |
-| `budget.md` *(optional)* | A PDM-linked budget: line items per activity, calculation basis (unit price × qty × frequency), funder split, per-year totals |
-| `details/toc.json` | Source data used to render every view above |
+**📄 License**
 
-You can start with a conversation, a PDF, or a Korean HWP file (`.hwp` or `.hwpx`). The bundled extractor
-has no external dependencies, so it can run in app sandboxes.
-
-## Verification you can check
-
-The checks are implemented in code and documented in this repository:
-
-- Deterministic quality gate: Pure Python enforces eight critical structural rules, including no
-  impact indicators, three to four outputs, indicator limits, required means of verification, no
-  orphan nodes, and noun-form outputs. It reached 18/18 detection accuracy on the
-  [seeded-violation benchmark](./skills/theory-of-change-agent/benchmark/).
-- Outcome review: A logic check asks whether the intended change addresses its underlying cause.
-  Outcome indicators are also matched to the closest of the 593 IRIS+ impact metrics for
-  reference only. This is not an official IRIS+ mapping.
-- Scripted budget arithmetic: A script calculates and validates every total, ratio, funder split,
-  and general-management cap, verified against real budget sheets.
-- Advisory rules: SMART, CREAM, and gender-disaggregated indicators are scored but not enforced.
-  You decide whether to act on the findings.
-
-## Data policy
-
-- `docs/` contains public reference documents only.
-- `benchmark/` PDMs are fictional. They retain the structure of the originals but omit real names and amounts.
-- Real project PDMs and budgets are never stored in this repository.
-
-## Repository layout
-
-```
-theory-of-change-agent/
-├── .claude-plugin/          plugin configuration
-├── skills/theory-of-change-agent/
-│   ├── SKILL.md             the full procedure
-│   ├── prompts/             interview & rendering prompts
-│   ├── rules/               writing rules + deterministic validators (gate, budget, HWP)
-│   ├── schema/              toc.json schema and reference example
-│   └── benchmark/           seeded-violation fixtures
-├── docs/                    public references
-└── README.md                this document
-```
-
-## Status
-
-Version 1.0 supports international development, impact startups, CSR and ESG, and nonprofits. It
-includes three interaction modes, a deterministic quality gate, budget support, HWP input, and
-plugin distribution. Impact-investor screening is planned. The project was renamed from Impact
-Harness in June 2026.
-
-## License
-
-[MIT](./LICENSE) © 2026 IMPACT SQUARE.
+* [MIT](./LICENSE) © 2026 IMPACT SQUARE.
