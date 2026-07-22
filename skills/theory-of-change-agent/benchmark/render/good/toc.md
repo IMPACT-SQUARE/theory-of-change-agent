@@ -12,11 +12,11 @@ flowchart LR
   classDef outcome fill:#e3f2fd,stroke:#64b5f6,color:#000;
   classDef ind fill:#f5f5f5,stroke:#bdbdbd,color:#000;
   classDef impact fill:#ede7f6,stroke:#9575cd,color:#000;
-  act_1["1.1 연수 프로그램 개발 지원"]:::act --> op_1["1.1 개발된 연수프로그램"]:::out
+  act_1["연수 프로그램 개발 지원"]:::act --> op_1["개발된 연수프로그램"]:::out
   subgraph oc_g1 [" "]
     direction TB
-    oc_1["성과 1 ICT 활용 교육역량 강화"]:::outcome
-    ind_oc_1_1("1-1 수료자 중 ICT 활용교육 선도교사 자격증 취득률"):::ind
+    oc_1["ICT 활용 교육역량 강화"]:::outcome
+    ind_oc_1_1("수료자 중 ICT 활용교육 선도교사 자격증 취득률"):::ind
     oc_1 -.-> ind_oc_1_1
   end
   op_1 --> oc_1
