@@ -36,14 +36,17 @@ nodes prominent.
 per-node `classDef` color for the level cue. *(A small per-**outcome** group IS allowed — see 성과지표 below;
 the ban is on level-wide containers only.)*
 
-**Level header row (임팩톨로지 feedback 2026-07-21):** TWO places, both mandatory:
-1. **A bold markdown line DIRECTLY ABOVE the ```mermaid block** — guarantees the 대목록 is visible in
-   every viewer regardless of Mermaid version:
-   `**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**`
-2. **The FIRST line of the graph** is a chain of level-label nodes (class `lvl`) with the same labels.
-   *(Older Mermaid versions treat this disconnected chain unpredictably — bottom/detached — which is why
-   the markdown line above is required too; verified 2026-07-21.)*
-Insert `투입물` after 사회문제 in both only when the 투입물 node is shown (intl-dev). Labels bilingual.
+**Level header (대목록) — the bold markdown line ONLY (2026-07-22 final):**
+`**사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**`
+DIRECTLY ABOVE the ```mermaid block — the one placement every viewer renders on top, deterministically.
+**Do NOT put a level-label node chain INSIDE the diagram**: a disconnected chain's position is
+renderer-dependent (drops to the 2nd row on larger graphs — 2026-07-22 pilot report), and anchoring it
+with invisible `~~~` edges scatters the labels into the graph body (both verified by render tests).
+Insert `투입물` after 사회문제 only when the 투입물 node is shown (intl-dev). Labels bilingual.
+
+**Node ordering (best-effort):** declare nodes and edges in display-number order (1, 2, 3…) — the layout
+engine uses declaration order as its starting point. The final vertical order within a column is still
+crossing-minimized by the renderer and is NOT semantic; the display numbers carry the order.
 
 **Readability (임팩톨로지 feedback 2026-07-21 — small/invisible text in Antigravity dark theme):**
 - Start the block with an init directive that raises the font size:
@@ -173,10 +176,10 @@ important to track).
   the flow is visible in viewers without Mermaid (Antigravity).
 - **Measurement tables (§3, monitoring) carry `지표 정의` and `산출식`** (formula `-` when qualitative); the
   §3 사회공헌 table also carries `측정 대상` (`-` when null / for intl-dev).
-- **No `subgraph` LEVEL containers** — levels are shown by LR flow + class color + the `lvl` header row.
-  (Per-outcome TB groups are the one allowed subgraph use.)
-- **Level header appears BOTH as a bold markdown line above the block AND as the `lvl` chain first line
-  of the graph**; every `classDef` carries `color:#000`.
+- **No `subgraph` LEVEL containers** — levels are shown by LR flow + class color + the bold 대목록 line
+  above the block. (Per-outcome TB groups are the one allowed subgraph use.)
+- **The bold 대목록 line sits directly above the ```mermaid block; NO level-node chain inside the
+  diagram**; every `classDef` carries `color:#000`.
 - **No external-tool tip lines** (mermaid.live etc.) in the output.
 - Each **outcome's indicators sit BELOW it inside its TB group** (`-.->`); no baseline/target numbers in
   the diagram.
