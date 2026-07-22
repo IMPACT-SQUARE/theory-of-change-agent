@@ -149,6 +149,60 @@ multiple outcomes. Example:
 ```
 Keep it compact; every node and edge in the Mermaid diagram must also appear here.
 
+### 1c. toc.html — guaranteed-rendering diagram viewer (ALWAYS write alongside, 2026-07-22)
+Markdown viewers render the diagram with whatever Mermaid version/extension they bundle — old ones lack
+ELK (order scrambles) or mis-theme it. So ALSO write **`OUT/toc.html`**: a self-viewer that pins the
+renderer INSIDE the file (Mermaid 11 + ELK from CDN), plus the zoom/save features markdown can't have.
+Verified working (headless-render test). Template — fill `{PROJECT}` and paste the **identical** Mermaid
+code from §1 (init line included) at `{MERMAID}`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>변화이론 도식 — {PROJECT}</title>
+<style>
+ body { font-family: -apple-system, "Apple SD Gothic Neo", sans-serif; margin: 24px; background: #fff; color: #111; }
+ .lvl { font-weight: bold; margin: 8px 0 16px; }
+ .toolbar { position: sticky; top: 0; background: #fff; padding: 8px 0; border-bottom: 1px solid #eee; }
+ .toolbar button { margin-right: 8px; padding: 6px 14px; cursor: pointer; }
+ #wrap { overflow: auto; }
+ #dia { transform-origin: 0 0; }
+</style>
+</head>
+<body>
+<h1>변화이론 (Theory of Change) — {PROJECT}</h1>
+<p class="lvl">사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)</p>
+<div class="toolbar">
+ <button onclick="zoomBy(1.25)">확대 +</button>
+ <button onclick="zoomBy(0.8)">축소 −</button>
+ <button onclick="zoomBy(0)">원래대로</button>
+ <button onclick="saveSvg()">SVG 저장</button>
+ <span style="color:#888">PDF가 필요하면: 브라우저 인쇄(Cmd/Ctrl+P) → PDF로 저장</span>
+</div>
+<div id="wrap"><div id="dia"><pre class="mermaid">
+{MERMAID}
+</pre></div></div>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0/dist/mermaid-layout-elk.esm.min.mjs";
+mermaid.registerLayoutLoaders(elkLayouts);
+mermaid.initialize({ startOnLoad: true });
+let s = 1;
+window.zoomBy = (f) => { s = f === 0 ? 1 : s * f; document.getElementById("dia").style.transform = `scale(${s})`; };
+window.saveSvg = () => { const svg = document.querySelector("#dia svg"); if (!svg) return;
+  const b = new Blob([new XMLSerializer().serializeToString(svg)], {type: "image/svg+xml"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "toc-diagram.svg"; a.click(); };
+</script>
+</body>
+</html>
+```
+Rules: the Mermaid code MUST be byte-identical to §1's block (one source of truth is `toc.json` — render
+once, paste twice). Do not add libraries beyond the two pinned CDN imports. Note to the user in the
+closing summary: `toc.html`은 브라우저에서 열면 순서·색이 항상 정확하고 확대/SVG 저장 가능 (첫 로드에
+인터넷 필요); `toc.md`는 원본. DRAFT gate: like §1, no diagram → no toc.html until finalized.
+
 ## 2. Narrative ToC (level by level)
 Top→bottom: **사회문제 → 투입물(있을 때) → 활동 → 산출물 → 성과 → 영향**. For each level list the items with
 their narratives. For 성과/산출물, show indicators by name only (NO baseline/target numbers — those live in
@@ -206,6 +260,7 @@ important to track).
 - **The bold 대목록 line sits directly above the ```mermaid block; NO level-node chain inside the
   diagram**; every `classDef` carries `color:#000`.
 - **No external-tool tip lines** (mermaid.live etc.) in the output.
+- **`toc.html` written alongside `toc.md`** (GATE/AUDIT only), Mermaid code identical to §1.
 - Each **outcome's indicators sit BELOW it inside its TB group** (`-.->`); no baseline/target numbers in
   the diagram.
 - **`toc.md` contains no "KOICA" mention** (labels, notes, citations — none).

@@ -37,6 +37,7 @@ out/
 ├── pdm.md          # PRIMARY end-view for intl-dev (KOICA 4×4). For ToC-view use-cases (biz-dev/csr-esg/nonprofit) this is toc.md instead.
 ├── budget.md       # OPTIONAL (intl-dev, on request after gate pass): 사업 예산서 — Phase 3 step 11
 ├── org.md          # org-unit runs (meta.unit=org, 비영리 중심): 조직 임팩트 맵 — Phase 1 step 0b
+├── toc.html        # ToC-view runs: 보장 렌더 도식 뷰어 (Mermaid+ELK 내장 핀, 확대/SVG 저장) — render-toc §1c
 └── details/
     ├── toc.json    # single source of truth (ID-linked results-chain DAG; every view renders from it)
     └── monitoring.md   # monitoring matrix (indicator def / baseline / target / source / timing / …)
@@ -46,7 +47,8 @@ out/
 - **`out/details/toc.json`** conforms to `schema/pdm-schema.json`; all views are RENDERED from it.
 - Create `out/details/` as needed. Which files are written depends on `meta.use_case` (Phase 3 steps 8-9).
 
-Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx`, any web UI.
+Out of scope (do NOT produce): the annual performance-check sheet, direct `.xlsx`, any SERVER/web app.
+(The static `toc.html` viewer file is in scope — render-toc §1c.)
 </Output_Contract>
 
 <Reference_Files>
@@ -312,8 +314,9 @@ Hard interview rules (mirror `koica-rules.md`):
      Activities row carries Inputs in the OVI column and Pre-conditions in the Assumptions column). The
      ToC node diagram (`prompts/render-toc-md.md` §1) MAY be appended as an optional figure.
    - ToC-view use-cases (`biz-dev`/`csr-esg`/`nonprofit`) → **`toc.md`** via `prompts/render-toc-md.md` (Theory-of-Change view + node
-     diagram). PDM-form structures (수원기관/투입물) are NOT forced (koica-rules.md §11.1). For `intl-dev`
-     you MAY also write `toc.md`, but write `pdm.md` **last**.
+     diagram) **+ `toc.html`** (§1c guaranteed-rendering viewer). PDM-form structures (수원기관/투입물) are
+     NOT forced (koica-rules.md §11.1). For `intl-dev` you MAY also write `toc.md`, but write `pdm.md`
+     **last**.
    > **Write order matters — end on the human-readable view.** Sequence: `out/details/toc.json` (written
    > in step 1, the source of truth) → `out/details/monitoring.md` → the primary view (`out/pdm.md` or
    > `out/toc.md`) **last**. Desktop/IDE apps (Claude desktop, Antigravity) surface the **last-written /
