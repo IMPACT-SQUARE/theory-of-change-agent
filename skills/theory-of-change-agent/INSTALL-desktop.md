@@ -57,14 +57,15 @@ zip -r theory-of-change-agent.zip theory-of-change-agent \
 > 상태(워크스페이스)에서 실행**하세요. 폴더 없이 실행하면 산출물이 Antigravity 스크래치 경로
 > (`~/.gemini/antigravity/scratch/…`)에 생성되어 미리보기 카드가 뜨지 않고 경로 텍스트만 남습니다.
 >
-> **변화이론 도식(Mermaid)이 Antigravity에서 코드처럼 보이면:** Open VSX에서 **`Markdown Preview Mermaid Support`**(`bierner.markdown-mermaid`) 확장을 설치하면 `toc.md`가 그림으로 렌더됩니다. 설치 없이도 스킬이 도식 아래에 **텍스트 인과 흐름**을 함께 출력하므로 논리 흐름은 그대로 읽을 수 있습니다. (루트 `README.md` 방법 3 참고.)
+> **변화이론 도식(Mermaid)이 Antigravity에서 코드처럼 보이면:** Open VSX에서 **`Markdown Preview Mermaid Support`**(`bierner.markdown-mermaid`) 확장을 설치하면 `toc.md`가 그림으로 렌더됩니다. **반드시 최신 버전으로**(구버전은 ELK 레이아웃 미지원 → 활동·산출물 세로 순서가 3,4,1,2처럼 섞여 보임; ELK 지원 버전은 Mermaid 11.3과 함께 추가됨). 확장 업데이트가 안 되면 순서는 표시 번호(1., 2., …)가 기준이며 인과 연결은 그대로 정확합니다. 설치 없이도 스킬이 도식 아래에 **텍스트 인과 흐름**을 함께 출력합니다.
 
 ---
 
 ## 2b. 업데이트 (2026-07 기준)
 
-- **Desktop 플러그인 설치**(Customize → Plugins → Browse에서 설치): 자동 업데이트 없음 —
-  **Customize → Plugins → 해당 마켓플레이스의 "Update" 버튼**으로 수동 갱신.
+- **Desktop 플러그인 설치**: 자동 업데이트 없음. **Update 버튼이 "최신 버전"이라며 새 버전을 못 잡는
+  경우가 있습니다**(마켓플레이스 카탈로그를 설치 시점 캐시와만 비교 — 2026-07-22 실측). 확실한 방법:
+  `Settings → Plugins`에서 **마켓플레이스를 제거 후 같은 URL로 재추가** — 항상 최신을 받아옵니다.
 - **zip 업로드**: 자동 업데이트 없음 — 새 zip 재업로드.
 - **자동 업데이트가 필요하면**: ① Claude Code 플러그인(마켓플레이스 autoUpdate 지원), 또는
   ② **Team/Enterprise 조직 관리형 마켓플레이스** — 관리자가 GitHub 레포를 등록하면 main 머지마다
