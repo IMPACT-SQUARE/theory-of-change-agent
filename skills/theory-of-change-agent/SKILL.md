@@ -331,6 +331,8 @@ Hard interview rules (mirror `koica-rules.md`):
     still `stale`) and then **present the primary view as the final artifact** — state its path as the
     closing line (e.g. "최종 결과: `out/pdm.md`" or "`out/toc.md`") so the user lands on it. In app
     sandboxes (Claude desktop / claude.ai) the files arrive as **download links in the chat** — say so.
+    In **Antigravity**, additionally emit the primary view as a user-facing Artifact preview (see
+    Guardrails) so it renders in the chat.
     If the user asks for a **PDF or 다운로드**, offer to render a print-ready **`out/pdm.html`**
     (self-contained, inline CSS, the same tables) and tell them: 브라우저에서 열어 인쇄 → "PDF로 저장".
     Never claim a hosted link exists — there is no server (web front-end is a separate 8월 workstream). **For DRAFT
@@ -443,6 +445,14 @@ On any edit to node X:
   cards with diff/preview for editor-tool writes; shell-written files show as dead text paths
   (2026-07-21 pilot report). This includes gate-fix re-renders (Phase 3 step 9b) — fix the md via the
   editor tool too. Shell is for RUNNING validators/scripts only.
+- **Presenting results in Antigravity — use its Artifact preview (2026-07-22):** after writing the
+  output files, ALSO surface the PRIMARY view as a rendered chat preview via Antigravity's Artifact
+  feature: create a **user-facing markdown artifact** (observed mechanism: write the preview copy under
+  the session's brain directory with `UserFacing: true`, `RequestFeedback: false`) containing the primary
+  view's full content. This shows the 미리보기 in the chat instead of dumping the user into a raw editor
+  "edited view" (pilot report: users had to explicitly ask "미리보기로 보여줘" every time). The workspace
+  files under `out/` remain the source of truth — the artifact is a presentation copy; regenerate it
+  after every re-render. In environments without such a feature, just present the file path as usual.
 - **Files:** all file ops run in whatever sandbox/filesystem is available; in the Claude apps the three
   output files are written to the sandbox for the user to download.
 </Guardrails>
