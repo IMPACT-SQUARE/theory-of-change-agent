@@ -5,7 +5,7 @@
 **사회문제 → 활동 (Activities) → 산출물 (Outputs) → 성과 (Outcomes) · 지표 → 영향 (Impact)**
 
 ```mermaid
-%%{init: {"themeVariables": {"fontSize": "16px"}}}%%
+%%{init: {"flowchart": {"defaultRenderer": "elk"}, "theme": "base", "themeVariables": {"fontSize": "16px", "lineColor": "#888", "primaryTextColor": "#000", "clusterBkg": "transparent", "clusterBorder": "#90a4ae", "edgeLabelBackground": "#ffffff"}}}%%
 flowchart LR
   classDef act fill:#fff3e0,stroke:#ffb74d,color:#000;
   classDef out fill:#e8f5e9,stroke:#81c784,color:#000;

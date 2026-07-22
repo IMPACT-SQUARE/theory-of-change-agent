@@ -33,7 +33,8 @@ nodes prominent.
 
 **Levels = INVISIBLE subgraphs whose titles are the column headers (2026-07-22, render-verified).**
 Wrap each level's nodes in a `subgraph` carrying the bilingual level title, then make the BOX invisible:
-`style SGn fill:none,stroke:none,color:#000,font-weight:bold`. The title sits above its own column and is
+`style SGn fill:none,stroke:none,color:#888,font-weight:bold` (mid-gray titles — they sit on the PAGE
+background, which may be dark; #000 disappears on dark themes). The title sits above its own column and is
 ATTACHED to it — it can never detach or drop to another row (the failure mode of the old disconnected
 label chain). **VISIBLE level boxes remain banned** (2026-07-01 feedback: boxes hide the nodes) — style
 the box away; only the title shows. Per-**outcome** groups nest INSIDE the 성과 level subgraph.
@@ -54,8 +55,10 @@ crossing-minimized — it is NOT semantic; the display numbers carry the order. 
 display-number order either way.
 
 **Readability (임팩톨로지 feedback 2026-07-21 — small/invisible text in Antigravity dark theme):**
-- Start the block with an init directive selecting ELK and raising the font size:
-  `%%{init: {"flowchart": {"defaultRenderer": "elk"}, "themeVariables": {"fontSize": "16px"}}}%%`
+- **Pin the THEME, not just node colors** (2026-07-22 pilot: viewer dark themes made arrows white/
+  invisible — edges inherit the theme unless pinned). Start the block with an init directive selecting
+  ELK, `theme: base`, and explicit `lineColor` (#888 reads on light AND dark backgrounds):
+  `%%{init: {"flowchart": {"defaultRenderer": "elk"}, "theme": "base", "themeVariables": {"fontSize": "16px", "lineColor": "#888", "primaryTextColor": "#000", "clusterBkg": "transparent", "clusterBorder": "#90a4ae", "edgeLabelBackground": "#ffffff"}}}%%`
 - **Every `classDef` includes `color:#000`** (black text). The fills are light, so without an explicit
   color, dark-theme apps (Antigravity) render white-on-light = unreadable.
 - Zoom / image-export buttons are NOT possible inside a markdown file — do NOT emit any external-tool
@@ -93,7 +96,7 @@ bottom node labeled "CLASS" (임팩톨로지 bug report 2026-07-21). `classDef` 
 
 Skeleton (ELK + invisible level subgraphs; light fills + black text):
 ```
-%%{init: {"flowchart": {"defaultRenderer": "elk"}, "themeVariables": {"fontSize": "16px"}}}%%
+%%{init: {"flowchart": {"defaultRenderer": "elk"}, "theme": "base", "themeVariables": {"fontSize": "16px", "lineColor": "#888", "primaryTextColor": "#000", "clusterBkg": "transparent", "clusterBorder": "#90a4ae", "edgeLabelBackground": "#ffffff"}}}%%
 flowchart LR
   classDef problem fill:#fdecea,stroke:#e57373,color:#000;
   classDef act fill:#fff3e0,stroke:#ffb74d,color:#000;
@@ -125,11 +128,11 @@ flowchart LR
   act_1 --> op_1
   op_1 --> oc_1
   oc_1 --> imp_1
-  style SG0 fill:none,stroke:none,color:#000,font-weight:bold
-  style SG1 fill:none,stroke:none,color:#000,font-weight:bold
-  style SG2 fill:none,stroke:none,color:#000,font-weight:bold
-  style SG3 fill:none,stroke:none,color:#000,font-weight:bold
-  style SG4 fill:none,stroke:none,color:#000,font-weight:bold
+  style SG0 fill:none,stroke:none,color:#888,font-weight:bold
+  style SG1 fill:none,stroke:none,color:#888,font-weight:bold
+  style SG2 fill:none,stroke:none,color:#888,font-weight:bold
+  style SG3 fill:none,stroke:none,color:#888,font-weight:bold
+  style SG4 fill:none,stroke:none,color:#888,font-weight:bold
   style oc_g1 fill:transparent,stroke:#90caf9,stroke-dasharray:4
 ```
 

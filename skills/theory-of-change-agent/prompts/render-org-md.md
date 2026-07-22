@@ -28,8 +28,7 @@ provided — never invent programs, outcomes, or numbers.**
 ### 1. 구조도 (Mermaid + text fallback)
 Mermaid `flowchart LR`, mission node at the root, one node per 프로젝트, each linked mission → project.
 Under each project node, one small attached node with its **핵심 성과 한 줄** (문서 근거가 있을 때만).
-- Style: same readability rules as render-toc §1 — every `classDef` carries `color:#000`, fontSize 16px
-  init, inline `:::` only (no `class` statement lines). **No 5-level header row** — chain levels don't
+- Style: same readability rules as render-toc §1 — every `classDef` carries `color:#000`, the theme-pinned ELK init of render-toc §1 (base + lineColor #888), inline `:::` only (no `class` statement lines). **No 5-level header row** — chain levels don't
   apply here.
 - Directly below the Mermaid block, ALWAYS emit the renderer-independent **text fallback** (plain fenced
   block, `→` per mission→project line) — same reason as render-toc §1b.

@@ -20,7 +20,8 @@ Rules:
   R04 toc.md   level header: bold 대목록 line directly above the mermaid block
                (in-diagram lvl chains banned — placement is renderer-dependent)
   R05 toc.md   no `class …` statement lines in the Mermaid block (stray-"CLASS"-node bug)
-  R06 toc.md   every `classDef` carries color:#000 (dark-theme readability)
+  R06 toc.md   every `classDef` carries color:#000 AND the init pins lineColor
+               (unpinned themes render white arrows on dark viewers)
   R07 toc.md   renderer-independent text fallback block (with →) follows the Mermaid block
   R08 toc.md   no "KOICA" mention (also monitoring.md for ToC-view use-cases)
   R09 monitoring.md  성과 table columns match the use-case (intl-dev: 기초치 present;
@@ -133,7 +134,10 @@ def main():
             set_rule("R05", not stray, f"`class` 문장 라인 발견(유령 CLASS 노드 유발): {stray[:2]}")
             bad_defs = [ln.strip() for ln in mm.splitlines()
                         if "classDef" in ln and "color:#000" not in ln]
-            set_rule("R06", not bad_defs, f"color:#000 없는 classDef: {bad_defs[:2]}")
+            line_pinned = "lineColor" in mm
+            set_rule("R06", not bad_defs and line_pinned,
+                     f"색 고정 미흡 — color:#000 없는 classDef: {bad_defs[:2]}"
+                     + ("" if line_pinned else " / init에 lineColor 핀 없음(다크 테마에서 화살표 흰색)"))
             tail = after_mermaid(toc_md)
             fb = re.search(r"```[a-zA-Z]*\s*\n(.*?)\n```", tail, re.DOTALL)
             set_rule("R07", bool(fb and "→" in fb.group(1)), "Mermaid 아래 텍스트 인과 흐름(→) 폴백 블록 없음")
