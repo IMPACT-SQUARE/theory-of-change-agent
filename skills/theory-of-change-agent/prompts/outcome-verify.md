@@ -20,12 +20,25 @@ step; see value-rules §V5.)*
    alone), letting you judge improvement (**실행력**) and explain the real change (**설명력**)? (§III) If not →
    **⚠️** with a better indicator suggestion.
 
-## Output
-Per outcome, one short block in `meta.lang`:
-- **`✅ 부합`** — briefly why it holds, or
-- **`⚠️ 교정 필요`** — one-line reason (in ToC/logic-model terms) + a concrete suggestion.
+## Output — classify every finding, then ACT on it (2026-07-22 pilot fix)
+Per outcome, one short block in `meta.lang`: **`✅ 부합`** (briefly why) or **`⚠️`** with a TYPE:
 
-Keep it short and advisory. Reason it out (tie to the problem's cause; distinguish 회복 vs 일반 효용) — do
+- **Type A — 결함 (our own rules violated):** the indicator is an output-level count posing as an outcome
+  (건수·인원수 누적), or a 수준-only measure (만족도) standing alone — i.e. it fails 지표=변화분
+  (value-rules §V3). **Do NOT just print advice** (2026-07-22 pilot: the flawed indicator stayed in
+  toc.json and every rendered file): propose the concrete corrected indicator (예: "협력 예술가 참여 인원"
+  → "협력 예술가 1인당 평균 소득 증가율" / "재계약(지속 협업) 비율"), get ONE quick user confirm
+  ("이렇게 고칠까요?" — batch multiple Type-A fixes into one confirm), then **UPDATE `toc.json`**
+  (indicator name/definition/formula; mark dependents per SKILL Phase 4) so every rendered view carries
+  the corrected indicator. §4 then shows `✅ (교정 반영: 이전 → 이후)`. If the user declines, keep theirs
+  and leave the `⚠️` with a one-line note.
+- **Type B — 판단 사항 (legitimate design choice):** e.g. a peripheral outcome (가족 유대감) that may be
+  부가 효용 vs an independent 성과. ASK the user (2 concrete options: 독립 성과 유지 / 파생 효과로 통합·
+  삭제), apply their decision to `toc.json`, and record it in §4. Never auto-delete an outcome.
+
+**AUDIT mode exception:** report-only — print findings with suggestions, never modify the document.
+
+Keep it short. Reason it out (tie to the problem's cause; distinguish 회복 vs 일반 효용) — do
 not appeal to authority. Example (ko):
 > **⚠️ 성과 2 "가족 교류 확대"** — 이미 교류가 있던 관계의 교류가 더 느는 부분까지 포함돼 **일반 효용**에
 > 가깝습니다. 정의한 원인이 "정서적 교류를 제공할 존재의 부재"였으니, **끊겨 있던 교류가 새로 생긴/회복된 정도**

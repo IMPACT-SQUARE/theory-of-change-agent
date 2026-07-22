@@ -18,6 +18,11 @@ conforms to `schema/pdm-schema.json` and the rules in `rules/koica-rules.md`. Us
 
 ## Field rules (mirror koica-rules.md)
 - `impact`: narrative + `sdgs` + `national_strategy`. **No `indicators` key** (C01).
+- **Outcome indicators MUST measure a CHANGE (변화분), never a bare count** (2026-07-22 pilot: counts
+  like "참여 인원"·"협업 건수" kept landing in outcome slots and failing verification): use 사전-사후
+  변화량 / 증가율 / 정착·유지 비율 forms. 건수·인원수·누적 카운트는 **output** indicators — if the interview
+  produced a count for an outcome, convert it (or move it to the feeding output) BEFORE emitting the JSON.
+  수준-only measures (만족도) may appear only as 보조 지표 alongside a 변화분 지표.
 - `outcomes`: 1+ allowed (single-outcome rule C07 was removed 2026-06-05); each outcome has 1-2 indicators, max 3 (C03), and a behavioral-change narrative written as an **outcome-oriented keyword phrase** ("~강화/~확대/~개선"), not a `~한다` sentence (koica-rules.md §3.4; A08 still requires it to name a behavioral change, not output volume).
 - `outputs`: 3-4 (C02); narrative in NOUN form (C06); each has ≥1 indicator with a non-empty `mov` (C04).
 - every indicator: name, definition, mov, data_source, timing, collector, disaggregation (use

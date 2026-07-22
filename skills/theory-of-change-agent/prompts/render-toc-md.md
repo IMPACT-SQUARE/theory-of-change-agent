@@ -153,9 +153,11 @@ Render as a short table or checklist, ordered outcome-first (outcome indicators 
 important to track).
 
 ## 4. 검증 (Verification)
-- **논리 검증 (implemented):** run `prompts/outcome-verify.md` for each outcome — is it a real Outcome (a
-  change-of-state recovering the problem's cause), or output-at-scale / general utility? Emit the per-outcome
-  `✅ 부합` / `⚠️ 교정 필요` verdicts here, in `meta.lang`, grounded in 변화이론·로직모델. Advisory (non-blocking).
+- **논리 검증:** emit the FINAL per-outcome verdicts from SKILL step 7b (which ran before this render and
+  already applied confirmed corrections to `toc.json`): `✅ 부합`, **`✅ (교정 반영: "이전 지표" → "새 지표")`**
+  for fixed Type-A findings, or `⚠️` only where the user chose to keep as-is / for open Type-B decisions.
+  In `meta.lang`, grounded in 변화이론·로직모델. The verdicts must describe the CURRENT (post-correction)
+  indicators — never critique an indicator that no longer exists in the data.
 - **IRIS+ 유사 지표 (implemented):** run `prompts/iris-match.md` for each **outcome** indicator — it distills
   English keywords, calls `python3 <SKILL_ROOT>/rules/iris-search.py --json --top 6 "…"` (deterministic
   search over the 593-metric IRIS+ catalog; use the skill root, NOT a CWD-relative path — see

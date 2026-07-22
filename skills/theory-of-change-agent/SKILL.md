@@ -293,9 +293,18 @@ Hard interview rules (mirror `koica-rules.md`):
    and `prompts/iris-match.md` for **each outcome indicator** (IRIS+ 근접 지표 — outcome indicators ONLY;
    `python3 <SKILL_ROOT>/rules/iris-search.py --json --top 6 "…"`, shortlist에서만 제시; "매칭 준비 중" is
    ONLY for a genuine exit 3 — command-not-found means wrong path, find the script and retry; never
-   invent a code). Include the per-outcome `✅ 부합`/`⚠️ 교정 필요` verdicts + IRIS+ suggestions in the
-   **step 10 self-check summary** (chat). When `toc.md` is rendered, its §4 embeds the same results — do
-   not run them twice; reuse.
+   invent a code). **This step runs BEFORE the renders (steps 8-9) so its corrections land in the
+   files** (2026-07-22 pilot fix — verdicts used to be print-only while the flawed indicator stayed in
+   toc.json):
+   - **Type-A findings (결함 — output-count/수준-only indicator posing as an outcome indicator):** propose
+     the corrected indicator, get one batched user confirm, **update `toc.json`**, and only then render.
+     Max 2 verify→fix rounds; if the user declines a fix, keep theirs and leave the ⚠️.
+   - **Type-B findings (판단 — e.g. 부가 성과 포함 여부):** ask (2 options), apply the decision to
+     `toc.json`.
+   - **AUDIT mode:** report-only — never modify.
+   Include the final verdicts (including `✅ (교정 반영: 이전→이후)` notes) + IRIS+ suggestions in the
+   **step 10 self-check summary** (chat). When `toc.md` is rendered, its §4 embeds the same final
+   results — do not run the checks twice; reuse.
 8. **Render + write `out/details/monitoring.md`** via `prompts/render-monitoring-md.md` (indicator
    measurement plan; all use-cases).
 9. **Render + write the PRIMARY end-view LAST** (Phase 1 step 0 routing):
