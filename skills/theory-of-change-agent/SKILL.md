@@ -10,7 +10,7 @@ description: |
   "project design matrix", "KOICA", "theory of change", "변화이론", "results chain", "로직 모델",
   "logframe", "logical framework", "impact harness", "임팩트 하네스" (legacy name), or wants to
   draft/audit a development-cooperation results matrix.
-argument-hint: "[--use-case intl-dev|biz-dev|csr-esg|nonprofit] [--concept <brief> | --inputs <file> | --draft] [--lang en|ko] [--advisory-threshold 0.8] [--audit]"
+argument-hint: "[--use-case intl-dev|biz-dev|csr-esg|nonprofit] [--concept <brief> | --inputs <file> | --draft] [--lang ko|en|ja|vi] [--advisory-threshold 0.8] [--audit]"
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
@@ -72,10 +72,14 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 </Reference_Files>
 
 <Language_Policy>
+- **Supported output languages: `ko` (한국어), `en` (English), `ja` (日本語), `vi` (Tiếng Việt).** All four
+  are first-class: every question, label, nudge, narrative, and rendered table must work in each.
 - **Set the output language FIRST — before asking anything — and LOCK it for the whole session.** Priority:
   `--lang` > a clear full-sentence in the user's first message > **ASK**. If the message is a bare skill
-  call, a single keyword, mixed, or there is ANY doubt, **ask a neutral bilingual question (`한국어` /
-  `English`) and never default to Korean.** Then lock `meta.lang`.
+  call, a single keyword, mixed, or there is ANY doubt, **ask a neutral multilingual question (`한국어` /
+  `English` / `日本語` / `Tiếng Việt`) and never default to Korean.** Then lock `meta.lang`.
+- If the user writes in a language outside the four (e.g. French), mirror it on a best-effort basis and
+  set `meta.lang` to the closest supported code for file-level conventions — but do not advertise it.
 - **Mirror that language CONSISTENTLY in EVERY user-facing surface**: the use-case / situation / pace
   questions and their option labels, the progress lines, the connectivity nudges, the social-problem
   reframes, the summaries, AND every narrative field / indicator / rendered table. Do **not** drift — an
@@ -83,10 +87,13 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
   language late and copying the Korean example strings verbatim made English sessions go Korean, and vice
   versa.)*
 - **The Korean strings throughout SKILL.md and the prompts are DEFAULT EXAMPLES for `ko`.** When
-  `meta.lang = en`, translate them — the questions, option labels, the `[질문 N · …]` progress line, the
-  `최종 결과: …` closing line, the `그건 사회문제라기보다…` reframes, etc. They are illustrations, not literals
-  to print regardless of language.
-- KOICA structural labels stay **bilingual** in the render (e.g. `요약 (Narrative Summary)`).
+  `meta.lang ≠ ko`, translate them into `meta.lang` — the questions, option labels, the `[질문 N · …]`
+  progress line, the `최종 결과: …` closing line, the `그건 사회문제라기보다…` reframes, etc. They are
+  illustrations, not literals to print regardless of language. Use natural sector terminology, not
+  literal translation (e.g. ja: アウトカム/アウトプット/成果, vi: Kết quả/Đầu ra).
+- KOICA structural labels stay **bilingual** in the render: the `meta.lang` label + English in
+  parentheses (ko `요약 (Narrative Summary)`, ja `事業の要約 (Narrative Summary)`, vi
+  `Tóm tắt (Narrative Summary)`; for `en`, English alone is fine).
 - **This SKILL.md and every prompt template are written in English** regardless of output language.
 </Language_Policy>
 
@@ -101,19 +108,19 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
 ## Phase 0 — Load context
 1. Read `rules/koica-rules.md`, `rules/checklist.json`, and `schema/pdm-schema.json` into context.
 2. Parse `{{ARGUMENTS}}`: `--use-case <intl-dev|biz-dev|csr-esg|nonprofit>`, `--concept <brief>`, `--inputs <file>`,
-   `--lang en|ko`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
+   `--lang ko|en|ja|vi`, `--advisory-threshold <0..1>` (default from checklist.json: 0.8), `--audit`, `--out <dir>`.
 
 ## Phase 1 — Language, use-case & mode selection
 00. **Set the output language FIRST — before any other question, and NEVER default to Korean silently.**
     - If `--lang` is given, use it.
-    - Else if the user's first message is clearly a full request in one language (an English or Korean
-      sentence), use that language.
+    - Else if the user's first message is clearly a full request in one supported language (a Korean,
+      English, Japanese, or Vietnamese sentence), use that language.
     - **Otherwise — a bare skill call (e.g. just invoking the skill), a single keyword, mixed, or ANY
-      doubt — ASK**, using the interactive choice tool, with a **bilingual** (neutral) question:
-      question `Language / 언어`, options `한국어` and `English`. Do not guess.
-    Set `meta.lang`. From here, **every** user-facing string — all the questions below, their option
-    labels, progress lines, nudges, narratives — is in `meta.lang`; the Korean text in these prompts is the
-    `ko` default, translate it when `meta.lang = en`.
+      doubt — ASK**, using the interactive choice tool, with a **language-neutral** question:
+      question `Language / 언어`, options `한국어`, `English`, `日本語`, `Tiếng Việt`. Do not guess.
+    Set `meta.lang` (`ko|en|ja|vi`). From here, **every** user-facing string — all the questions below,
+    their option labels, progress lines, nudges, narratives — is in `meta.lang`; the Korean text in these
+    prompts is the `ko` default, translate it when `meta.lang ≠ ko`.
 0. **Determine the use-case FIRST** (before the interaction mode). 변화이론 에이전트 covers several use-cases;
    the underlying results-chain logic is the **same** for all — only the rendered **end-view** and which
    structures are required differ. If `--use-case <x>` is given, use it; otherwise ASK with the
@@ -201,7 +208,7 @@ Load these (they live alongside this SKILL.md) and treat them as authoritative:
    ```json
    {
      "use_case": "intl-dev|biz-dev|csr-esg|nonprofit|invest-screen", "input_source": "concept|inputs", "interaction": "interview|draft",
-     "mode": "A|B|C", "lang": "ko|en", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
+     "mode": "A|B|C", "lang": "ko|en|ja|vi", "gate_mode": "GATE|AUDIT|DRAFT", "advisory_threshold": 0.8,
      "results_chain": { "problem_analysis": null, "goal_analysis": null,
        "impact": null, "outcomes": [], "outputs": [], "activities": [], "inputs": null },
      "assumptions": {}, "interview_rounds": []
@@ -418,9 +425,10 @@ On any edit to node X:
   fails `validate-critical.sh`.
 - Do NOT auto-overwrite downstream nodes on an edit; regeneration is opt-in.
 - Do NOT loosen Critical rules to make a real/approved PDM pass — use AUDIT mode to report deviations.
-- Keep prompts internal-English; keep **all user-facing output in `meta.lang`**, locked at the first
-  message (Phase 1 step 00) and never drifting mid-session. The Korean strings in these prompts are `ko`
-  examples — translate them when `meta.lang = en`. Match the user's language; do not switch on them.
+- Keep prompts internal-English; keep **all user-facing output in `meta.lang`** (`ko|en|ja|vi`), locked
+  at the first message (Phase 1 step 00) and never drifting mid-session. The Korean strings in these
+  prompts are `ko` examples — translate them when `meta.lang ≠ ko`. Match the user's language; do not
+  switch on them.
 - One interview question per turn.
 - **Connectivity is proactive, never silent.** Treat the `from_*` graph as the product's core. On any
   structural edit/add/remove, state the impact on connected nodes and nudge the fix BEFORE applying

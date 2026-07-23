@@ -14,7 +14,7 @@
         "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
         "created_at": { "type": "string", "format": "date" },
         "approved_at": { "type": ["string", "null"] },
-        "lang": { "type": "string", "enum": ["ko", "en"] },
+        "lang": { "type": "string", "enum": ["ko", "en", "ja", "vi"] },
         "use_case": { "type": "string", "enum": ["intl-dev", "biz-dev", "csr-esg", "nonprofit", "invest-screen"], "description": "What the user is doing (asked first, before mode). Confirmed labels (2026-07-09): intl-dev = 국제개발협력(PDM) — PDM matrix view, 사업 단위; biz-dev = 임팩트 스타트업(신규사업개발) — ToC view, 조직 단위 가능; csr-esg = 사회공헌(CSR, ESG) — ToC view, 사업 단위; nonprofit = 비영리(재단·NGO) — ToC view, 조직 단위 가능(연차보고서 입력 잦음); invest-screen = 임팩트 투자사 (투심; backlog, not offered). The results-chain logic is identical across use-cases; only the rendered end-view and which structures are required differ. ToC-view use-cases = biz-dev, csr-esg, nonprofit." },
         "unit": { "type": "string", "enum": ["project", "org"], "description": "입력 단위. project = 사업(프로젝트) 하나 (intl-dev, csr-esg 기본). org = 조직 단위 입력 (biz-dev, nonprofit에서 가능 — 다수 프로젝트 포함 문서). 변화이론은 프로젝트 단위로 만들어지므로, org 입력이며 다수 프로젝트가 감지되면 사용자에게 [전체 프로젝트 vs 특정 프로젝트] 분기를 물어야 한다 (SKILL Phase 1 step 0b)." },
         "org_context": { "type": ["object", "null"], "description": "unit=org일 때의 조직 컨텍스트. 특정 프로젝트를 골라 내려간 경우에도 부모 조직 정보를 보존한다.", "properties": {
